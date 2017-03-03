@@ -73,13 +73,13 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
             ]
         }
         ```
-        ([get this code on GitHub](https://github.com/alexa/tutorial-quiz-game/blob/master/speechAssets/intentSchema.json))
+        ([get this code on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speechAssets/intentSchema.json))
 
         You should notice that there is an AnswerIntent, and it has five slots defined: StateName, Capitol, StatehoodYear, Abbreviation, and StatehoodOrder.  Thanks to many of the [Built-In Slots](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/built-in-intent-ref/slot-type-reference#list-types) that Amazon provides us, we can easily set the "type" of four of our slots to those built-in values with AMAZON.US_STATE, AMAZON.US_CITY, AMAZON.FOUR_DIGIT_NUMBER, and AMAZON.NUMBER.  For the last value, we need to define a custom slot type.
 
     2.  **Custom Slot Types** Custom slots are sets of training data for Alexa to give her an idea of the types of data you are expecting to receive from your users.  It is important to note that the values in a custom slot *do not* function like a drop-down list on a website.  If your custom slot contains a list of colors in the rainbow, and your user responds with a color that isn't in your list, you will still receive "sky blue" as an answer, and you need to be prepared for those situations.
 
-        For this guide, you will need to create one custom slot type: [US_STATE_ABBR](https://github.com/alexa/tutorial-quiz-game/blob/master/speechAssets/US_STATE_ABBR_slotvalues.txt).  To create a custom slot type, click the "Add Slot Type" button.
+        For this guide, you will need to create one custom slot type: [US_STATE_ABBR](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speechAssets/US_STATE_ABBR_slotvalues.txt).  To create a custom slot type, click the "Add Slot Type" button.
 
         <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/1-7-2-add-slot-type._TTH_.png" />
 
@@ -145,7 +145,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
             WI
             WY
             ```
-            ([get this on GitHub](https://github.com/alexa/tutorial-quiz-game/blob/master/speechAssets/US_STATE_ABBR_slotvalues.txt))
+            ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speechAssets/US_STATE_ABBR_slotvalues.txt))
 
         3.  Click the **Save** button when you are done with your new custom slot value.
 
@@ -164,7 +164,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
         QuizIntent and start a quiz
         QuizIntent and quiz me
         ```
-        ([get this on GitHub](https://github.com/alexa/tutorial-quiz-game/blob/master/speechAssets/intentSchema.json))
+        ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speechAssets/intentSchema.json))
 
         Once you have added these sample utterances to your skill, you can click the "Save" button to verify that your interaction model is built properly without any errors.
 

@@ -7,15 +7,15 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
 1.  **New data.** You will need to create a new dataset for your skill that *isn't* the 50 United States of America.  If you are looking for an idea, check out [Wikipedia's List of Lists of Lists](https://en.wikipedia.org/wiki/List_of_lists_of_lists).
 
-    1.  **Open a copy of index.js.** If you haven't already downloaded the code for this project, [you can find a copy of index.js here on GitHub](/src/index.js).  You can use a simple, lightweight code editor like [Atom](http://atom.io), [Sublime Text](http://sublimetext.com), or [VSCode](http://code.visualstudio.com), but you also have the option to edit the code directly in your Lambda function.
+    1.  **Open a copy of index.js.** If you haven't already downloaded the code for this project, [you can find a copy of index.js here on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master//src/index.js).  You can use a simple, lightweight code editor like [Atom](http://atom.io), [Sublime Text](http://sublimetext.com), or [VSCode](http://code.visualstudio.com), but you also have the option to edit the code directly in your Lambda function.
 
     2.  **Scroll to the bottom, and search for the comment "TODO: Replace this data with your own."**  This is the data for our skill.  You can see that there is a row for each state, represented by five data values: **StateName**, **Abbreviation**, **Capitol**, **StatehoodYear**, and **StatehoodOrder**.
 
         You can provide as few or as many properties for your data as you would like, but we recommend a minimum of three to keep your skill interesting.  (Two is the fewest that will make any sense for a quiz.)  You should provide at least 25 rows of data for your quiz by replacing the data that we provided with the content you want to create a quiz for.  To see a few other examples of appropriate data structures, we have created a few other sample data sets for your review.
 
-        *  [Sports Teams](https://github.com/alexa/skill-sample-nodejs-quiz-game-staging/blob/master/data/SPORTSTEAMS.js)
-        *  [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game-staging/blob/master/data/VIDEOGAMES.js)
-        *  [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game-staging/blob/master/data/BOOKS.js)
+        *  [Sports Teams](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/SPORTSTEAMS.js)
+        *  [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/VIDEOGAMES.js)
+        *  [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/BOOKS.js)
         
     3.  **Consider using built-in slot values.** We recommend considering data from the built-in slot values that Amazon provides for us to use.  You still need to build your entire dataset, but using values from the built-in slots will make your work in the next few steps easier.  We have provided a few examples below, but you can see the [entire list of built-in slot values here](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/built-in-intent-ref/slot-type-reference#list-types).
 

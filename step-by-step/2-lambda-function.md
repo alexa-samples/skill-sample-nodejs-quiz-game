@@ -35,7 +35,7 @@ In the [first step of this guide](https://github.com/alexa/skill-sample-nodejs-q
 
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-7-configure-your-function._TTH_.png" />
 
-8.  **Paste the provided code into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/tutorial-quiz-game/blob/master/src/index.js).  Simply delete the contents of the code box, and paste the contents of the new code.
+8.  **Paste the provided code into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/src/index.js).  Simply delete the contents of the code box, and paste the contents of the new code.
 
 9.  **Set up your Lambda function role.**  If you haven't done this before, we have a [detailed walkthrough for setting up your first role for Lambda](LAMBDAROLE.md).  If you have done this before, you only need to set your **Existing role** value to "lambda_basic_execution."
 
