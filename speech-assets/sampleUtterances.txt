@@ -1,0 +1,9 @@
+AnswerIntent {StateName}
+AnswerIntent {Capitol}
+AnswerIntent {StatehoodYear}
+AnswerIntent {StatehoodOrder}
+AnswerIntent {Abbreviation}
+
+QuizIntent start a quiz
+QuizIntent and start a quiz
+QuizIntent and quiz me

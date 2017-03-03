@@ -1,0 +1,126 @@
+# Build An Alexa Quiz Game Skill
+<a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/1-locked._TTH_.png" /></a><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/spacer._TTH_.png" /><a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/2-lambda-function.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/2-locked._TTH_.png" /></a><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/spacer._TTH_.png" /><a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/3-connect-vui-to-code.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/3-locked._TTH_.png" /></a><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/spacer._TTH_.png" /><a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/4-testing.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/4-locked._TTH_.png" /></a><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/spacer._TTH_.png" /><a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/5-customization.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/5-locked._TTH_.png" /></a><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/spacer._TTH_.png" /><a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/6-publication.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/navigation/6-on._TTH_.png" /></a>
+
+## Get Your Skill Certified and Published
+
+We are almost done!  The last step is to add the metadata that your skill will use in the [Alexa Skill Store](http://amazon.com/skills).  This page will walk you through the remaining steps, and give you some tips on how to avoid the common mistakes developers make that result in a failed certification.
+
+1.  **Go to your skill's Publishing Information tab on the [Developer Portal](https://developer.amazon.com/edw/home.html#/skills/list).**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-1-publishing-information._TTH_.png" />
+
+2.  **Complete the Global Fields data.**  These fields apply across all of the languges that your skill supports.
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-2-global-fields._TTH_.png" />
+
+    *  **For category, we are building a quiz game, so select "Games, Trivia, and Accessories."**  You will also be presented with a Sub Category option.  For this skill, choose "Knowledge and Trivia."
+
+    *  **Testing Instructions are meant to give you an opportunity to explain things to the certification testing team.** If they need credentials to use something, or you want to explain how to use your skill so that you have a successful certification, this is the place to provide that information.
+
+        *  Since you are using our Quiz Game Sample, make sure to add this sentence to your Testing Instructions:
+
+           ```
+           This was built using the Quiz Game Sample.
+           ```
+
+           This will let the testing team understand what you're providing them, and should decrease the testing time required.        
+
+    *  **Countries and Region can be for "all countries", unless you have a specific reason to exclude a specific location.**  ADD MORE CONTENT ABOUT HOW THIS WORKS.
+
+3.  **Write your skill descriptions.**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-3-descriptions._TTH_.png" />
+
+    *  **Spend some time coming up with an enticing, succinct description.**  This is one of the few places you have an opportunity to attract new users, so make the most of it!  These descriptions show up in the list of skills available in the [Alexa app](http://alexa.amazon.com/spa/index.html#skills).
+
+4.  **For your example phrases, come up with the three most exciting ways a user can talk to your skill.**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-4-example-phrases._TTH_.png" />
+
+    *  **Make sure that each of your example phrases are a perfect match with one of your Sample Utterances.**  Incorrect example phrases are one of the most common reasons that skills fail certification, so we have provided a short list of things to consider as you write your example phrases:
+
+       | Common Failure Points for Example Phrases |
+       | ----------------------------------------- |
+       | Example phrases **must** adhere to the [supported phrases](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/supported-phrases-to-begin-a-conversation). |
+       | Example phrases **must** be based on sample utterances specified in your Intent Schema. |
+       | Your first example phrase **must** include a wake word and your invocation name. |
+       | Example phrases **must** provide a contextual response. |
+
+    *  **These three example phrases are most likely to be the first thing that users will try when they interact with your skill.** Make sure each of them work well, and provide an excellent user experience.
+
+5.  **Provide a comprehensive list of keywords for users that are searching for new skills.**  This is an optional field, and the Alexa Skill Store search will find the words in your Skill Name and descriptions, so you don't need to overdo it.  That being said, if there are words that you want users to find your skill with, you should include them here.  (You can just separate them with commas.)
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-5-keywords._TTH_.png" />
+
+6.  **Create your skill's icons.**  You need two sizes of your icon: 108x108px and 512x512px.
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-6-icons._TTH_.png" />
+
+    *  **Make sure you have the rights to the icons you create.** Please don't violate any trademarks or copyrights.
+    *  **If you don't have software to make icons, try one of these free options:**
+
+       *  [GIMP](https://www.gimp.org/) (Windows/Mac/Linux)
+       *  [Paint.NET](http://www.getpaint.net/index.html) (Windows)
+       *  [Inkscape](http://inkscape.org) (Windows/Mac/Linux)
+       *  [Iconion](http://iconion.com/) (Windows/Mac)
+
+    *  To make it easier to get started, we've created blank versions of these icons in both sizes for many formats:
+
+       *  [PSD](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/psd._TTH_.zip)
+       *  [PNG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/png._TTH_.zip)
+       *  [GIF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/gif._TTH_.zip)
+       *  [PDF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdf._TTH_.zip)
+       *  [JPG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/jpg._TTH_.zip)
+       *  [SVG](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/svg._TTH_.zip)
+       *  [PDN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/pdn._TTH_.zip) - for [Paint.NET](http://www.getpaint.net/index.html)
+       *  [XCF](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/icon-templates/xcf._TTH_.zip) - for [GIMP](https://www.gimp.org/)
+
+7.  **Open the Privacy & Compliance tab on the left side of your skill in the [Developer Portal](https://developer.amazon.com/edw/home.html#/skills/list).**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-7-privacy-and-compliance._TTH_.png"/>
+
+8.  **Answer each of the Global Fields questions using the guidance below.**  These fields also apply across all of the languges that your skill supports.
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-8-global-fields._TTH_.png"/>
+
+    *  **Does this skill allow users to make purchases or spend real money?** For this quiz game, the answer is no.  For future skills, make sure you answer this appropriately.
+
+    *  **Does this Alexa skill collect users' personal information?** Again, for this quiz game, the answer is no.  If you do collect information about a user, like names, email addresses, phone numbers, etc., make sure that you indicate yes for this question.
+        *  Answering "yes" to this question will also require you to provide a link to your Privacy Policy at the bottom of the page.
+
+    *  **Is your skill directed to children under the age of 13?** Because you customized this skill with data you provided, it is possible that you created a skill that targets children under the age of 13.
+        * Factors to consider in determining if this skill is directed to children under 13 include:
+            * Subject matter of the skill
+            * Presence of child-oriented activities and incentives
+            * Type of language used in the skill
+            * Music and other audio content in the skill
+            * How the skill is described and marketed
+            * Intended audience for the skill
+
+            If you're not sure, please see the [FTC's COPPA Guidance and FAQ](https://www.ftc.gov/tips-advice/business-center/guidance/complying-coppa-frequently-asked-questions) for more information.
+
+9.  **Export Compliance.** Make sure to check this box, as Amazon requires this permission to distribute your skill around the globe.  Be certain that you agree with all of the conditions.
+
+10. **Privacy Policy URL.** This is an optional field, and should not be required for this Quiz Game skill sample.  You can leave it blank.
+
+11. **Terms of Use URL.** This is also optional, and you can leave it blank.
+
+12. **Click the Save button at the bottom of the page.**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-12-save-button._TTH_.png"/>
+
+13. **You should now see all six checkmarks lit up green.**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-13-all-six-checkmarks._TTH_.png"/>
+
+14. **If you feel that your skill is ready for certification, click the "Submit for Certification" button at the bottom of the page.**
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-14-submit-for-certification._TTH_.png"/>
+
+15. **You're done! Congratulations!**  Here's a few things you might need to know:
+
+    *  **Certification can take several days to complete.** Please be patient.  It takes time because we want to get it right.
+
+    *  **Did something go wrong?** Our team of evangelists run [online office hours every Tuesday from 1-2pm Pacific Time](https://attendee.gotowebinar.com/rt/8389200425172113931).  They can help answer any questions you might have.
+
+    *  **Want the coolest t-shirt you've ever seen?** Every month, we create a brand-new Alexa Developer t-shirt or hoodie, and send them out to developers that published a skill that month.  [You can get yours here](https://developer.amazon.com/alexa-skills-kit/alexa-developer-skill-promotion).

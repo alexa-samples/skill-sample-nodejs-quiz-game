@@ -1,0 +1,13 @@
+{"intents": [
+    {"intent": "AnswerIntent", "slots":[{"name": "StateName", "type": "AMAZON.US_STATE"},
+                                        {"name": "Capitol", "type": "AMAZON.US_CITY"}, 
+                                        {"name": "StatehoodYear", "type": "AMAZON.FOUR_DIGIT_NUMBER"},
+                                        {"name": "Abbreviation", "type": "US_STATE_ABBR"},
+                                        {"name": "StatehoodOrder", "type": "AMAZON.NUMBER"}]},
+    {"intent": "QuizIntent"},
+    {"intent": "AMAZON.StopIntent"},
+    {"intent": "AMAZON.CancelIntent"},
+    {"intent": "AMAZON.StartOverIntent"},
+    {"intent": "AMAZON.HelpIntent"}
+  ]
+}
