@@ -1,9 +1,16 @@
 AnswerIntent {StateName}
-AnswerIntent {Capitol}
+AnswerIntent {Capital}
 AnswerIntent {StatehoodYear}
 AnswerIntent {StatehoodOrder}
 AnswerIntent {Abbreviation}
 
+AnswerIntent tell me about {StateName}
+AnswerIntent tell me about {Capital}
+AnswerIntent tell me about {StatehoodYear}
+AnswerIntent tell me about {StatehoodOrder}
+AnswerIntent tell me about {Abbreviation}
+
 QuizIntent start a quiz
+QuizIntent start a quiz game
 QuizIntent and start a quiz
 QuizIntent and quiz me
