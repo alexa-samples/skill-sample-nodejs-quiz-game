@@ -19,26 +19,28 @@
 *  The sample code on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game).
 *  Simple graphical editing tool
 *  At least 25 rows of interesting data to quiz your users with.
-   *  Examples: [U.S. States](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/STATES.js), [Sports Teams](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/SPORTSTEAMS.js), [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/VIDEOGAMES.js), [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/BOOKS.js)
+   *  Examples: [U.S. States](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/states.js), [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/videogames.js), [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/books.js), [British Monarchs](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/monarchs.js)
 
 ## What Your Skill Will Do
-Everyone has some interesting data in their head.  Maybe it's a list of all of the action figures you played with as a kid, specific details about the 50 states, or a historical list of the starting quarterbacks for your favorite football team.  When we're hanging out with our friends, sometimes we'll even quiz each other on these nuanced categories of information.  It's a fun, interactive way to share your knowledge with others, and it's always enjoyable to learn more about a topic you're passionate about.
+We all hold interesting data in our heads. Maybe it's a list of all the action figures we played with as a kid, specific details about the 50 states, or a historical list of the starting quarterbacks for our favorite football team. When we're with friends, sometimes we'll even quiz each other on these nuanced categories of information. It's a fun, interactive way to share our knowledge and learn more about our favorite topics.
 
-This new Alexa skill template helps you create a quiz for exactly that kind of information.  Not only that, but this skill can also be used as a reference guide.  In addition to being able to quiz a user about your data, Alexa will be able to answer questions like:
-
-*  "Alexa, ask United States Quiz about Ohio."
-*  "Alexa, ask Hockey Quiz about Wayne Gretzky."
-*  "Alexa, ask Video Game Quiz about River City Ransom."
-
-You get to provide the data, as well as the number of properties in that data, and Alexa will dynamically build a quiz game for you.  In the quiz, Alexa will ask questions like:
-
+You can now bring that experience to Alexa using our new quiz skill template. You provide the data and the number of properties in that data, and Alexa will dynamically build a quiz game for you. In the quiz, Alexa will ask questions like:
 *  "What is the capital of Vermont?"
 *  "How many career home runs did Mickey Mantle hit?"
 *  "What year was Harry Potter and the Sorcerer's Stone first published?"
 
-We've also included a new feature for Alexa skill development: [speechcons](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference).  Speechcons are special words and phrases that Alexa pronounces more expressively.  We use them in this quiz game to let the user know whether they gave a correct or incorrect answer during the quiz.
+You get to provide the data, as well as the number of properties in that data, and Alexa will dynamically build a quiz game for you.  In the quiz, Alexa will ask questions like:
+*  "Alexa, ask United States Quiz about Ohio."
+*  "Alexa, ask Hockey Quiz about Wayne Gretzky."
+*  "Alexa, ask Video Game Quiz about River City Ransom."
 
-If you would like to see an example of this skill in action, you can enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills).  You may not get all of the answers right on your first try, but you'll definitely get a great feel for what your new quiz game could be like!
+If you’re in the US, we've also included the new [speechcons](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference) feature for Alexa skill development. Speechcons are special words and phrases that Alexa pronounces more expressively. We use them in this quiz game to let the user know whether they gave a correct or incorrect answer during the quiz.
+
+If you would like to see an example of this skill in action, you can enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills).  You may not get all of the answers right on your first try, but you'll definitely get a great feel for what your new quiz game could sound like!
+
+### Register For the Live Webinar
+Join us on April 6 at 11 a.m. PT for a live webinar on how to build a quiz skill. We’ll walk you through the entire process of building a skill from end-to-end. [Sign up now]()!
+
 
 <a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
 

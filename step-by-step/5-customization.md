@@ -15,9 +15,10 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
         You can provide as few or as many properties for your data as you would like, but we recommend a minimum of three to keep your skill interesting.  (Two is the fewest that will make any sense for a quiz.)  You should provide at least 25 rows of data for your quiz by replacing the data that we provided with your content.  To see other examples of appropriate data structures for a quiz game skill, we have created a few sample data sets for you to look at.
 
-        *  [Sports Teams](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/SPORTSTEAMS.js)
-        *  [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/VIDEOGAMES.js)
-        *  [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/BOOKS.js)
+        *  [Video Games](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/videogames.js)
+        *  [Books](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/books.js)
+        *  [U.S. States](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/states.js)
+        *  [British Monarchs](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/data/monarchs.js)
         
     3.  **Consider using built-in slot values.** We recommend considering data from the built-in slot values provided by Amazon.  You still need to build your entire dataset, but using values from the built-in slots will make your work in the next few steps easier.  We have provided a few examples below, but you can see the [entire list of built-in slot values here](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/built-in-intent-ref/slot-type-reference#list-types).
 
@@ -46,7 +47,7 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
         <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/5-2-1-interaction-model._TTH_.png" />
 
-    2.  **Update the slot values for AnswerIntent in your Intent Schema** In our [original intent schema](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master//speech-assets/intentSchema.json), we defined a slot for each property in our data, and they had the exact same names as the properties of our data.  You should do the same with your intent schema.
+    2.  **Update the slot values for AnswerIntent in your Intent Schema** In our [original intent schema](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master//speech-assets/intent-schema.json), we defined a slot for each property in our data, and they had the exact same names as the properties of our data.  You should do the same with your intent schema.
 
         ### Tips for Your Intent Schema
 
@@ -57,7 +58,7 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
     4.  **Update your sample utterances.** There is a sample utterance for AnswerIntent for each data type we created.  You need to update this list of utterances to represent your data structure instead.
 
-        *  **Remember that if you are creating this skill for a language other than English, your sample utterances need to be written in that language, not English.
+        *  **Remember that if you are creating this skill for another language other than English, your sample utterances need to be written in that language, not English.
 
     5.  **Click the "Save" button when you have completed.**
 

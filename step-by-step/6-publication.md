@@ -50,7 +50,7 @@ We are almost done!  The last step is to add the metadata that your skill will u
 
     *  **Choose three example phrases that are likely to be the most common ways that users will attempt to interact with your skill.**  Make sure that each of them works well, and provides an excellent user experience.
 
-5.  **Provide a comprehensive list of keywords for users that are searching for new skills.**  This is an optional field, and the searching the [Alexa app](http://alexa.amazon.com) will also find the words in your Skill Name and descriptions, so you don't need to overdo it.  That being said, if there are words that you want users to find your skill with, you should include them here.  Separate the keywords with commas.
+5.  **Provide a comprehensive list of keywords for users that are searching for new skills.**  This is an optional field, and searching the [Alexa app](http://alexa.amazon.com) will also find the words in your Skill Name and descriptions, so you don't need to overdo it.  That being said, if there are words that you want users to find your skill with, you should include them here.  Separate the keywords with commas.
 
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-5-keywords._TTH_.png" />
 
@@ -90,7 +90,7 @@ We are almost done!  The last step is to add the metadata that your skill will u
     *  **Does this Alexa skill collect users' personal information?** Again, for this quiz game, the answer is no.  If you do collect information about a user, such as names, email addresses, phone numbers, and so forth, ensure that you answer Yes to this question.
         *  Answering "yes" to this question will also require you to provide a link to your Privacy Policy at the bottom of the page.
 
-    *  **Is your skill directed to children under the age of 13?** Because you customized this skill with data you provided, it is possible that you created a skill that targets children under the age of 13.
+    *  **Is your skill directed to children under the age of 13?** Because you customized this skill with data you provided, it is possible that you created a skill that targets children under the age of 13.  For the United States Quiz, the answer is **no** because it doesn't target a specific age group.
         * Factors to consider in determining if this skill is directed to children under 13 include:
             * Subject matter of the skill
             * Presence of child-oriented activities and incentives
@@ -119,7 +119,7 @@ We are almost done!  The last step is to add the metadata that your skill will u
 
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/6-14-submit-for-certification._TTH_.png"/>
 
-15. **You're done with your aubmission!**  Here are a few things you might need to know:
+15. **You're done with your submission!**  Here are a few things you might need to know:
 
     *  **Certification can take several days to complete.** Please be patient.  It takes time because we want to get it right.
 

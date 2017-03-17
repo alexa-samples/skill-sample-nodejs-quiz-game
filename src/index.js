@@ -2,7 +2,7 @@
 const Alexa = require('alexa-sdk');
 
 //=========================================================================================================================================
-//TODO: The items below this comment need your attention.
+//TODO: The items below this comment need your attention
 //=========================================================================================================================================
 
 //Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.  
@@ -204,7 +204,7 @@ const handlers = {
 
 var startHandlers = Alexa.CreateStateHandler(states.START,{
     "Start": function() {
-        this.emit(":ask", WELCOME_MESSAGE);
+        this.emit(":ask", WELCOME_MESSAGE, HELP_MESSAGE);
     },
     "AnswerIntent": function() {
         var item = getItem(this.event.request.intent.slots);

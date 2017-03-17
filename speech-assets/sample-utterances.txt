@@ -1,0 +1,30 @@
+AnswerIntent {StateName}
+AnswerIntent {Capital}
+AnswerIntent {StatehoodYear}
+AnswerIntent {StatehoodOrder}
+AnswerIntent {Abbreviation}
+
+AnswerIntent tell me about {StateName}
+AnswerIntent tell me about {Capital}
+AnswerIntent tell me about {StatehoodYear}
+AnswerIntent tell me about {StatehoodOrder}
+AnswerIntent tell me about {Abbreviation}
+
+AnswerIntent what do you know about {StateName}
+AnswerIntent what do you know about {Capital}
+AnswerIntent what do you know about {StatehoodYear}
+AnswerIntent what do you know about {StatehoodOrder}
+AnswerIntent what do you know about {Abbreviation}
+
+AnswerIntent {StateName} information
+AnswerIntent {Capital} information
+AnswerIntent {StatehoodYear} information
+AnswerIntent {StatehoodOrder} information
+AnswerIntent {Abbreviation} information
+
+QuizIntent start a quiz
+QuizIntent start a quiz game
+QuizIntent and start a quiz
+QuizIntent and quiz me
+QuizIntent for a quiz
+QuizIntent a quiz
