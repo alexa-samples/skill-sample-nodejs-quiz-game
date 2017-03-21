@@ -181,7 +181,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
         QuizIntent for a quiz
         QuizIntent a quiz
         ```
-        ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/sample-utterances.json))
+        ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/sample-utterances.txt))
 
         When you have added these sample utterances to your skill, click **Save** to verify that your interaction model builds properly without any errors. 
 
