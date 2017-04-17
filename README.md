@@ -38,24 +38,9 @@ If you’re in the US, we've also included the new [speechcons](https://develope
 
 If you would like to see an example of this skill in action, you can enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills).  You may not get all of the answers right on your first try, but you'll definitely get a great feel for what your new quiz game could sound like!
 
-### Register For the Live Webinar
-Join us on April 6 at 11 a.m. PT for a live webinar on how to build a quiz skill. We’ll walk you through the entire process of building a skill from end-to-end. [Sign up now](https://attendee.gotowebinar.com/register/2170658435959581697)!
-
-
 <a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
 
 <img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
