@@ -5,7 +5,7 @@ const Alexa = require('alexa-sdk');
 //TODO: The items below this comment need your attention
 //=========================================================================================================================================
 
-//Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.  
+//Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.
 //Make sure to enclose your value in quotes, like this:  var APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
 var APP_ID = undefined;
 
@@ -61,8 +61,8 @@ function getAnswer(property, item)
 
 //This is a list of positive speechcons that this skill will use when a user gets a correct answer.  For a full list of supported
 //speechcons, go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
-var speechConsCorrect = ["Booya", "All righty", "Bam", "Bazinga", "Bingo", "Boom", "Bravo", "Cha Ching", "Cheers", "Dynomite", 
-"Hip hip hooray", "Hurrah", "Hurray", "Huzzah", "Oh dear.  Just kidding.  Hurray", "Kaboom", "Kaching", "Oh snap", "Phew", 
+var speechConsCorrect = ["Booya", "All righty", "Bam", "Bazinga", "Bingo", "Boom", "Bravo", "Cha Ching", "Cheers", "Dynomite",
+"Hip hip hooray", "Hurrah", "Hurray", "Huzzah", "Oh dear.  Just kidding.  Hurray", "Kaboom", "Kaching", "Oh snap", "Phew",
 "Righto", "Way to go", "Well done", "Whee", "Woo hoo", "Yay", "Wowza", "Yowsa"];
 
 //This is a list of negative speechcons that this skill will use when a user gets an incorrect answer.  For a full list of supported
@@ -71,7 +71,7 @@ var speechConsWrong = ["Argh", "Aw man", "Blarg", "Blast", "Boo", "Bummer", "Dar
 "Mamma mia", "Oh boy", "Oh dear", "Oof", "Ouch", "Ruh roh", "Shucks", "Uh oh", "Wah wah", "Whoops a daisy", "Yikes"];
 
 //This is the welcome message for when a user starts the skill without a specific intent.
-var WELCOME_MESSAGE = "Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?";  
+var WELCOME_MESSAGE = "Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?";
 
 //This is the message a user will hear when they start a quiz.
 var START_QUIZ_MESSAGE = "OK.  I will ask you 10 questions about the United States.";
@@ -170,7 +170,7 @@ var data = [
             ];
 
 //=========================================================================================================================================
-//Editing anything below this line might break your skill.  
+//Editing anything below this line might break your skill.
 //=========================================================================================================================================
 
 var counter = 0;
@@ -209,8 +209,9 @@ var startHandlers = Alexa.CreateStateHandler(states.START,{
     "AnswerIntent": function() {
         var item = getItem(this.event.request.intent.slots);
 
-        if (item[Object.getOwnPropertyNames(data[0])[0]] != undefined)
+        if (item && item[Object.getOwnPropertyNames(data[0])[0]] != undefined)
         {
+          console.log("\nMEMO's TEST\n");
             if (USE_CARDS_FLAG)
             {
                 var imageObj = {smallImageUrl: getSmallImage(item), largeImageUrl: getLargeImage(item)};
@@ -224,7 +225,7 @@ var startHandlers = Alexa.CreateStateHandler(states.START,{
         else
         {
             this.emit(":ask", getBadAnswer(item), getBadAnswer(item));
-            
+
         }
     },
     "QuizIntent": function() {
@@ -351,7 +352,7 @@ function getItem(slots)
 {
     var propertyArray = Object.getOwnPropertyNames(data[0]);
     var value;
-    
+
     for (var slot in slots)
     {
         if (slots[slot].value !== undefined)
@@ -374,7 +375,7 @@ function getSpeechCon(type)
 {
     var speechCon = "";
     if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
-    else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";    
+    else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
 }
 
 function formatCasing(key)
@@ -386,7 +387,7 @@ function formatCasing(key)
 function getTextDescription(item)
 {
     var text = "";
-    
+
     for (var key in item)
     {
         text += formatCasing(key) + ": " + item[key] + "\n";
@@ -400,4 +401,3 @@ exports.handler = (event, context) => {
     alexa.registerHandlers(handlers, startHandlers, quizHandlers);
     alexa.execute();
 };
-
