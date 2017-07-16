@@ -5,7 +5,7 @@
 
 ## Testing Your Alexa Skill
 
-So far, we have [created a Voice User Interface](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/1-voice-user-interface.md) and [a Lambda function](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/2-lambda-function.md), and [connected the two together](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/3-connect-vui-to-lambda.md).  Your skill is now ready to test.
+So far, we have [created a Voice User Interface](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/1-voice-user-interface.md) and [a Lambda function](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/2-lambda-function.md), and [connected the two together](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/3-connect-vui-to-code.md).  Your skill is now ready to test.
 
 1.  **Go back to the [Amazon Developer Portal](https://developer.amazon.com/edw/home.html#/skills/list) and select your skill from the list.** You may still have a browser tab open if you started at the beginning of this tutorial.
 
@@ -43,7 +43,7 @@ pronounce it. To make changes to her pronunciation, use Speech Synthesis Markup 
         * "Start a quiz"
         * [Press the listen button, and type an answer to the first question in the box]
         * [Press the listen button, and type an answer the second question in the box]
-        
+
         (Continue this process for the entire quiz. To start over, click the "Reset" button.)
 
     * If you receive a response that reads: *"The remote endpoint could not be called, or the response it returned was invalid,"* this is an indication that something is broken.  AWS Lambda offers an additional testing tool to help you troubleshoot your skill.
@@ -108,9 +108,9 @@ pronounce it. To make changes to her pronunciation, use Speech Synthesis Markup 
         <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/4-5-4-paste-request._TTH_.png" />
 
     5.  **Click the "Save and test" button.** This will save your test event, and run it against your Lambda function.
-    
+
         <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/4-5-5-save-and-test._TTH_.png" />
-        
+
         This gives you visibility into four things:
 
         *  **Your response, listed in the "Execution Result."**
@@ -122,7 +122,7 @@ pronounce it. To make changes to her pronunciation, use Speech Synthesis Markup 
            <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/4-5-5-2-summary._TTH_.png" />
 
         *  **Log output.**  By effectively using console.log() statements in your Lambda code, you can track what is happening inside your function, and help to figure out what is happening when something goes wrong.  You will find the log to be incredibly valuable as you move into more advanced skills.
-        
+
            <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/4-5-5-3-log-output._TTH_.png"/>
 
         *  **A link to your [CloudWatch](https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logs:) logs for this function.**  This will show you **all** of the responses and log statements from every user interaction.  This is very useful, especially when you are testing your skill from a device with your voice.  (It is the "[Click here](https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logs:)" link in the Log Output description.)
@@ -138,7 +138,7 @@ pronounce it. To make changes to her pronunciation, use Speech Synthesis Markup 
     *  Verify that a card was created in the Alexa app that resembles this screenshot:
 
        <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/4-7-alexa-app._TTH_.png"/>   
-    
+
 
 8.  **If your sample skill is working properly, you can now customize your skill.**
 
@@ -146,6 +146,3 @@ pronounce it. To make changes to her pronunciation, use Speech Synthesis Markup 
 <a href="https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/5-customization.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_customization._TTH_.png" /></a>
 
 <img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
-
-
-

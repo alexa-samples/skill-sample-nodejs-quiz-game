@@ -3,7 +3,7 @@
 
 ## Setting up Your Voice User Interface
 
-There are two parts to an Alexa skill.  The first part is the [Voice User Interface (VUI)](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/defining-the-voice-interface).  This is where we define how we will handle a user's voice input, and which code should be executed when specific commands are uttered.  The second part is the actual code logic for our skill, and we will handle that in [the next step](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/2-lambda-function.md) of this step-by-step guide.
+There are two parts to an Alexa skill.  The first part is the [Voice User Interface (VUI)](https://developer.amazon.com/alexa-skills-kit/vui).  This is where we define how we will handle a user's voice input, and which code should be executed when specific commands are uttered.  The second part is the actual code logic for our skill, and we will handle that in [the next step](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/2-lambda-function.md) of this step-by-step guide.
 
 1.  **Go to the [Amazon Developer Portal](http://developer.amazon.com).  In the top right corner of the screen, click the Sign In button.** </br>(If you don't already have an account, you will be able to create a new one for free.)
 
@@ -24,7 +24,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 5.  **Fill out the Skill Information screen.**  Make sure to review the tips we provide below the screenshot.
 
     ![Skill Information](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-5-skill-information._TTH_.png)
-    
+
     ### Skill Information Instructions
     *  **Skill Type** For this skill, we are creating a skill using the Custom Interaction Model.  This is the default choice.
 
@@ -42,7 +42,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
         | The invocation name must not contain any of the Alexa skill launch phrases and connecting words.  Launch phrase examples include "launch," "ask," "tell," "load," and "begin."  Connecting word examples include "to," "from," "by," "if," "and," "whether." | trivia game for star wars; better with bacon |
         | The invocation name must not contain the wake words "Alexa," "Amazon," "Echo," "Computer," or the words "skill" or "app." | hackster initial skill; word skills |
         | The invocation name must be written in each language you choose to support.  For example, the German version of your skill must have an invocation name written in German, while the English (US) version must have an invocation name written in English. | kitchen stories (German skill) |
-    
+
     *  **Audio Player** For this Quiz Game skill, we won't be using any audio files, so you can select No for this option.  If you would like to learn more about adding audio to your skills, please check out our [Audio Player Guide](https://github.com/alexa/skill-sample-nodejs-audio-player).
 
 6.  **Click the Next button to move to the Interaction Model.**
@@ -59,7 +59,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
         ```javascript
         {"intents": [
             {"intent": "AnswerIntent", "slots":[{"name": "StateName", "type": "AMAZON.US_STATE"},
-                                        {"name": "Capital", "type": "AMAZON.US_CITY"}, 
+                                        {"name": "Capital", "type": "AMAZON.US_CITY"},
                                         {"name": "StatehoodYear", "type": "AMAZON.FOUR_DIGIT_NUMBER"},
                                         {"name": "Abbreviation", "type": "US_STATE_ABBR"},
                                         {"name": "StatehoodOrder", "type": "AMAZON.NUMBER"}]},
@@ -183,7 +183,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
         ```
         ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/sample-utterances.txt))
 
-        When you have added these sample utterances to your skill, click **Save** to verify that your interaction model builds properly without any errors. 
+        When you have added these sample utterances to your skill, click **Save** to verify that your interaction model builds properly without any errors.
 
 8.  If your interaction model builds successfully, click **Next** to move on to Configuration.  In our next step of this guide, we will be creating our Lambda function in the AWS developer console, but keep this browser tab open, because we will be returning here on [Page #3: Connect VUI to Code](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/step-by-step/3-connect-vui-to-code.md).
 
