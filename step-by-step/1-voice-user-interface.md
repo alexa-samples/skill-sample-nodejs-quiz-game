@@ -77,7 +77,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
     2.  **Custom Slot Types** Custom slots are sets of training data for Alexa to give her an idea of the types of data you expect to receive from your skill users. Note that the values in a custom slot *do not* function like a drop-down list on a website.  If your custom slot contains a list of colors in the rainbow, and your user responds with a color that isn't in your list, you will still receive "sky blue" as an answer, and your skill must be able to handle those situations.
 
-        For this sample skill, you will need to create one custom slot type: [US_STATE_ABBR](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/US_STATE_ABBR_slotvalues.txt).  To create a custom slot type, click **Add Slot Type** to open the "Adding slot type" fields.
+        For this sample skill, you will need to create one custom slot type: [US_STATE_ABBR](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/US_STATE_ABBR-slotvalues.txt).  To create a custom slot type, click **Add Slot Type** to open the "Adding slot type" fields.
 
         ![Add Slot Type](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-2-add-slot-type._TTH_.png)
 
