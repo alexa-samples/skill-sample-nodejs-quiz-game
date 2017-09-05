@@ -28,16 +28,16 @@ function getQuestion(counter, property, item)
     switch(property)
     {
         case "City":
-            return "Here is your " + counter + "th question.  In what city do the " + item.League + "'s "  + item.Mascot + " play?";
+            return "Here is question number " + counter + ". In what city do the " + item.League + "'s "  + item.Mascot + " play?";
         break;
         case "Sport":
-            return "Here is your " + counter + "th question.  What sport do the " + item.City + " " + item.Mascot + " play?";
+            return "Here is question number " + counter + ". What sport do the " + item.City + " " + item.Mascot + " play?";
         break;
         case "HeadCoach":
-            return "Here is your " + counter + "th question.  Who is the head coach of the " + item.City + " " + item.Mascot + "?";
+            return "Here is question number " + counter + ". Who is the head coach of the " + item.City + " " + item.Mascot + "?";
         break;
         default:
-            return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
+            return "Here is question number " + counter + ". What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
         break;
     }
     */
