@@ -28,3 +28,8 @@ QuizIntent and start a quiz
 QuizIntent and quiz me
 QuizIntent for a quiz
 QuizIntent a quiz
+
+RepeatIntent repeat
+RepeatIntent say that again
+RepeatIntent again
+RepeatIntent can i hear the question again

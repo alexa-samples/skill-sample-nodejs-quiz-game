@@ -79,6 +79,17 @@
         "a quiz"
       ],
       "slots": []
+    },
+    {
+      "name": "RepeatIntent",
+      "samples": [
+        "repeat",
+        "say that again",
+        "again",
+        "can i hear the question again",
+        "question again"
+      ],
+      "slots":[]
     }
   ],
   "types": [

@@ -232,6 +232,9 @@ var startHandlers = Alexa.CreateStateHandler(states.START,{
         this.handler.state = states.QUIZ;
         this.emitWithState("Quiz");
     },
+    "RepeatIntent": function() {
+        this.emitWithState("AskQuestion");
+    },
     "AMAZON.StopIntent": function() {
         this.emit(":tell", EXIT_SKILL_MESSAGE);
     },
@@ -268,7 +271,12 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
 
         this.attributes["quizitem"] = item;
         this.attributes["quizproperty"] = property;
-        this.attributes["counter"]++;
+        
+        if(!this.attributes["isRepeat"]){
+            this.attributes["counter"]++;            
+        } else {
+            this.attributes["isRepeat"] = false;
+        }
 
         var question = getQuestion(this.attributes["counter"], property, item);
         var speech = this.attributes["response"] + question;
@@ -305,6 +313,10 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
             response += getFinalScore(this.attributes["quizscore"], this.attributes["counter"]);
             this.emit(":tell", response + " " + EXIT_SKILL_MESSAGE);
         }
+    },
+    "RepeatIntent": function() {
+        this.attributes["isRepeat"] = true;
+        this.emitWithState("AskQuestion");
     },
     "AMAZON.StartOverIntent": function() {
         this.emitWithState("Quiz");
