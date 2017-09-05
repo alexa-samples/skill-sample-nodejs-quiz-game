@@ -22,7 +22,7 @@ function getSpeechDescription(item)
 //structure for each property of your data.
 function getQuestion(counter, property, item)
 {
-    return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of "  + item.StateName + "?";
+    return "Here is question number " + counter + ". What is the " + formatCasing(property) + " of "  + item.StateName + "?";
 
     /*
     switch(property)
