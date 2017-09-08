@@ -237,7 +237,7 @@ var startHandlers = Alexa.CreateStateHandler(states.START,{
         this.handler.state = states.QUIZ;
         this.emitWithState("Quiz");
     },
-    "RepeatIntent": function() {
+    "AMAZON.RepeatIntent": function() {
         this.emitWithState("AskQuestion");
     },
     "AMAZON.StopIntent": function() {
@@ -324,7 +324,7 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
             this.emit(":responseReady");
         }
     },
-    "RepeatIntent": function() {
+    "AMAZON.RepeatIntent": function() {
         var question = getQuestion(this.attributes["counter"], this.attributes["quizproperty"], this.attributes["quizitem"]);
         this.response.speak(question).listen(question);
         this.emit(":responseReady");

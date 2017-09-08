@@ -15,6 +15,10 @@
     {
       "name": "AMAZON.StopIntent",
       "samples": []
+    },    
+    {
+      "name": "AMAZON.RepeatIntent",
+      "samples": []
     },
     {
       "name": "AnswerIntent",
@@ -79,17 +83,6 @@
         "a quiz"
       ],
       "slots": []
-    },
-    {
-      "name": "RepeatIntent",
-      "samples": [
-        "repeat",
-        "say that again",
-        "again",
-        "can i hear the question again",
-        "question again"
-      ],
-      "slots":[]
     }
   ],
   "types": [

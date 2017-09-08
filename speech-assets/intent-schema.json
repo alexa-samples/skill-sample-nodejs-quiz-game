@@ -5,7 +5,7 @@
                                         {"name": "Abbreviation", "type": "US_STATE_ABBR"},
                                         {"name": "StatehoodOrder", "type": "AMAZON.NUMBER"}]},
     {"intent": "QuizIntent"},
-    {"intent": "RepeatIntent"},
+    {"intent": "AMAZON.RepeatIntent"},
     {"intent": "AMAZON.StopIntent"},
     {"intent": "AMAZON.CancelIntent"},
     {"intent": "AMAZON.StartOverIntent"},
