@@ -22,22 +22,23 @@ function getSpeechDescription(item)
 //structure for each property of your data.
 function getQuestion(counter, property, item)
 {
-    return "Here is question number " + counter + ". What is the " + formatCasing(property) + " of "  + item.StateName + "?";
+    //Alexa will handle how the ordinals are pronounced. She'll correctly say "first" instead of "1th", or "second" instead of "2th"
+    return "Here is the " + counter + "th question. What is the " + formatCasing(property) + " of "  + item.StateName + "?";
 
     /*
     switch(property)
     {
         case "City":
-            return "Here is question number " + counter + ". In what city do the " + item.League + "'s "  + item.Mascot + " play?";
+            return "Here is the " + counter + "th question. In what city do the " + item.League + "'s "  + item.Mascot + " play?";
         break;
         case "Sport":
-            return "Here is question number " + counter + ". What sport do the " + item.City + " " + item.Mascot + " play?";
+            return "Here is the " + counter + "th question. What sport do the " + item.City + " " + item.Mascot + " play?";
         break;
         case "HeadCoach":
-            return "Here is question number " + counter + ". Who is the head coach of the " + item.City + " " + item.Mascot + "?";
+            return "Here is the " + counter + "th question. Who is the head coach of the " + item.City + " " + item.Mascot + "?";
         break;
         default:
-            return "Here is question number " + counter + ". What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
+            return "Here is the " + counter + "th question. What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
         break;
     }
     */
