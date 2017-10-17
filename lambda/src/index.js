@@ -22,23 +22,22 @@ function getSpeechDescription(item)
 //structure for each property of your data.
 function getQuestion(counter, property, item)
 {
-    //Alexa will handle how the ordinals are pronounced. She'll correctly say "first" instead of "1th", or "second" instead of "2th"
-    return "Here is the " + counter + "th question. What is the " + formatCasing(property) + " of "  + item.StateName + "?";
+    return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of "  + item.StateName + "?";
 
     /*
     switch(property)
     {
         case "City":
-            return "Here is the " + counter + "th question. In what city do the " + item.League + "'s "  + item.Mascot + " play?";
+            return "Here is your " + counter + "th question.  In what city do the " + item.League + "'s "  + item.Mascot + " play?";
         break;
         case "Sport":
-            return "Here is the " + counter + "th question. What sport do the " + item.City + " " + item.Mascot + " play?";
+            return "Here is your " + counter + "th question.  What sport do the " + item.City + " " + item.Mascot + " play?";
         break;
         case "HeadCoach":
-            return "Here is the " + counter + "th question. Who is the head coach of the " + item.City + " " + item.Mascot + "?";
+            return "Here is your " + counter + "th question.  Who is the head coach of the " + item.City + " " + item.Mascot + "?";
         break;
         default:
-            return "Here is the " + counter + "th question. What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
+            return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
         break;
     }
     */
@@ -195,8 +194,7 @@ const handlers = {
         this.emitWithState("AnswerIntent");
     },
     "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":ask", HELP_MESSAGE, HELP_MESSAGE);
     },
     "Unhandled": function() {
         this.handler.state = states.START;
@@ -206,8 +204,7 @@ const handlers = {
 
 var startHandlers = Alexa.CreateStateHandler(states.START,{
     "Start": function() {
-        this.response.speak(WELCOME_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":ask", WELCOME_MESSAGE, HELP_MESSAGE);
     },
     "AnswerIntent": function() {
         var item = getItem(this.event.request.intent.slots);
@@ -218,40 +215,31 @@ var startHandlers = Alexa.CreateStateHandler(states.START,{
             if (USE_CARDS_FLAG)
             {
                 var imageObj = {smallImageUrl: getSmallImage(item), largeImageUrl: getLargeImage(item)};
-
-                this.response.speak(getSpeechDescription(item)).listen(REPROMPT_SPEECH);
-                this.response.cardRenderer(getCardTitle(item), getTextDescription(item), imageObj);
+                this.emit(":askWithCard", getSpeechDescription(item), REPROMPT_SPEECH, getCardTitle(item), getTextDescription(item), imageObj);
             }
             else
             {
-                this.response.speak(getSpeechDescription(item)).listen(REPROMPT_SPEECH);
+                this.emit(":ask", getSpeechDescription(item), REPROMPT_SPEECH);
             }
         }
         else
         {
-            this.response.speak(getBadAnswer(item)).listen(getBadAnswer(item));
-        }
+            this.emit(":ask", getBadAnswer(item), getBadAnswer(item));
 
-        this.emit(":responseReady");
+        }
     },
     "QuizIntent": function() {
         this.handler.state = states.QUIZ;
         this.emitWithState("Quiz");
     },
-    "AMAZON.RepeatIntent": function() {
-        this.emitWithState("AskQuestion");
-    },
     "AMAZON.StopIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":tell", EXIT_SKILL_MESSAGE);
     },
     "AMAZON.CancelIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":tell", EXIT_SKILL_MESSAGE);
     },
     "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":ask", HELP_MESSAGE, HELP_MESSAGE);
     },
     "Unhandled": function() {
         this.emitWithState("Start");
@@ -267,7 +255,6 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         this.emitWithState("AskQuestion");
     },
     "AskQuestion": function() {
-
         if (this.attributes["counter"] == 0)
         {
             this.attributes["response"] = START_QUIZ_MESSAGE + " ";
@@ -281,18 +268,15 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
 
         this.attributes["quizitem"] = item;
         this.attributes["quizproperty"] = property;
-        
         this.attributes["counter"]++;
 
         var question = getQuestion(this.attributes["counter"], property, item);
         var speech = this.attributes["response"] + question;
 
-        this.response.speak(speech).listen(question);  
-        this.emit(":responseReady");
+        this.emit(":ask", speech, question);
     },
     "AnswerIntent": function() {
         var response = "";
-        var speechOutput = "";
         var item = this.attributes["quizitem"];
         var property = this.attributes["quizproperty"]
 
@@ -319,31 +303,20 @@ var quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         else
         {
             response += getFinalScore(this.attributes["quizscore"], this.attributes["counter"]);
-            speechOutput = response + " " + EXIT_SKILL_MESSAGE;
-
-            this.response.speak(speechOutput);
-            this.emit(":responseReady");
+            this.emit(":tell", response + " " + EXIT_SKILL_MESSAGE);
         }
-    },
-    "AMAZON.RepeatIntent": function() {
-        var question = getQuestion(this.attributes["counter"], this.attributes["quizproperty"], this.attributes["quizitem"]);
-        this.response.speak(question).listen(question);
-        this.emit(":responseReady");
     },
     "AMAZON.StartOverIntent": function() {
         this.emitWithState("Quiz");
     },
     "AMAZON.StopIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":tell", EXIT_SKILL_MESSAGE);
     },
     "AMAZON.CancelIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":tell", EXIT_SKILL_MESSAGE);
     },
     "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
+        this.emit(":ask", HELP_MESSAGE, HELP_MESSAGE);
     },
     "Unhandled": function() {
         this.emitWithState("AnswerIntent");
