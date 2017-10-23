@@ -15,10 +15,6 @@
     {
       "name": "AMAZON.StopIntent",
       "samples": []
-    },    
-    {
-      "name": "AMAZON.RepeatIntent",
-      "samples": []
     },
     {
       "name": "AnswerIntent",
