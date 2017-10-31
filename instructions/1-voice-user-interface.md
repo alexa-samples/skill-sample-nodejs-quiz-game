@@ -47,151 +47,37 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
 6.  **Click the Next button to move to the Interaction Model.**
 
-    ![Next Button](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-6-next-button._TTH_.png)
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-6-next-button._TTH_.png" />
 
-7.  **Fill out the Interaction Model screen.**  Below the screenshot, we have provided links to the content you need to include in each box.
+7.  Click on the **Launch Skill Builder** (Beta) button . This will launch the new Skill Builder Dashboard.
 
-    ![Interaction Model](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-interaction-model._TTH_.png)
+  ![Launch Skill Builder](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-skill-builder-launch._TTH_.png)
 
-    ### Interaction Model Instructions
-    1.  **Intent Schema** An intent schema defines the actions that we want our users to be able to take.  We will dive into modifying this schema later in this guide, so for now, just copy and paste this code into the Intent Schema box.
+8.  Click on the "Code Editor" item under **Dashboard** on the top left side of the skill builder.
 
-        ```javascript
-        {"intents": [
-            {"intent": "AnswerIntent", "slots":[{"name": "StateName", "type": "AMAZON.US_STATE"},
-                                        {"name": "Capital", "type": "AMAZON.US_CITY"},
-                                        {"name": "StatehoodYear", "type": "AMAZON.FOUR_DIGIT_NUMBER"},
-                                        {"name": "Abbreviation", "type": "US_STATE_ABBR"},
-                                        {"name": "StatehoodOrder", "type": "AMAZON.NUMBER"}]},
-            {"intent": "QuizIntent"},
-            {"intent": "AMAZON.StopIntent"},
-            {"intent": "AMAZON.CancelIntent"},
-            {"intent": "AMAZON.StartOverIntent"},
-            {"intent": "AMAZON.HelpIntent"}
-            ]
-        }
-        ```
-        ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/intent-schema.json))
+9.  In the textfield provided, replace any existing code with the code provided in the [Interaction Model](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/InteractionModel.json), then click "Apply Changes" or "Save Model".
 
-        Note the AnswerIntent, which has five slots defined: StateName, Capital, StatehoodYear, Abbreviation, and StatehoodOrder.  Amazon provides Built-In Slots to handle commonly recurring sets. Use these [Built-In Slots]((https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/built-in-intent-ref/slot-type-reference#list-types)) to set the type for four of these slots: AMAZON.US_STATE, AMAZON.US_CITY, AMAZON.FOUR_DIGIT_NUMBER, and AMAZON.NUMBER.  For the last value, we need to define a custom slot type.
 
-    2.  **Custom Slot Types** Custom slots are sets of training data for Alexa to give her an idea of the types of data you expect to receive from your skill users. Note that the values in a custom slot *do not* function like a drop-down list on a website.  If your custom slot contains a list of colors in the rainbow, and your user responds with a color that isn't in your list, you will still receive "sky blue" as an answer, and your skill must be able to handle those situations.
+11. Click on the **Save Model** button, and then click on the **Build Model** button.
 
-        For this sample skill, you will need to create one custom slot type: [US_STATE_ABBR](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/US_STATE_ABBR-slotvalues.txt).  To create a custom slot type, click **Add Slot Type** to open the "Adding slot type" fields.
+    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-12-skill-builder-build-save-model._TTH_.png)
 
-        ![Add Slot Type](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-2-add-slot-type._TTH_.png)
 
-        ![Adding Slot Type](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-2-adding-slot-type._TTH_.png)
+12.  If your interaction model builds successfully, click on **Configuration button** to move on to Configuration. In our next step of this guide, we will be creating our Lambda function in the AWS developer console, but keep this browser tab open, because we will be returning here on [Page #3: Connect VUI to Code](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/instructions/3-connect-vui-to-code.md).
+     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-13-skill-builder-configuration.png)
 
-        To create your custom slot, follow these steps:
+     If you get an error from your interaction model, check through this list:
 
-        1.  Use the same name for **Enter Type** that is already listed in the intent schema: US_STATE_ABBR.
+*  **Is your custom slot named US_STATE_ABBR?**
+*  **Did you copy and paste the provided code into the appropriate boxes?**
+*  **Did you accidentally add any unwanted characters to the Interaction Model or Sample Utterances?**
 
-        2.  Copy the state abbreviations below and paste them in the **Enter Values** box.
+<br/><br/>
+[![Next: Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_lambda_function._TTH_.png)](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/instructions/2-lambda-function.md)
 
-            ```
-            AK
-            AL
-            AZ
-            AR
-            CA
-            CO
-            CT
-            DE
-            FL
-            GA
-            HI
-            ID
-            IL
-            IN
-            IA
-            KS
-            KY
-            LA
-            ME
-            MD
-            MA
-            MI
-            MN
-            MS
-            MO
-            MT
-            NE
-            NV
-            NH
-            NJ
-            NM
-            NY
-            NC
-            ND
-            OH
-            OK
-            OR
-            PA
-            RI
-            SC
-            SD
-            TN
-            TX
-            UT
-            VT
-            VA
-            WA
-            WV
-            WI
-            WY
-            ```
-            ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/US_STATE_ABBR-slotvalues.txt))
-
-        3.  When you have entered the information for your new custom slot type, click **Save**.
-
-            ![Save Button](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-3-save-button._TTH_.png)
-
-    3.  **Sample Utterances** Sample utterances guide Alexa to map what a user says to the Intents that we defined earlier. Copy these sample utterances and paste them into the **Sample Utterances** box in your browser.
-
-        ```
-        AnswerIntent {StateName}
-        AnswerIntent {Capital}
-        AnswerIntent {StatehoodYear}
-        AnswerIntent {StatehoodOrder}
-        AnswerIntent {Abbreviation}
-
-        AnswerIntent tell me about {StateName}
-        AnswerIntent tell me about {Capital}
-        AnswerIntent tell me about {StatehoodYear}
-        AnswerIntent tell me about {StatehoodOrder}
-        AnswerIntent tell me about {Abbreviation}
-
-        AnswerIntent what do you know about {StateName}
-        AnswerIntent what do you know about {Capital}
-        AnswerIntent what do you know about {StatehoodYear}
-        AnswerIntent what do you know about {StatehoodOrder}
-        AnswerIntent what do you know about {Abbreviation}
-
-        AnswerIntent {StateName} information
-        AnswerIntent {Capital} information
-        AnswerIntent {StatehoodYear} information
-        AnswerIntent {StatehoodOrder} information
-        AnswerIntent {Abbreviation} information
-
-        QuizIntent start a quiz
-        QuizIntent start a quiz game
-        QuizIntent and start a quiz
-        QuizIntent and quiz me
-        QuizIntent for a quiz
-        QuizIntent a quiz
-        ```
-        ([get this on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/speech-assets/sample-utterances.txt))
-
-        When you have added these sample utterances to your skill, click **Save** to verify that your interaction model builds properly without any errors.
-
-8.  If your interaction model builds successfully, click **Next** to move on to Configuration.  In our next step of this guide, we will be creating our Lambda function in the AWS developer console, but keep this browser tab open, because we will be returning here on [Page #3: Connect VUI to Code](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/instructions/3-connect-vui-to-code.md).
-
-    If you get an error from your interaction model, check through this list:
-
-    *  **Is your custom slot named US_STATE_ABBR?**
-    *  **Did you copy and paste the provided code into the appropriate boxes?**
-    *  **Did you accidentally add any unwanted characters to the Interaction Model or Sample Utterances?**
+*  **Is your custom slot named US_STATE_ABBR?**
+*  **Did you copy and paste the provided code into the appropriate boxes?**
+*  **Did you accidentally add any unwanted characters to the Interaction Model or Sample Utterances?**
 
 <br/><br/>
 [![Next: Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_lambda_function._TTH_.png)](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/instructions/2-lambda-function.md)
