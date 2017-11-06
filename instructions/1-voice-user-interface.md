@@ -74,12 +74,3 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
 <br/><br/>
 [![Next: Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_lambda_function._TTH_.png)](./2-lambda-function.md)
-
-*  **Is your custom slot named US_STATE_ABBR?**
-*  **Did you copy and paste the provided code into the appropriate boxes?**
-*  **Did you accidentally add any unwanted characters to the Interaction Model or Sample Utterances?**
-
-<br/><br/>
-[![Next: Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_lambda_function._TTH_.png)](./2-lambda-function.md)
-
-<img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
