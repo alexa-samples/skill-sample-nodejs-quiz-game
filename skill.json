@@ -37,7 +37,7 @@
       },
       "isAvailableWorldwide": true,
       "testingInstructions": "Include your testing instruction (if any) here",
-      "category": "STREAMING_SERVICE",
+      "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": []
     },
     "apis": {
@@ -45,11 +45,6 @@
         "endpoint": {
           "sourceDir": "lambda/src"
         },
-        "interfaces": [
-          {
-            "type": "AUDIO_PLAYER"
-          }
-        ]
       }
     },
     "manifestVersion": "1.0",

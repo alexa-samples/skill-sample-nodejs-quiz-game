@@ -9,6 +9,10 @@
           "samples": []
         },
         {
+          "name": "AMAZON.PauseIntent",
+          "samples": []
+        },
+        {
           "name": "AMAZON.StartOverIntent",
           "samples": []
         },
