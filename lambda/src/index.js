@@ -237,6 +237,10 @@ const startHandlers = Alexa.CreateStateHandler(states.START,{
         this.handler.state = states.QUIZ;
         this.emitWithState("Quiz");
     },
+    "AMAZON.PauseIntent": function() {
+        this.response.speak(EXIT_SKILL_MESSAGE);
+        this.emit(":responseReady");
+    },
     "AMAZON.StopIntent": function() {
         this.response.speak(EXIT_SKILL_MESSAGE);
         this.emit(":responseReady");
@@ -327,6 +331,10 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         this.emitWithState("Quiz");
     },
     "AMAZON.StopIntent": function() {
+        this.response.speak(EXIT_SKILL_MESSAGE);
+        this.emit(":responseReady");
+    },
+    "AMAZON.PauseIntent": function() {
         this.response.speak(EXIT_SKILL_MESSAGE);
         this.emit(":responseReady");
     },
