@@ -6,7 +6,7 @@
           "summary": "Test your knowledge of the US states and their capitals.",
           "examplePhrases": [
             "Alexa, open States Quiz",
-            "Alexa, play States Quiz",
+            "Alexa, play States Quiz"
           ],
           "keywords": [
             "quiz",
@@ -22,7 +22,7 @@
           "summary": "Test your knowledge of the US states and their capitals..",
           "examplePhrases": [
             "Alexa, open States Quiz",
-            "Alexa, play States Quiz",
+            "Alexa, play States Quiz"
           ],
           "keywords": [
             "quiz",
@@ -44,7 +44,7 @@
       "custom": {
         "endpoint": {
           "sourceDir": "lambda/src"
-        },
+        }
       }
     },
     "manifestVersion": "1.0",
