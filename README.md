@@ -133,8 +133,6 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 	Alexa, start quiz game
 	```
 
-
-
 ## Customization
 
 1. ```./skill.json```
