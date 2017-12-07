@@ -66,7 +66,7 @@ Alexa, start Quiz Game
 
 ### Repository Contents
 * `/.ask`	- [ASK CLI (Command Line Interface) Configuration](https://developer.amazon.com/docs/smapi/ask-cli-intro.html)	 
-* `/lambda/src` - Back-End Logic for the Alexa Skill hosted on [AWS Lambda](https://aws.amazon.com/lambda/)
+* `/lambda/custom` - Back-End Logic for the Alexa Skill hosted on [AWS Lambda](https://aws.amazon.com/lambda/)
 * `/models` - Voice User Interface and Language Specific Interaction Models
 * `/instructions` - Step-by-Step Instructions for Getting Started
 * `skill.json`	- [Skill Manifest](https://developer.amazon.com/docs/smapi/skill-manifest.html)
@@ -97,7 +97,7 @@ Alexa, start Quiz Game
 3. Install npm dependencies by navigating into the `/lambda` directory and running the npm command: `npm install`
 
 	```bash
-	$ cd lambda/src
+	$ cd lambda/custom
 	$ npm install
 	```
 
@@ -143,7 +143,7 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 
    See the Skill [Manifest Documentation](https://developer.amazon.com/docs/smapi/skill-manifest.html) for more information.
 
-2. ```./lambda/src/index.js```
+2. ```./lambda/custom/index.js```
 
    Modify messages, and facts from the source code to customize the skill.
 
