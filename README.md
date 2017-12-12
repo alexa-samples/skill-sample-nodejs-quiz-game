@@ -1,7 +1,3 @@
-Regions: [🇯🇵](../../tree/ja-JP)
-
-
-
 #  Build An Alexa Quiz Game Skill 🇺🇸
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
@@ -10,6 +6,7 @@ Regions: [🇯🇵](../../tree/ja-JP)
 This Alexa sample skill is a template for a basic quiz game skill. Provided a list of interesting facts about a topic, Alexa will quiz a user with facts from the list.
 
 You can see an example of this skill in action - just enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills). 
+
 
 If this is your first time here, you're new to Alexa Skills Development, or you're looking for more detailed instructions, click the **Get Started** button below:
 
