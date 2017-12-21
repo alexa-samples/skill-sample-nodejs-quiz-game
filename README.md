@@ -9,7 +9,7 @@ Regions: [🇯🇵](../../tree/ja-JP)
 
 This Alexa sample skill is a template for a basic quiz game skill. Provided a list of interesting facts about a topic, Alexa will quiz a user with facts from the list.
 
-You can see an example of this skill in action - just enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills). 
+You can see an example of this skill in action - just enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills).
 
 If this is your first time here, you're new to Alexa Skills Development, or you're looking for more detailed instructions, click the **Get Started** button below:
 
@@ -65,7 +65,7 @@ Alexa, start Quiz Game
 	$ ask init
 	```
 
-3. Install npm dependencies by navigating into the `/lambda` directory and running the npm command: `npm install`
+3. Install npm dependencies by navigating into the `/lambda/custom` directory and running the npm command: `npm install`
 
 	```bash
 	$ cd lambda/custom
@@ -90,7 +90,7 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 2. Simulate verbal interaction with your skill through the command line using the following example:
 
 	```bash
-	 $ ask simulate -l en-US -t "alexa, start quiz game"
+	 $ ask simulate -l en-US -t "start quiz game"
 
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
