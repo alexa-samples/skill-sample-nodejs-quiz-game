@@ -47,10 +47,10 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
   Once you have selected Alexa Skills Kit, scroll down and click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function (QuizGame if you used our suggestion) and scroll down to the field called "Function code".
 
-11.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/src/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/src/index.js).  Delete the contents of the code box, and paste the contents of the new code.
+11.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/custom/index.js).  Delete the contents of the code box, and paste the contents of the new code.
 Click "Save".
 
 <br/><br/>
 <a href="./3-connect-vui-to-code.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_connect_vui_to_code._TTH_.png"/></a>
 
-    <img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
+  <img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
