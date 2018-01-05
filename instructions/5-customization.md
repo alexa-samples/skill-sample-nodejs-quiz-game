@@ -9,7 +9,7 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
 1.  **New data.** You will need to create a new dataset for your skill that *isn't* the 50 United States of America.  If you are looking for an idea, check out the [Wikipedia List of Lists of Lists](https://en.wikipedia.org/wiki/List_of_lists_of_lists).
 
-    1.  **Open a copy of index.js.** If you haven't already downloaded the code for this project, [you can find a copy of index.js here on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/src/index.js).  You can use a simple, lightweight code editor like [Atom](http://atom.io), [Sublime Text](http://sublimetext.com), or [VSCode](http://code.visualstudio.com), but you also have the option to edit the code directly in your Lambda function.
+    1.  **Open a copy of index.js.** If you haven't already downloaded the code for this project, [you can find a copy of index.js here on GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/custom/index.js).  You can use a simple, lightweight code editor like [Atom](http://atom.io), [Sublime Text](http://sublimetext.com), or [VSCode](http://code.visualstudio.com), but you also have the option to edit the code directly in your Lambda function.
 
     2.  **Search for the comment "TODO: Replace this data with your own."**  This is the data for our skill.  You can see that there is a row for each state, represented by five data values: **StateName**, **Abbreviation**, **Capital**, **StatehoodYear**, and **StatehoodOrder**.
 
@@ -43,13 +43,11 @@ At this point, you should have a working copy of our United States Quiz Game ski
 
 2.  **New Interaction Model for your AnswerIntent.** If your data is changing, then the type of data you receive from your users must change as well.
 
-    1.  **Open your skill in the Developer Portal, and go to the Interaction Model tab.**
+    1.  **Open your skill in the Developer Portal, and go to the Skill Builder Beta.**
 
-        <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/5-2-1-interaction-model._TTH_.png" />
+    2.  **Update the slot values for AnswerIntent** In our original Interaction Model, we defined a slot for each property in our data, and they had the exact same names as the properties of our data.  You should do the same with your intent schema.
 
-    2.  **Update the slot values for AnswerIntent in your Intent Schema** In our [original intent schema](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master//speech-assets/intent-schema.json), we defined a slot for each property in our data, and they had the exact same names as the properties of our data.  You should do the same with your intent schema.
-
-        ### Tips for Your Intent Schema
+        ### Tips for Your Intent Customization
 
         *  **Make sure you have a slot for every property in your data.**  
         *  **Use built-in slot values when possible.** This will generally make your life easier, but if you need a custom slot, [they're easy to make](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference#custom-slot-syntax).  You should have noticed that we created one custom slot for our U.S. states quiz for US state abbreviations.
