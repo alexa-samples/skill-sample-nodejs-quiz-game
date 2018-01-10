@@ -1,25 +1,42 @@
 'use strict';
 const Alexa = require('alexa-sdk');
 
+// Aliases to Image and Text utility functions. These are used for display 
+// directives which are rendered on Echo Show and Echo Spot.
+
+const MAKE_TEXT_CONTENT = Alexa.utils.TextUtils.makeTextContent;
+const MAKE_IMAGE = Alexa.utils.ImageUtils.makeImage;
+const MAKE_RICH_TEXT = Alexa.utils.TextUtils.makeRichText;
+const MAKE_PLAIN_TEXT = Alexa.utils.TextUtils.makePlainText;
+
+const IMAGE_PATH = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png";
+const BACKGROUND_IMAGE_PATH = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png"
+
 //=========================================================================================================================================
 //TODO: The items below this comment need your attention
 //=========================================================================================================================================
 
-//Replace with your app ID (OPTIONAL).  You can find this value at the top of your skill's page on http://developer.amazon.com.
-//Make sure to enclose your value in quotes, like this:  const APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
+// Replace with your app ID (OPTIONAL).  You can find this value at the top of 
+// your skill's page on http://developer.amazon.com. Make sure to enclose your 
+// value in quotes, like this: 
+// const APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
 const APP_ID = undefined;
 
-//This function returns a descriptive sentence about your data.  Before a user starts a quiz, they can ask about a specific data element,
-//like "Ohio."  The skill will speak the sentence from this function, pulling the data values from the appropriate record in your data.
+// This function returns a descriptive sentence about your data.  Before a user 
+// starts a quiz, they can ask about a specific data element, like "Ohio."  
+// The skill will speak the sentence from this function, pulling the data values
+// from the appropriate record in your data.
 function getSpeechDescription(item)
 {
     let sentence = item.StateName + " is the " + item.StatehoodOrder + "th state, admitted to the Union in " + item.StatehoodYear + ".  The capital of " + item.StateName + " is " + item.Capital + ", and the abbreviation for " + item.StateName + " is <break strength='strong'/><say-as interpret-as='spell-out'>" + item.Abbreviation + "</say-as>.  I've added " + item.StateName + " to your Alexa app.  Which other state or capital would you like to know about?";
     return sentence;
 }
 
-//We have provided two ways to create your quiz questions.  The default way is to phrase all of your questions like: "What is X of Y?"
-//If this approach doesn't work for your data, take a look at the commented code in this function.  You can write a different question
-//structure for each property of your data.
+// We have provided two ways to create your quiz questions.  The default way is 
+// to phrase all of your questions like: "What is X of Y?" If this approach 
+// doesn't work for your data, take a look at the commented code in this 
+// function.  You can write a different question structure for each property of 
+// your data.
 function getQuestion(counter, property, item)
 {
     return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of "  + item.StateName + "?";
@@ -43,9 +60,19 @@ function getQuestion(counter, property, item)
     */
 }
 
-//This is the function that returns an answer to your user during the quiz.  Much like the "getQuestion" function above, you can use a
-//switch() statement to create different responses for each property in your data.  For example, when this quiz has an answer that includes
-//a state abbreviation, we add some SSML to make sure that Alexa spells that abbreviation out (instead of trying to pronounce it.)
+// getQuestionWithoutOrdinal returns the question without the ordinal and is 
+// used for the echo show.
+function getQuestionWithoutOrdinal(property, item)
+{
+    return "What is the " + formatCasing(property).toLowerCase() + " of "  + item.StateName + "?";
+}
+
+// This is the function that returns an answer to your user during the quiz.  
+// Much like the "getQuestion" function above, you can use a switch() statement 
+// to create different responses for each property in your data.  For example, 
+// when this quiz has an answer that includes a state abbreviation, we add some 
+// SSML to make sure that Alexa spells that abbreviation out (instead of trying 
+// to pronounce it.)
 function getAnswer(property, item)
 {
     switch(property)
@@ -59,59 +86,95 @@ function getAnswer(property, item)
     }
 }
 
-//This is a list of positive speechcons that this skill will use when a user gets a correct answer.  For a full list of supported
-//speechcons, go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
+// This is a list of positive speechcons that this skill will use when a user 
+// gets a correct answer.  For a full list of supported speechcons, 
+// go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
 const speechConsCorrect = ["Booya", "All righty", "Bam", "Bazinga", "Bingo", "Boom", "Bravo", "Cha Ching", "Cheers", "Dynomite",
 "Hip hip hooray", "Hurrah", "Hurray", "Huzzah", "Oh dear.  Just kidding.  Hurray", "Kaboom", "Kaching", "Oh snap", "Phew",
 "Righto", "Way to go", "Well done", "Whee", "Woo hoo", "Yay", "Wowza", "Yowsa"];
 
-//This is a list of negative speechcons that this skill will use when a user gets an incorrect answer.  For a full list of supported
-//speechcons, go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
+// This is a list of negative speechcons that this skill will use when a user 
+// gets an incorrect answer.  For a full list of supported speechcons, 
+// go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
 const speechConsWrong = ["Argh", "Aw man", "Blarg", "Blast", "Boo", "Bummer", "Darn", "D'oh", "Dun dun dun", "Eek", "Honk", "Le sigh",
 "Mamma mia", "Oh boy", "Oh dear", "Oof", "Ouch", "Ruh roh", "Shucks", "Uh oh", "Wah wah", "Whoops a daisy", "Yikes"];
 
-//This is the welcome message for when a user starts the skill without a specific intent.
+// This is the welcome message for when a user starts the skill without a 
+// specific intent.
 const WELCOME_MESSAGE = "Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?";
 
-//This is the message a user will hear when they start a quiz.
+// This is the message a user will hear when they start a quiz.
 const START_QUIZ_MESSAGE = "OK.  I will ask you 10 questions about the United States.";
 
-//This is the message a user will hear when they try to cancel or stop the skill, or when they finish a quiz.
+// This is the message a user will hear when they try to cancel or stop the 
+// skill, or when they finish a quiz.
 const EXIT_SKILL_MESSAGE = "Thank you for playing the United States Quiz Game!  Let's play again soon!";
 
-//This is the message a user will hear after they ask (and hear) about a specific data element.
+// This is the message a user will hear after they ask (and hear) about a 
+// specific data element.
 const REPROMPT_SPEECH = "Which other state or capital would you like to know about?";
 
-//This is the message a user will hear when they ask Alexa for help in your skill.
+// This is the message a user will hear when they ask Alexa for help in your 
+// skill.
 const HELP_MESSAGE = "I know lots of things about the United States.  You can ask me about a state or a capital, and I'll tell you what I know.  You can also test your knowledge by asking me to start a quiz.  What would you like to do?";
 
 
-//This is the response a user will receive when they ask about something we weren't expecting.  For example, say "pizza" to your
-//skill when it starts.  This is the response you will receive.
-function getBadAnswer(item) { return "I'm sorry. " + item + " is not something I know very much about in this skill. " + HELP_MESSAGE; }
+//This is the response a user will receive when they ask about something we 
+// weren't expecting.  For example, say "pizza" to your skill when it starts.  
+// This is the response you will receive.
+function getBadAnswer(item) { 
+    return "I'm sorry. " + item + " is not something I know very much about in this skill. " + HELP_MESSAGE; 
+}
 
-//This is the message a user will receive after each question of a quiz.  It reminds them of their current score.
-function getCurrentScore(score, counter) { return "Your current score is " + score + " out of " + counter + ". "; }
+// This is the message a user will receive after each question of a quiz.  
+// It reminds them of their current score.
+function getCurrentScore(score, counter) { 
+    return "Your current score is " + score + " out of " + counter + ". "; 
+}
 
-//This is the message a user will receive after they complete a quiz.  It tells them their final score.
-function getFinalScore(score, counter) { return "Your final score is " + score + " out of " + counter + ". "; }
+// This is the message a user will receive after they complete a quiz.  It tells 
+// them their final score.
+function getFinalScore(score, counter) { 
+    return "Your final score is " + score + " out of " + counter + ". "; 
+}
 
-//These next four values are for the Alexa cards that are created when a user asks about one of the data elements.
-//This only happens outside of a quiz.
+// These next four values are for the Alexa cards that are created when a user 
+// asks about one of the data elements. This only happens outside of a quiz.
 
-//If you don't want to use cards in your skill, set the USE_CARDS_FLAG to false.  If you set it to true, you will need an image for each
-//item in your data.
+// If you don't want to use cards in your skill, set the USE_CARDS_FLAG to 
+// false.  If you set it to true, you will need an image for each item in your 
+// data.
 const USE_CARDS_FLAG = true;
 
-//This is what your card title will be.  For our example, we use the name of the state the user requested.
-function getCardTitle(item) { return item.StateName;}
+// This is what your card title will be.  
+// For our example, we use the name of the state the user requested.
+function getCardTitle(item) { 
+    return item.StateName;
+}
 
-//This is the small version of the card image.  We use our data as the naming convention for our images so that we can dynamically
-//generate the URL to the image.  The small image should be 720x400 in dimension.
-function getSmallImage(item) { return "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/720x400/" + item.Abbreviation + "._TTH_.png"; }
+// This is the small version of the card image.  We use our data as the naming 
+// convention for our images so that we can dynamically generate the URL to the 
+// image.  The small image should be 720x400 in dimension.
+function getSmallImage(item) { 
+    return getImage(720, 400, item.Abbreviation);
+}
 
 //This is the large version of the card image.  It should be 1200x800 pixels in dimension.
-function getLargeImage(item) { return "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/1200x800/" + item.Abbreviation + "._TTH_.png"; }
+function getLargeImage(item) { 
+    return getImage(1200, 800, item.Abbreviation);
+}
+
+function getImage(height, width, label) {
+    return IMAGE_PATH.replace("{0}", height)
+                    .replace("{1}", width)
+                    .replace("{2}", label);
+}
+
+function getBackgroundImage(label, height = 1024, width = 600) {
+    return BACKGROUND_IMAGE_PATH.replace("{0}", height)
+                                .replace("{1}", width)
+                                .replace("{2}", label);
+}
 
 //=========================================================================================================================================
 //TODO: Replace this data with your own.
@@ -213,7 +276,7 @@ const startHandlers = Alexa.CreateStateHandler(states.START,{
 
         if (item && item[Object.getOwnPropertyNames(data[0])[0]] != undefined)
         {
-          console.log("\nMEMO's TEST\n");
+          
             if (USE_CARDS_FLAG)
             {
                 let imageObj = {smallImageUrl: getSmallImage(item), largeImageUrl: getLargeImage(item)};
@@ -224,11 +287,31 @@ const startHandlers = Alexa.CreateStateHandler(states.START,{
             {
                 this.response.speak(getSpeechDescription(item)).listen(REPROMPT_SPEECH);
             }
+
+            // Display code for an Alexa Device with a screen Echo Show|Spot
+            // For this we are using Body Template 2 
+            // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#bodytemplate2-for-image-views-and-limited-centered-text
+            if (supportsDisplay.call(this)) {
+                let builder = new Alexa.templateBuilders['BodyTemplate2Builder']();
+                let mainImage = MAKE_IMAGE(getLargeImage(item));
+                let title = getCardTitle(item);
+                let primaryText = MAKE_RICH_TEXT(getTextDescription(item, "<br/>"));
+
+                builder.setImage(mainImage);
+                builder.setTitle(title);
+                builder.setTextContent(primaryText, null, null);
+
+                // The back button can be hidden by passing 'hidden'
+                // The default is 'visibile'
+                builder.setBackButtonBehavior('visible'); 
+                let template = builder.build();
+
+                this.response.renderTemplate(template);
+            }            
         }
         else
         {
             this.response.speak(getBadAnswer(item)).listen(getBadAnswer(item));
-
         }
 
         this.emit(":responseReady");
@@ -258,7 +341,6 @@ const startHandlers = Alexa.CreateStateHandler(states.START,{
     }
 });
 
-
 const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
     "Quiz": function() {
         this.attributes["response"] = "";
@@ -285,7 +367,47 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         let question = getQuestion(this.attributes["counter"], property, item);
         let speech = this.attributes["response"] + question;
 
-        this.emit(":ask", speech, question);
+        this.response.speak(speech).listen(question);
+
+        // Display code for an Alexa Device with a screen Echo Show|Spot
+        // For this we are using Body Template 1
+        // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#bodytemplate1-for-simple-text-and-image-views
+        if (supportsDisplay.call(this)) {
+            // let builder = new Alexa.templateBuilders['BodyTemplate1Builder']();
+            let builder = new Alexa.templateBuilders['ListTemplate1Builder']();
+            let title = `Question #${this.attributes["counter"]}`;    
+            let primaryText = MAKE_RICH_TEXT(getQuestionWithoutOrdinal(property, item));
+            
+            let itemList = [];
+
+            getAndShuffleMultipleChoiceAnswers(random, item, property).forEach( (x, i) => {
+                itemList.push(
+                    {  
+                        "token": x, 
+                        "image": null, 
+                        "textContent": MAKE_TEXT_CONTENT(MAKE_PLAIN_TEXT(x), null, null)
+                    }
+                );
+            });
+
+            builder.setTitle(title);
+            builder.setToken('QUESTION');
+            builder.setListItems(itemList);
+
+            // builder.setTextContent(primaryText, null, null);
+
+            // During the quiz we don't want the back button visibile.
+            // We don't want the user to be able to reanswer with the correct
+            // answer after they got it wrong.
+
+            builder.setBackgroundImage(MAKE_IMAGE(getBackgroundImage(item.Abbreviation)));
+            builder.setBackButtonBehavior('hidden');
+            let template = builder.build();
+
+            this.response.renderTemplate(template);
+        }                  
+
+        this.emit(':responseReady');
     },
     "AnswerIntent": function() {
         let response = "";
@@ -293,7 +415,9 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         let item = this.attributes["quizitem"];
         let property = this.attributes["quizproperty"]
 
-        let correct = compareSlots(this.event.request.intent.slots, item[property]);
+        let correct = compareSlots(this.event, item[property]);
+
+
 
         if (correct)
         {
@@ -319,8 +443,33 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
             speechOutput = response + " " + EXIT_SKILL_MESSAGE;
 
             this.response.speak(speechOutput);
+            
+            if (supportsDisplay.call(this)) {
+            let builder = new Alexa.templateBuilders['BodyTemplate1Builder']();
+            let title = 'Thank you for playing!';    
+            let primaryText = MAKE_RICH_TEXT(getFinalScore(this.attributes["quizscore"], this.attributes["counter"]));
+            console.log('primary text: ', primaryText);
+            builder.setTitle(title);
+
+
+            builder.setTextContent(primaryText, null, null);
+
+            // During the quiz we don't want the back button visibile.
+            // We don't want the user to be able to reanswer with the correct
+            // answer after they got it wrong.
+
+            //builder.setBackgroundImage(MAKE_IMAGE(getLargeImage(item)));
+            builder.setBackButtonBehavior('hidden');
+            let template = builder.build();
+
+            this.response.renderTemplate(template);
+            } 
             this.emit(":responseReady");
         }
+    },
+    "ElementSelected": function() {
+        console.log("In ElementSelected Quiz State.");
+        this.emitWithState("AnswerIntent");
     },
     "AMAZON.RepeatIntent": function() {
         let question = getQuestion(this.attributes["counter"], this.attributes["quizproperty"], this.attributes["quizitem"]);
@@ -351,18 +500,29 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
     }
 });
 
-function compareSlots(slots, value)
+function compareSlots(event, value)
 {
-    for (let slot in slots)
-    {
-        if (slots[slot].value != undefined)
+
+    if (event.request && event.request.token) {
+        console.log(JSON.stringify(event.request));
+        if (event.request.token.toString().toLowerCase() == value.toString().toLocaleLowerCase()) {
+            return true;
+        }
+            
+    } else if (event.request.intent && event.request.intent.slots) {
+        let slots = event.request.intent.slots
+        for (let slot in slots)
         {
-            if (slots[slot].value.toString().toLowerCase() == value.toString().toLowerCase())
+            if (slots[slot].value != undefined)
             {
-                return true;
+                if (slots[slot].value.toString().toLowerCase() == value.toString().toLowerCase())
+                {
+                    return true;
+                }
             }
         }
     }
+
     return false;
 }
 
@@ -399,6 +559,63 @@ function getItem(slots)
     return value;
 }
 
+function getAndShuffleMultipleChoiceAnswers(currentIndex, item, property) {
+    return shuffle(getMultipleChoiceAnswers(currentIndex, item, property));
+}
+
+// This function randomly chooses 3 answers 2 incorrect and 1 correct answer to
+// display on the screen using the ListTemplate. It ensures that the list is unique.
+function getMultipleChoiceAnswers(currentIndex, item, property) {
+
+    // insert the correct answer first
+    let answerList = [item[property]];
+
+    // There's a possibility that we might get duplicate answers
+    // 8 states were founded in 1788
+    // 4 states were founded in 1889
+    // 3 states were founded in 1787 
+    // to prevent duplicates we need avoid index collisions and take a sample of
+    // 8 + 4 + 1 = 13 answers (it's not 8+4+3 because later we take the unique 
+    // we only need the minimum.)
+    let count = 0
+    let upperBound = 12 
+
+    let seen = new Array();
+    seen[currentIndex] = 1;
+
+    while (count < upperBound) {
+        let random = getRandom(0, data.length - 1);
+
+        // only add if we haven't seen this index
+        if ( seen[random] === undefined ) {
+            answerList.push(data[random][property]);
+            count++;
+        }
+    }
+
+    // remove duplicates from the list.
+    answerList = answerList.filter((v, i, a) => a.indexOf(v) === i)
+    // take the first three items from the list.
+    answerList = answerList.slice(0, 3);
+
+    return answerList;
+}
+
+// This function takes the contents of an array and randomly shuffles it. 
+function shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    while ( 0 !== currentIndex ) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+}
+
 function getSpeechCon(type)
 {
     let speechCon = "";
@@ -412,18 +629,33 @@ function formatCasing(key)
     return key;
 }
 
-function getTextDescription(item)
+function getTextDescription(item, delimiter = "\n")
 {
     let text = "";
 
     for (let key in item)
     {
-        text += formatCasing(key) + ": " + item[key] + "\n";
+        text += formatCasing(key) + ": " + item[key] + delimiter;
     }
     return text;
 }
 
+
+// returns true if the skill is running on a device with a display (show|spot)
+function supportsDisplay() {
+    var hasDisplay =
+      this.event.context &&
+      this.event.context.System &&
+      this.event.context.System.device &&
+      this.event.context.System.device.supportedInterfaces &&
+      this.event.context.System.device.supportedInterfaces.Display
+  
+    return hasDisplay;
+  }
+
 exports.handler = (event, context) => {
+    console.log("event: ", event);
+    console.log("context: ", context)
     const alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     alexa.registerHandlers(handlers, startHandlers, quizHandlers);
