@@ -399,7 +399,7 @@ function getItem(slots)
 
 function getSpeechCon(type)
 {
-    let speechCon = "";
+  
     if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
     else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
 }
