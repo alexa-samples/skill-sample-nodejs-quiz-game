@@ -51,11 +51,9 @@ function getAnswer(property, item)
     switch(property)
     {
         case "Abbreviation":
-            return "The " + formatCasing(property) + " of " + item.StateName + " is <say-as interpret-as='spell-out'>" + item[property] + "</say-as>. "
-        break;
+            return "The " + formatCasing(property) + " of " + item.StateName + " is <say-as interpret-as='spell-out'>" + item[property] + "</say-as>. ";
         default:
-            return "The " + formatCasing(property) + " of " + item.StateName + " is " + item[property] + ". "
-        break;
+            return "The " + formatCasing(property) + " of " + item.StateName + " is " + item[property] + ". ";
     }
 }
 
@@ -291,7 +289,7 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         let response = "";
         let speechOutput = "";
         let item = this.attributes["quizitem"];
-        let property = this.attributes["quizproperty"]
+        let property = this.attributes["quizproperty"];
 
         let correct = compareSlots(this.event.request.intent.slots, item[property]);
 
