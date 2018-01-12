@@ -369,10 +369,7 @@ function getRandom(min, max)
     return Math.floor(Math.random() * (max-min+1)+min);
 }
 
-function getRandomSymbolSpeech(symbol)
-{
-    return "<say-as interpret-as='spell-out'>" + symbol + "</say-as>";
-}
+
 
 function getItem(slots)
 {
@@ -399,7 +396,7 @@ function getItem(slots)
 
 function getSpeechCon(type)
 {
-  
+
     if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
     else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
 }
