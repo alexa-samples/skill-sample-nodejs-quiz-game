@@ -171,8 +171,6 @@ const data = [
 //Editing anything below this line might break your skill.
 //=========================================================================================================================================
 
-const counter = 0;
-
 const states = {
     START: "_START",
     QUIZ: "_QUIZ"
@@ -368,8 +366,6 @@ function getRandom(min, max)
 {
     return Math.floor(Math.random() * (max-min+1)+min);
 }
-
-
 
 function getItem(slots)
 {
