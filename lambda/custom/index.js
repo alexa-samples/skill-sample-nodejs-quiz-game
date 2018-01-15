@@ -51,11 +51,9 @@ function getAnswer(property, item)
     switch(property)
     {
         case "Abbreviation":
-            return "The " + formatCasing(property) + " of " + item.StateName + " is <say-as interpret-as='spell-out'>" + item[property] + "</say-as>. "
-        break;
+            return "The " + formatCasing(property) + " of " + item.StateName + " is <say-as interpret-as='spell-out'>" + item[property] + "</say-as>. ";
         default:
-            return "The " + formatCasing(property) + " of " + item.StateName + " is " + item[property] + ". "
-        break;
+            return "The " + formatCasing(property) + " of " + item.StateName + " is " + item[property] + ". ";
     }
 }
 
@@ -173,8 +171,6 @@ const data = [
 //Editing anything below this line might break your skill.
 //=========================================================================================================================================
 
-const counter = 0;
-
 const states = {
     START: "_START",
     QUIZ: "_QUIZ"
@@ -291,7 +287,7 @@ const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
         let response = "";
         let speechOutput = "";
         let item = this.attributes["quizitem"];
-        let property = this.attributes["quizproperty"]
+        let property = this.attributes["quizproperty"];
 
         let correct = compareSlots(this.event.request.intent.slots, item[property]);
 
@@ -371,11 +367,6 @@ function getRandom(min, max)
     return Math.floor(Math.random() * (max-min+1)+min);
 }
 
-function getRandomSymbolSpeech(symbol)
-{
-    return "<say-as interpret-as='spell-out'>" + symbol + "</say-as>";
-}
-
 function getItem(slots)
 {
     let propertyArray = Object.getOwnPropertyNames(data[0]);
@@ -401,7 +392,7 @@ function getItem(slots)
 
 function getSpeechCon(type)
 {
-    let speechCon = "";
+
     if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
     else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
 }
