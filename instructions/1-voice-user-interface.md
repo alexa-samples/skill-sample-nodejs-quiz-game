@@ -23,7 +23,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
 5.  **Fill out the Skill Information screen.**  Make sure to review the tips we provide below the screenshot.
 
-    ![Skill Information](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-5-skill-information._TTH_.png)
+    ![Skill Information](https://s3-eu-west-1.amazonaws.com/alx402/skillinfo.png)
 
     ### Skill Information Instructions
     *  **Skill Type** For this skill, we are creating a skill using the Custom Interaction Model.  This is the default choice.
