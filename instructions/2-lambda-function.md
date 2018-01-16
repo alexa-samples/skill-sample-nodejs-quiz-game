@@ -56,7 +56,7 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
 15. Click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function and scroll down to the field called "Function code".
 
-16.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-fact/blob/en-US/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/skill-sample-nodejs-fact/blob/en-US/lambda/custom/index.js).  Delete the contents of the code box, and paste the contents of the new code.
+16.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game/blob/master/lambda/custom/index.js).  Delete the contents of the code box, and paste the contents of the new code.
 Click "Save".
 
 17. **After you're done, the ARN value for this Lambda function should be in the top right corner of the page. Copy this value for use in the next section of the guide.**
