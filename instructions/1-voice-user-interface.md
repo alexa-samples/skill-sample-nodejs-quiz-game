@@ -1,76 +1,78 @@
-# Build An Alexa Quiz Game Skill
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-on._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-off._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./6-publication.md)
+# Alexaクイズゲームスキルの作成
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-on._TT_.png)](1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-off._TT_.png)](2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-off._TT_.png)](3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-off._TT_.png)](4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-off._TT_.png)](5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-off._TT_.png)](6-publication.md)
 
-## Setting up Your Voice User Interface
+## 開発者ポータルでAlexaスキルの設定をする
 
-There are two parts to an Alexa skill.  The first part is the [Voice User Interface (VUI)](https://developer.amazon.com/alexa-skills-kit/vui).  This is where we define how we will handle a user's voice input, and which code should be executed when specific commands are uttered.  The second part is the actual code logic for our skill, and we will handle that in [the next step](./2-lambda-function.md) of this instructions guide.
+Alexaスキルは２つの部分からできています。一つは [音声ユーザーインターフェース (VUI)](https://developer.amazon.com/alexa-skills-kit/vui) です。ここで、ユーザーからの音声入力をどのように処理し、特定の指示が発話された時にどのコードが実行されるかを定義します。もう一つはスキルの実際のコードロジックです。これについては、このステップバイステップガイドの [次のステップ](2-lambda-function.md) で説明します。
 
-1.  **Go to the [Amazon Developer Portal](http://developer.amazon.com).  In the top right corner of the screen, click the Sign In button.** </br>(If you don't already have an account, you will be able to create a new one for free.)
+1.  **まず、[Amazon開発者ポータル](http://developer.amazon.com)を開き、右上にある「サインイン」ボタンをクリックしてください。** </br>(まだアカウントを持っていない場合、無料で新規アカウントを作成できます。)
 
-    ![Sign in](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-1-developer-portal._TTH_.png)
+     ![サインイン](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-1-developer-portal._TT_.png)
 
-2.  **Once you have signed in, click the Alexa button at the top of the screen.**
+2.  **サインイン後、画面の上にある Alexa ボタンをクリックしてください。**
 
-    ![Alexa button](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-2-alexa-button._TTH_.png)
+    ![Alexaボタン](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-2-alexa-button._TT_.png)
 
-3.  **On the Alexa page, choose the Get Started button for the Alexa Skills Kit.**
+3.  **ALEXA** のページが開いたら、**Alexa Skills Kit** の **始める** ボタンをクリックします。
 
-    ![Get Started](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-3-alexa-skills-kit._TTH_.png)
+    ![Get Started](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-3-alexa-skills-kit._TT_.png)
 
-4.  **Select Add A New Skill.** This will get you to the first page of your new Alexa skill.
+4.  **新しいスキルを追加する** ボタンをクリックします。新しいAlexaスキル設定画面の最初のページが開きます。
 
-    ![Amazon Developer Portal](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-4-add-a-new-skill._TTH_.png)
+    ![Amazon開発者ポータル](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-4-add-a-new-skill._TT_.png)
 
-5.  **Fill out the Skill Information screen.**  Make sure to review the tips we provide below the screenshot.
+5.  **スキル情報** ページに必要な情報を入力してください。 
 
-    ![Skill Information](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-5-skill-information._TTH_.png)
+	入力の際、下記のヒントを参考にしてください。
 
-    ### Skill Information Instructions
-    *  **Skill Type** For this skill, we are creating a skill using the Custom Interaction Model.  This is the default choice.
+    ![スキル情報](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-5-skill-information._TT_.png)
 
-    *  **Language** Choose the first language you want to support.  You can add additional languages in the future, but we need to start with one.  (This guide is using U.S. English to start.)
+    ### スキル情報の入力
+    *  **スキルの種類** 今回は、「カスタム対話モデル」を利用してスキルを作成します。これは初期設定です。
 
-    *  **Name** This is the name of the skill as it will be displayed in the [Alexa app](http://alexa.amazon.com).
+    *  **言語** サポートする主要な言語を選択してください。後から追加の言語を設定できますが、まずは一つの言語から始めましょう。 (このガイドでは日本語を利用します)
 
-    *  **Invocation Name** This is the name spoken by your users to start the skill. Use a name like "united states quiz" for this sample skill. Some common issues that developers experience with invocation names are listed in the following table. In addition, please review the [Invocation Name Requirements](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/choosing-the-invocation-name-for-an-alexa-skill) as you consider an invocation name for your skill.
+    *  **スキル名** [Alexaアプリ](http://alexa.amazon.co.jp) 内で表示されるスキルの名前です。
 
-        | Invocation Name Requirements | Examples of incorrect invocation names |
+    *  **呼び出し名** ユーザーがスキルを起動する時に使う名前です。このサンプルスキルには、「都道府県クイズ」のような名前を使います。開発者が呼び出し名について経験する一般的な課題を次の表に示します。スキルの呼び出し名を検討する際には、[カスタムスキルの呼び出し名を決定する](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/choosing-the-invocation-name-for-an-alexa-skill) も確認してください。
+
+        | 呼び出し名の条件 | 誤った呼び出し名の例 |
         | ---------------------------- | -------------------------------------- |
-        | The skill invocation name must not infringe upon the intellectual property rights of an entity or person. | korean air; septa check |
-        | Invocation names should be more than one word (unless it is a brand or intellectual property), and must not be a name or place | horoscope; trivia; guide; new york |
-        | Two word invocation names are not allowed when one of the words is a definite article, indefinite article, or a preposition | any poet; the bookie; the fool |
-        | The invocation name must not contain any of the Alexa skill launch phrases and connecting words.  Launch phrase examples include "launch," "ask," "tell," "load," and "begin."  Connecting word examples include "to," "from," "by," "if," "and," "whether." | trivia game for star wars; better with bacon |
-        | The invocation name must not contain the wake words "Alexa," "Amazon," "Echo," "Computer," or the words "skill" or "app." | hackster initial skill; word skills |
-        | The invocation name must be written in each language you choose to support.  For example, the German version of your skill must have an invocation name written in German, while the English (US) version must have an invocation name written in English. | kitchen stories (German skill) |
+        | スキルの呼び出し名は知的財産権を侵してはいけない。| 日本航空、トヨタ |
+        | 呼び出し名は2つ以上の単語である必要がある(ブランド名や知的財産権のある単語の場合は例外)。人名や場所名は利用できない。 | 占い、 トリビア、 案内、 大阪 |
+        | 呼び出し名には Alexaの起動フレーズが含まれてはいけない。起動フレーズの例: 「起動」「実行」「検索」「スタート」「サーチ」| 辞書サーチ、スタートアップ英会話 |
+        | 呼び出し名にはウェイクワードつまり「アレクサ」「アマゾン」「エコー」「コンピューター」を含んではいけない。また、「スキル」「アプリ」という単語を含んでもいけない。| ハッカースキル、単語アプリ |
+        | 呼び出し名は選択した言語で書かれなければならない。例えば、日本語のスキルの場合、呼び出し名は日本語で書かれなければならない。同様に、ドイツ語スキルの場合はドイツ語で、英語スキルの場合は英語で書かれなければならない。| English Study (日本語のスキル) |
 
-    *  **Audio Player** For this Quiz Game skill, we won't be using any audio files, so you can select No for this option.  If you would like to learn more about adding audio to your skills, please check out our [Audio Player Guide](https://github.com/alexa/skill-sample-nodejs-audio-player).
+    *  **Audio Player** 今回のクイズゲームスキルではオーディオファイルを利用しないので「No」を選択してください。スキルにオーディオを追加する方法について知りたい場合は、 [Audio Player Guide](https://github.com/alexa/skill-sample-nodejs-audio-player)を参照してください。
 
-6.  **Click the Next button to move to the Interaction Model.**
+6.  **次へ** ボタンをクリックし **対話モデル** のページに移動します。
 
-    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-6-next-button._TTH_.png" />
+    ![次へ ボタン](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-6-next-button._TTH_.png)
 
-7.  Click on the **Launch Skill Builder** (Beta) button . This will launch the new Skill Builder Dashboard.
+7.  **スキルビルダーを起動する** ボタンをクリックします。スキルビルダーのダッシュボードが開きます。
+    
+    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-7-skill-builder-launch._TTH_.png)
 
-  ![Launch Skill Builder](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-7-skill-builder-launch._TTH_.png)
+8. スキルビルダーの左上にある **Dashboard** の下の「Code Editor」をクリックします。
 
-8.  Click on the "Code Editor" item under **Dashboard** on the top left side of the skill builder.
+9. 表示されたテキストフィールドで、[Interaction Model](../InteractionModel.json) が提供するコードに既存のコードを置き換えて、「Apply Changes」または「Save Model」をクリックします。
 
-9.  In the textfield provided, replace any existing code with the code provided in the [Interaction Model](../InteractionModel.json), then click "Apply Changes" or "Save Model".
+10. **Save Model** ボタンをクリックしてから、 **Build Model** ボタンをクリックします。
+ 
+    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-12-skill-builder-build-save-model._TTH_.png)
 
+11.  対話モデルのビルドに成功したら、**Configuration ボタン** を押してコンフィギュレーションに移動します。このガイドの次のステップでは、AWS開発者コンソールからLambda関数を作成します。このブラウザのタブは開いたままにしておいてください。[3ページ: VUIとコードを接続する](3-connect-vui-to-code.md)で再びこの画面に戻ってきます。
 
-11. Click on the **Save Model** button, and then click on the **Build Model** button.
+    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-13-skill-builder-configuration._TTH_.png)
 
-    ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-12-skill-builder-build-save-model._TTH_.png)
+    対話モデルでエラーが発生するようであれば、次のリストを確認してください。
 
-
-12.  If your interaction model builds successfully, click on **Configuration button** to move on to Configuration. In our next step of this guide, we will be creating our Lambda function in the AWS developer console, but keep this browser tab open, because we will be returning here on [Page #3: Connect VUI to Code](./3-connect-vui-to-code.md).
-     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-13-skill-builder-configuration.png)
-
-     If you get an error from your interaction model, check through this list:
-
-*  **Is your custom slot named US_STATE_ABBR?**
-*  **Did you copy and paste the provided code into the appropriate boxes?**
-*  **Did you accidentally add any unwanted characters to the Interaction Model or Sample Utterances?**
+    *  カスタムスロットの名前は ```JP_ROMANIZATION``` と ```JP_PREFECTURE_FLOWER``` になっていますか？
+    *  コードを正しく適切なボックスにコピーアンドペーストしましたか？
+    *  対話モデルもしくはサンプル発話に、余計な文字を誤って入力していませんか？ スロット {...} の両側には半角スペースを入れてください。
 
 <br/><br/>
-[![Next: Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_lambda_function._TTH_.png)](./2-lambda-function.md)
+[![Lambda関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_next_lambda_function._TT_.png)](2-lambda-function.md)
+
+<img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>

@@ -1,20 +1,8 @@
 {
-  "name": "StatesQuiz",
+  "name": "alexa-skill-kit-sdk-factskill",
   "version": "1.0.0",
-  "description": "A quiz about states and their capitals.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "alexa",
-    "skill",
-    "fact"
-  ],
-  "author": "Amazon.com",
-  "license": "Apache-2.0",
+  "private": true,
   "dependencies": {
-    "alexa-sdk": "^1.0.0",
-    "voice-insights-sdk": "^1.2.2"
+    "alexa-sdk": "^1.0.10"
   }
 }

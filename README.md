@@ -1,93 +1,86 @@
-#  Build An Alexa Quiz Game Skill 🇺🇸
+# Alexaクイズゲームスキルの構築
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-off._TTH_.png)](./instructions/1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-off._TTH_.png)](./instructions/2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](./instructions/3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](./instructions/4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](./instructions/5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./instructions/6-publication.md)
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-off.png)](./instructions/1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-off.png)](./instructions/2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-off.png)](./instructions/3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-off.png)](./instructions/4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-off.png)](./instructions/5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-off.png)](./instructions/6-publication.md)
 
-This Alexa sample skill is a template for a basic quiz game skill. Provided a list of interesting facts about a topic, Alexa will quiz a user with facts from the list.
+このAlexaサンプルスキルは、簡単なクイズゲームスキルのテンプレートを提供します。あるトピックの関連する情報のリストを提供すると、Alexaがそのリストから情報を取り出しクイズを出します。
 
-You can see an example of this skill in action - just enable the [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) from the [Alexa app](http://amazon.com/skills).
+初めてここに訪れ、これからAlexaのスキル開発に取り組もうとする方や、より詳細なガイダンスが必要な方は、下の「Get started!」ボタンをクリックしてください。
 
-
-If this is your first time here, you're new to Alexa Skills Development, or you're looking for more detailed instructions, click the **Get Started** button below:
-
-<p align='center'>
-<a href='./instructions/0-intro.md'><img src='https://camo.githubusercontent.com/db9b9ce26327ad3bac57ec4daf0961a382d75790/68747470733a2f2f6d2e6d656469612d616d617a6f6e2e636f6d2f696d616765732f472f30312f6d6f62696c652d617070732f6465782f616c6578612f616c6578612d736b696c6c732d6b69742f7475746f7269616c732f67656e6572616c2f627574746f6e732f627574746f6e5f6765745f737461727465642e5f5454485f2e706e67'></a>
-</p>
+<a href="./step-by-step/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
 
 
-Be sure to take a look at the [Additional Resources](#additional-resources) at the bottom of this page!
+下記の追加のリソースにも必ず目を通してください。
 
+##概要
+**補足**:このReadmeは、すでに利用を開始できる開発環境があり、CLI(コマンドラインインターフェース)ツールや、[AWS](https://aws.amazon.com/jp/)、[ASK開発者ポータル](https://developer.amazon.com/ja/alexa)の使用経験のある方を想定しています。もし該当しない場合は、[こちら](instruction/0-intro.md)をクリックしてより詳細なチュートリアルから始めてください。
 
-## About
-**Note:** The rest of this readme assumes you have your developer environment ready to go and that you have some familiarity with CLI (Command Line Interface) Tools, [AWS](https://aws.amazon.com/), and the [ASK Developer Portal](https://developer.amazon.com/alexa-skills-kit). If not, [click here](./instructions/0-intro.md) for a more detailed walkthrough.
-
-
-
-### Usage
+### 使い方
 
 ```text
-Alexa, ask Quizgame to start a quiz.
-	>> OK.  I will ask you 10 questions about the United States.
-
-Alexa, start Quiz Game
+アレクサ、都道府県クイズを開いてクイズを出して。
+		>> 了解です。都道府県に関する10個のクイズを出します。
+		
+アレクサ、都道府県クイズをスタートして。
 ```
 
-### Repository Contents
-* `/.ask`	- [ASK CLI (Command Line Interface) Configuration](https://developer.amazon.com/docs/smapi/ask-cli-intro.html)	 
-* `/lambda/custom` - Back-End Logic for the Alexa Skill hosted on [AWS Lambda](https://aws.amazon.com/lambda/)
-* `/models` - Voice User Interface and Language Specific Interaction Models
-* `/instructions` - Step-by-Step Instructions for Getting Started
-* `skill.json`	- [Skill Manifest](https://developer.amazon.com/docs/smapi/skill-manifest.html)
+### リポジトリの内容
+* `/.ask`	- [ASK CLI (Command Line Interface)の設定](https://developer.amazon.com/docs/smapi/ask-cli-intro.html)	 
+* `/lambda/custom` - [AWS Lambda](https://aws.amazon.com/lambda/)にホストされるバックエンド処理
+* `/models` - 音声ユーザーインターフェースと言語別の対話モデル
+* `/instructions` - 上記「Getting Started!」のチュートリアルガイド
+* `skill.json`	- [スキルのマニフェストファイル](https://developer.amazon.com/docs/smapi/skill-manifest.html)
 
-## Setup w/ ASK CLI
+### ASK CLIを使ったセットアップ
 
-### Pre-requisites
+### 前提条件
 
 * Node.js (> v4.3)
-* Register for an [AWS Account](https://aws.amazon.com/)
-* Register for an [Amazon Developer Account](https://developer.amazon.com/)
-* Install and Setup [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html)
+* [AWSアカウント](https://aws.amazon.com/)の登録
+* [Amazon 開発者アカウント](https://developer.amazon.com/)の登録
+* [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html)のインストールとセットアップ
 
-### Installation
-1. Clone the repository.
+
+### インストール
+1. ja-JPブランチのリポジトリをクローンします。
 
 	```bash
 	$ git clone https://github.com/alexa/skill-sample-nodejs-quiz-game/
+	$ git checkout -b ja-JP origin/ja-JP
 	```
 
-2. Initiatialize the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html) by Navigating into the repository and running npm command: `ask init`. Follow the prompts.
+2. リポジトリのフォルダに移動し、 `ask init` コマンドを実行することで  [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html) を初期化します。
 
 	```bash
 	$ cd skill-sample-nodejs-quiz-game
 	$ ask init
 	```
 
-3. Install npm dependencies by navigating into the `/lambda/custom` directory and running the npm command: `npm install`
+3. `/lambda/custom`ディレクトリに移動し、npm コマンド `npm install` を実行し、npm 関連ファイルをインストールします。
 
 	```bash
 	$ cd lambda/custom
 	$ npm install
 	```
 
+### デプロイ
 
-### Deployment
+ASK CLI はスキルとLambda関数を作成します。Lambda関数はデフォルトで ```us-east-1 (Northern Virginia)``` に作成されます。
 
-ASK CLI will create the skill and the lambda function for you. The Lambda function will be created in ```us-east-1 (Northern Virginia)``` by default.
-
-1. Deploy the skill and the lambda function in one step by running the following command:
+1. 以下のコマンドを実行するだけでスキルとLambdaのデプロイを一度に行うことができます。
 
 	```bash
 	$ ask deploy
 	```
 
-### Testing
+### テスト
 
-1. To test, you need to login to Alexa Developer Console, and enable the "Test" switch on your skill from the "Test" Tab.
+1. テストするには、Alexa開発者コンソールにログインし、「テスト」タブに行き、スキルのテスト機能を有効にする必要があります。
 
-2. Simulate verbal interaction with your skill through the command line using the following example:
+2. 以下の例のようにコマンドを実行すると、コマンドラインからスキルの音声による対話をシミュレートできます。
 
 	```bash
-	 $ ask simulate -l en-US -t "start quiz game"
+	 $ ask simulate -l ja-JP -t "都道府県クイズをスタートして"
 
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
@@ -95,40 +88,39 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 	  ...
 	 ```
 
-3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Mobile App and say :
+3. テスト機能を有効にすると、開発者アカウントに紐づいているデバイスでもテストすることができます。有効なEchoデバイス、または[echosim.io](https://echosim.io/welcome)や、Amazonモバイルアプリか、次のように話しかけます。
 
 	```text
-	Alexa, start quiz game
+	アレクサ、都道府県クイズをスタートして。
 	```
 
-## Customization
+## カスタマイズ
 
 1. ```./skill.json```
 
-   Change the skill name, example phrase, icons, testing instructions etc ...
+   スキル名、サンプルフレーズ、アイコン、テスト手順などを変更します。
 
-   Remember that many information is locale-specific and must be changed for each locale (en-GB and en-US)
+   多くの情報は地域寄って固有なので、en-US, en-GB, ja-JPのようにロケールごとに変更する必要があります。
 
-   See the Skill [Manifest Documentation](https://developer.amazon.com/docs/smapi/skill-manifest.html) for more information.
+   より詳しい情報はスキルの [Manifest Documentation](https://developer.amazon.com/docs/smapi/skill-manifest.html) を参照してください。
 
 2. ```./lambda/custom/index.js```
 
-   Modify messages, and facts from the source code to customize the skill.
+   スキルをカスタマイズするための、Alexaが発声するメッセージや、情報を編集します。
 
 3. ```./models/*.json```
 
-	Change the model definition to replace the invocation name and the sample phrase for each intent.  Repeat the operation for each locale you are planning to support.
+	呼び出し名やインテント毎のサンプル発話を修正する場合、このモデル定義ファイルを変更します。スキルが対応する地域毎にファイルを作成する必要があります。
 
-## Additional Resources
 
-### Community
-* [Amazon Developer Forums](https://forums.developer.amazon.com/spaces/165/index.html) - Join the conversation!
-* [Hackster.io](https://www.hackster.io/amazon-alexa) - See what others are building with Alexa.
+##追加のリソース
 
-### Tutorials & Guides
-* [Voice Design Guide](https://developer.amazon.com/designing-for-voice/) - A great resource for learning conversational and voice user interface design.
-* [CodeAcademy: Learn Alexa](https://www.codecademy.com/learn/learn-alexa) - Learn how to build an Alexa Skill from within your browser with this beginner friendly tutorial on CodeAcademy!
+### コミュニティ
+* [Amazon 開発者フォーラム](https://forums.developer.amazon.com/spaces/293/index.html) - Alexaのスキル開発で困ったら、ここで質問できます。Amazonの中の人、またはスキル開発の先人達からアドバイスをもらえるでしょう。
 
-###Documentation
-* [Official Alexa Skills Kit Node.js SDK](https://www.npmjs.com/package/alexa-sdk) - The Official Node.js SDK Documentation
-*  [Official Alexa Skills Kit Documentation](https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html) - Official Alexa Skills Kit Documentation
+### チュートリアル / ガイド
+* [音声デザインガイド](https://developer.amazon.com/ja/designing-for-voice/) - 対話と音声ユーザーインターフェースデザインの学習に役立ちます。全てのAlexa開発者に読んでいただきたい有用な資料です。
+
+### ドキュメント
+* [Alexa Skills Kit for Node.js SDK](https://www.npmjs.com/package/alexa-sdk) - Node.js SDK のオフィシャルドキュメント(英語)
+* [Alexa Skills Kitによるスキルの作成](https://developer.amazon.com/ja/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html) - Alexa Skills Kit のオフィシャルドキュメント(日本語)

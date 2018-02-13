@@ -1,0 +1,638 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "都道府県クイズ",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerIntent",
+          "slots": [
+            {
+              "name": "PrefectureName",
+              "type": "AMAZON.Region"
+            },
+            {
+              "name": "PrefecturalOfficeLocation",
+              "type": "AMAZON.City"
+            },
+            {
+              "name": "Romanization",
+              "type": "JP_ROMANIZATION"
+            },
+            {
+              "name": "PrefectureFlower",
+              "type": "JP_PREFECTURE_FLOWER"
+            },
+            {
+              "name": "PrefectureOrder",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{PrefectureName}",
+            "{PrefecturalOfficeLocation}",
+            "{PrefectureFlower}",
+            "{PrefectureOrder}",
+            "{Romanization}",
+            "{PrefectureName} について教えて",
+            "{PrefecturalOfficeLocation} について教えて",
+            "{PrefectureFlower} について教えて",
+            "{PrefectureOrder} について教えて",
+            "{Romanization} について教えて",
+            "{PrefectureName} について知ってる",
+            "{PrefecturalOfficeLocation} について知ってる",
+            "{PrefectureFlower} について知ってる",
+            "{PrefectureOrder} について知ってる",
+            "{Romanization} について知ってる",
+            "{PrefectureName} の情報",
+            "{PrefecturalOfficeLocation} の情報",
+            "{PrefectureFlower} の情報",
+            "{PrefectureOrder} の情報",
+            "{Romanization} の情報"
+          ]
+        },
+        {
+          "name": "QuizIntent",
+          "samples": [
+            "クイズをはじめて",
+            "始めて",
+            "問題を出して",
+            "問題を言って",
+            "クイズを言って"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "ハマナス",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "りんごの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "キリ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ミヤギノハギ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "フキのとう",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "べにばな",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ネモトシャクナゲ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "バラ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ヤシオツツジ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "レンゲツツジ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "サクラソウ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "なのはな",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ソメイヨシノ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ヤマユリ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "チューリップ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "クロユリ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "スイセン",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "フジサクラ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "リンドウ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "レンゲ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ツツジ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "カキツバタ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ハナショウブ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "シャクナゲ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "しだれ桜",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ノジギク",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "奈良八重桜",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ウメ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "20世紀梨の花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ボタン",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ももの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "モミジ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "夏みかんの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "すだちの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "オリーブ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "みかんの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ヤマモモ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "クスの花",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "雲仙ツツジ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "豊後梅",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "はまゆう",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "ミヤマキリシマ",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "デイゴ",
+                "synonyms": []
+              }
+            }
+          ],
+          "name": "JP_PREFECTURE_FLOWER"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "Hokkaido",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Aomori",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Iwate",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Miyagi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Akita",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Yamagata",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Fukushima",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Ibaraki",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Tochigi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Gunma",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Saitama",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Chiba",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Tokyo",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kanagawa",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Niigata",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Toyama",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Ishikawa",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Fukui",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Yamanashi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Nagano",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Gifu",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Shizuoka",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Aichi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Mie",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Shiga",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kyoto",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Osaka",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Hyogo",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Nara",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Wakayama",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Tottori",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Shimane",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Okayama",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Hiroshima",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Yamaguchi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Tokushima",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kagawa",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Ehime",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kochi",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Fukuoka",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Saga",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Nagasaki",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kumamoto",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Oita",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Miyazaki",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Kagoshima",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "Okinawa",
+                "synonyms": []
+              }
+            }
+          ],
+          "name": "JP_ROMANIZATION"
+        }
+      ]
+    }
+  }
+}

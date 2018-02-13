@@ -1,40 +1,38 @@
-# Build An Alexa Fact Skill
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/header._TTH_.png" />
-
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-off._TTH_.png)](1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-off._TTH_.png)](2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](6-publication.md)
+# Alexaクイズゲームスキルの作成
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-off._TT_.png)](1-voice-user-interface.md)[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-off._TT_.png)](2-lambda-function.md)[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-off._TT_.png)](3-connect-vui-to-code.md)[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-off._TT_.png)](4-testing.md)[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-off._TT_.png)](5-customization.md)[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-off._TT_.png)](6-publication.md)
 
 
-## What You Will Learn
+## 習得するもの
 *  [AWS Lambda](http://aws.amazon.com/lambda)
 *  [Alexa Skills Kit (ASK)](https://developer.amazon.com/alexa-skills-kit)
-*  Voice User Interface (VUI) Design
+*  Voice User Interface (VUI) の設計
 *  Skill Certification
 *  State Management
 *  [Speechcons](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference)
 
-## What You Will Need
-*  [Amazon Developer Portal Account](http://developer.amazon.com)
-*  [Amazon Web Services Account](http://aws.amazon.com/)
-*  The sample code on [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game).
-*  Simple graphical editing tool
-*  At least 25 rows of interesting data to quiz your users with.
-   *  Examples: [U.S. States](.data/states.js), [Video Games](.data/videogames.js), [Books](data/books.js), [British Monarchs](data/monarchs.js)
+## 必要なもの
+*  [Amazon Developer Portalのアカウント](http://developer.amazon.com)
+*  [Amazon Web Servicesのアカウント](http://aws.amazon.com/)
+*  [GitHub](https://github.com/alexa/skill-sample-nodejs-quiz-game)上のサンプルコード
+*  シンプルなGUIエディタ
+*  スキルのユーザに出題する面白いクイズデータ (すくなくとも25問分)。
+   *  例: [米国の州](./data/prefectures.js), [ビデオゲーム](./data/videogames.js), [本](./data/books.js), [徳川将軍](./data/monarchs.js)
 
-## What Your Skill Will Do
-We all hold interesting data in our heads. Maybe it's a list of all the action figures we played with as a kid, specific details about the 50 states, or a historical list of the starting quarterbacks for our favorite football team. When we're with friends, sometimes we'll even quiz each other on these nuanced categories of information. It's a fun, interactive way to share our knowledge and learn more about our favorite topics.
+## クイズゲームスキルがおこなうこと
+私たちは皆、頭の中に興味深いデータを持っています。それは、たとえば、子供時代に遊んだアクションフィギュアのリストであったり、日本の都道府県の詳細な情報であったり、贔屓の野球チームの歴史的な名投手のリストであったりすることでしょう。私たちは友人といる時に、こういったカテゴリの情報についてお互いにクイズを出しあうこともあります。それは、私たちの知識を共有し、好きなトピックについてより学ぶための楽しくインタラクティブな方法です。
 
-You can now bring that experience to Alexa using our new quiz skill template. You provide the data and the number of properties in that data, and Alexa will dynamically build a quiz game for you. In the quiz, Alexa will ask questions like:
-*  "What is the capital of Vermont?"
-*  "How many career home runs did Mickey Mantle hit?"
-*  "What year was Harry Potter and the Sorcerer's Stone first published?"
+新しいクイズスキルテンプレートを使用して、Alexaにそのような体験をさせましょう。データとそのプロパティの数を指定すると、Alexaがクイズゲームを動的に作成します。クイズで、Alexaは次のような質問をします。
+*  「神奈川県の県の花は何ですか?」
+*  「金田正一投手が成し遂げた完封回数は何回ですか?」
+*  「『銀河鉄道の夜』が最初に出版されたのは何年ですか?」
 
-You get to provide the data, as well as the number of properties in that data, and Alexa will dynamically build a quiz game for you.  In the quiz, Alexa will ask questions like:
-*  "Alexa, ask United States Quiz about Ohio."
-*  "Alexa, ask Hockey Quiz about Wayne Gretzky."
-*  "Alexa, ask Video Game Quiz about River City Ransom."
+データとそのプロパティの数を入力すると、Alexaがクイズゲームを動的に作成します。クイズでは、Alexaは次のような質問をします。
+*  「アレクサ、都道府県クイズに三重県について聞いて」
+*  「アレクサ、野球クイズに鈴木啓示について聞いて」
+*  「アレクサ、ベストセラークイズに『砂の女』について聞いて」
 
-If you’re in the US, we've also included the new [speechcons](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference) feature for Alexa skill development. Speechcons are special words and phrases that Alexa pronounces more expressively. We use them in this quiz game to let the user know whether they gave a correct or incorrect answer during the quiz.
+あなたがUSにいるなら、新しい [speechcon](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference) 機能をAlexaスキル開発で使うことができます。Speechconは、 Alexaがより感情を込めて発音する特別な言葉とフレーズです。このクイズゲームスキルでは、クイズの最中に、ユーザの回答が正解だったか不正解だったかを伝える箇所で使います。
 
-<p align='center'>
-<a href='./1-voice-user-interface.md'><img src='https://camo.githubusercontent.com/db9b9ce26327ad3bac57ec4daf0961a382d75790/68747470733a2f2f6d2e6d656469612d616d617a6f6e2e636f6d2f696d616765732f472f30312f6d6f62696c652d617070732f6465782f616c6578612f616c6578612d736b696c6c732d6b69742f7475746f7269616c732f67656e6572616c2f627574746f6e732f627574746f6e5f6765745f737461727465642e5f5454485f2e706e67'></a>
-</p>
+実際に動くスキルのサンプルを見たい場合、[Alexa app](http://amazon.com/skills) から [United States Quiz](https://www.amazon.com/Jeff-Blankenburg-United-States-Quiz/dp/B06X9GQBRL) を有効化できます。クイズに最初に挑戦した時にはすべての問題に正解できないかもしれませんが、新しいクイズゲームがどんなふうに素晴らしいかを体感できるはずです!
+
+[![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png)](1-voice-user-interface.md)
