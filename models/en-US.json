@@ -25,7 +25,7 @@
         },
         {
           "name": "AMAZON.RepeatIntent",
-          "samples": []
+          "samples": ["repeat"]
         },
         {
           "name": "AnswerIntent",
