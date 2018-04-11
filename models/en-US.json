@@ -24,6 +24,10 @@
           "samples": []
         },
         {
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
+        },
+        {
           "name": "AnswerIntent",
           "samples": [
             "{StateName}",
