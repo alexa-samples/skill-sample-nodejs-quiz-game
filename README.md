@@ -7,13 +7,13 @@
 
 初めてここに訪れ、これからAlexaのスキル開発に取り組もうとする方や、より詳細なガイダンスが必要な方は、下の「Get started!」ボタンをクリックしてください。
 
-<a href="./step-by-step/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
+<a href="./instructions/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
 
 
 下記の追加のリソースにも必ず目を通してください。
 
 ##概要
-**補足**:このReadmeは、すでに利用を開始できる開発環境があり、CLI(コマンドラインインターフェース)ツールや、[AWS](https://aws.amazon.com/jp/)、[ASK開発者ポータル](https://developer.amazon.com/ja/alexa)の使用経験のある方を想定しています。もし該当しない場合は、[こちら](instruction/0-intro.md)をクリックしてより詳細なチュートリアルから始めてください。
+**補足**:このReadmeは、すでに利用を開始できる開発環境があり、CLI(コマンドラインインターフェース)ツールや、[AWS](https://aws.amazon.com/jp/)、[ASK開発者ポータル](https://developer.amazon.com/ja/alexa)の使用経験のある方を想定しています。もし該当しない場合は、[こちら](instructions/0-intro.md)をクリックしてより詳細なチュートリアルから始めてください。
 
 ### 使い方
 
