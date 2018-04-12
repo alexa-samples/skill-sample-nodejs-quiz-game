@@ -77,7 +77,8 @@
 2.  **その他のテスト方法の検討**
 
     *  [Echosim.io](https://echosim.io) はブラウザベースのAlexaスキルテストツールです。物理デバイスを持ち運ぶことなくどこでも使えるので、手軽にスキルをテストできます。
-    *  [Unit Testing with Alexa(英語)](https://github.com/alexa/alexa-cookbook/tree/master/testing/postman/README.md) は [Postman](http://getpostman.com) と [Amazon API Gateway](http://aws.amazon.com/apigateway) を使用したモダンなユニットテストのアプローチです.
+    *  [Unit Testing with Alexa](https://github.com/alexa/alexa-cookbook/tree/master/testing/postman/README.md) は [Postman](http://getpostman.com) と [Amazon API Gateway](http://aws.amazon.com/apigateway) を使用したモダンなユニットテストのアプローチです.
+
 
 7.  サンプルスキルが正常に動作することを確認できたら、このスキルを**カスタマイズ**しましょう。
 
