@@ -56,7 +56,7 @@ Alexaスキルは２つの部分からできています。一つは [音声ユ�
 
 8. スキルビルダーの左上にある **Dashboard** の下の「Code Editor」をクリックします。
 
-9. 表示されたテキストフィールドで、[Interaction Model](../InteractionModel.json) が提供するコードに既存のコードを置き換えて、「Apply Changes」または「Save Model」をクリックします。
+9. 表示されたテキストフィールドで、[Interaction Model](../models/ja-JP.json) が提供するコードに既存のコードを置き換えて、「Apply Changes」または「Save Model」をクリックします。
 
 10. **Save Model** ボタンをクリックしてから、 **Build Model** ボタンをクリックします。
  
