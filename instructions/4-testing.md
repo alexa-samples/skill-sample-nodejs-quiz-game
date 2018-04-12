@@ -3,9 +3,9 @@
 
 ## Alexaスキルのテスト
 
-ここまでで、私たちは[音声ユーザーインターフェース](1-voice-user-interface.md)と[Lambda関数](2-lambda-function.md)を作成し、 [それらを接続](3-connect-vui-to-lambda.md)しました。 これであなたのスキルをテストする準備が整いました。
+ここまでで、私たちは[音声ユーザーインターフェース](1-voice-user-interface.md)と[Lambda関数](2-lambda-function.md)を作成し、 [それらを接続](3-connect-vui-to-code.md)しました。 これであなたのスキルをテストする準備が整いました。
 
-1.  **[Amazon開発者ポータル](https://developer.amazon.com/edw/home.html#/skills/list)**に戻り、あなたが作ったスキルを一覧から選択します。このチュートリアルを冒頭から始めていれば、ブラウザーのタブに残っていることでしょう。
+1.  **[Amazon開発者ポータル](https://developer.amazon.com/edw/home.html#/skills/list)** に戻り、あなたが作ったスキルを一覧から選択します。このチュートリアルを冒頭から始めていれば、ブラウザーのタブに残っていることでしょう。
 
 2.  左側にある**「テスト」**タブを開きます。
 
@@ -77,7 +77,7 @@
 2.  **その他のテスト方法の検討**
 
     *  [Echosim.io](https://echosim.io) はブラウザベースのAlexaスキルテストツールです。物理デバイスを持ち運ぶことなくどこでも使えるので、手軽にスキルをテストできます。
-    *  [Unit Testing with Alexa](../unit-testing.md) は [Postman](http://getpostman.com) と [Amazon API Gateway](http://aws.amazon.com/apigateway) を使用したモダンなユニットテストのアプローチです.
+    *  [Unit Testing with Alexa(英語)](https://github.com/alexa/alexa-cookbook/tree/master/testing/postman/README.md) は [Postman](http://getpostman.com) と [Amazon API Gateway](http://aws.amazon.com/apigateway) を使用したモダンなユニットテストのアプローチです.
 
 7.  サンプルスキルが正常に動作することを確認できたら、このスキルを**カスタマイズ**しましょう。
 
