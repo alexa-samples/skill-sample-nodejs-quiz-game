@@ -36,7 +36,7 @@
 
     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/2-7-configure-your-function._TTH_.png)
 
-8.  **Lambda関数用のロールを設定します。**  ロールがまだない場合は、[初めてLambda用ロールを作成する場合の手順](../lambda-role.md)を参考に作ってください。この手順に沿って作成したロールが既にある場合は、**既存のロール** の値を「lambda\_basic\_execution」に設定してください。
+8.  **Lambda関数用のロールを設定します。**  ロールがまだない場合は、[初めてLambda用ロールを作成する場合の手順(英語)](https://github.com/alexa/alexa-cookbook/tree/master/aws/lambda-role.md)を参考に作ってください。この手順に沿って作成したロールが既にある場合は、**既存のロール** の値を「lambda\_basic\_execution」に設定してください。
 
     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/2-9-lambda-function-role._TTH_.png)
     
@@ -56,10 +56,10 @@
 
 	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/2-11-1-select-lamda._TTH_.png)
      
-12.  **Lambda関数コード**のコード編集ボックスに、 [提供されたコード](../lambda/index.js) を**コピー＆ペースト**してください。このソースコードは、[GitHub](../lambda/index.js)にあります。
+12.  **Lambda関数コード**のコード編集ボックスに、 [提供されたコード](../lambda/custom/index.js) を**コピー＆ペースト**してください。このソースコードは、[GitHub](../lambda/custom/index.js)にあります。
 
 	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/2-12-copy-lambda-code._TTH_.png)
-
+     
 13. 今回はその他の項目は設定する必要はありません。画面右上の **保存** ボタンをクリックしてください。
 
     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/2-10-save-button._TTH_.png)
