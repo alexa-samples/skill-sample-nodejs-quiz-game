@@ -62,7 +62,7 @@ Alexaスキルは２つの部分からできています。一つは [音声ユ�
  
     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-12-skill-builder-build-save-model._TTH_.png)
 
-11.  対話モデルのビルドに成功したら、**Configuration ボタン** を押してコンフィギュレーションに移動します。このガイドの次のステップでは、AWS開発者コンソールからLambda関数を作成します。このブラウザのタブは開いたままにしておいてください。[3ページ: VUIとコードを接続する](3-connect-vui-to-code.md)で再びこの画面に戻ってきます。
+11. 対話モデルのビルドに成功したら、**Configuration ボタン** を押してコンフィギュレーションに移動します。このガイドの次のステップでは、AWS開発者コンソールからLambda関数を作成します。このブラウザのタブは開いたままにしておいてください。[3ページ: VUIとコードを接続する](3-connect-vui-to-code.md)で再びこの画面に戻ってきます。
 
     ![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/quiz-game/1-13-skill-builder-configuration._TTH_.png)
 
