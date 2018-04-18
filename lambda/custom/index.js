@@ -1,654 +1,587 @@
-'use strict';
-const Alexa = require('alexa-sdk');
+/* eslint-disable  func-names */
+/* eslint-disable  no-console */
+/* eslint-disable  no-restricted-syntax */
 
-// Aliases to Image and Text utility functions. These are used for display 
-// directives which are rendered on Echo Show and Echo Spot.
+// IMPORTANT: Please note that this template uses Dispay Directives,
+// Display Interface for your skill should be enabled through the Amazon developer console
+// See this screenshot - https://alexa.design/enabledisplay
 
-const MAKE_TEXT_CONTENT = Alexa.utils.TextUtils.makeTextContent;
-const MAKE_IMAGE = Alexa.utils.ImageUtils.makeImage;
-const MAKE_RICH_TEXT = Alexa.utils.TextUtils.makeRichText;
-const MAKE_PLAIN_TEXT = Alexa.utils.TextUtils.makePlainText;
+const Alexa = require('ask-sdk-core');
 
-const IMAGE_PATH = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png";
-const BACKGROUND_IMAGE_PATH = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png"
+/* INTENT HANDLERS */
+const LaunchRequestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === `LaunchRequest`;
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak(welcomeMessage)
+      .reprompt(helpMessage)
+      .getResponse();
+  },
+};
 
-//=========================================================================================================================================
-//TODO: The items below this comment need your attention
-//=========================================================================================================================================
+const QuizHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    console.log("Inside QuizHandler");
+    console.log(JSON.stringify(request));
+    return request.type === "IntentRequest" &&
+           (request.intent.name === "QuizIntent" || request.intent.name === "AMAZON.StartOverIntent");
+  },
+  handle(handlerInput) {
+    console.log("Inside QuizHandler - handle");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+    attributes.state = states.QUIZ;
+    attributes.counter = 0;
+    attributes.quizScore = 0;
 
-// Replace with your app ID (OPTIONAL).  You can find this value at the top of 
-// your skill's page on http://developer.amazon.com. Make sure to enclose your 
-// value in quotes, like this: 
-// const APP_ID = "amzn1.ask.skill.bb4045e6-b3e8-4133-b650-72923c5980f1";
-const APP_ID = undefined;
+    var question = askQuestion(handlerInput);
+    var speakOutput = startQuizMessage + question;
+    var repromptOutput = question;
 
-// This function returns a descriptive sentence about your data.  Before a user 
-// starts a quiz, they can ask about a specific data element, like "Ohio."  
-// The skill will speak the sentence from this function, pulling the data values
-// from the appropriate record in your data.
-function getSpeechDescription(item)
-{
-    let sentence = item.StateName + " is the " + item.StatehoodOrder + "th state, admitted to the Union in " + item.StatehoodYear + ".  The capital of " + item.StateName + " is " + item.Capital + ", and the abbreviation for " + item.StateName + " is <break strength='strong'/><say-as interpret-as='spell-out'>" + item.Abbreviation + "</say-as>.  I've added " + item.StateName + " to your Alexa app.  Which other state or capital would you like to know about?";
-    return sentence;
-}
+    const item = attributes.quizItem;
+    const property = attributes.quizProperty;
 
-// We have provided two ways to create your quiz questions.  The default way is 
-// to phrase all of your questions like: "What is X of Y?" If this approach 
-// doesn't work for your data, take a look at the commented code in this 
-// function.  You can write a different question structure for each property of 
-// your data.
-function getQuestion(counter, property, item)
-{
-    return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of "  + item.StateName + "?";
-
-    /*
-    switch(property)
-    {
-        case "City":
-            return "Here is your " + counter + "th question.  In what city do the " + item.League + "'s "  + item.Mascot + " play?";
-        break;
-        case "Sport":
-            return "Here is your " + counter + "th question.  What sport do the " + item.City + " " + item.Mascot + " play?";
-        break;
-        case "HeadCoach":
-            return "Here is your " + counter + "th question.  Who is the head coach of the " + item.City + " " + item.Mascot + "?";
-        break;
-        default:
-            return "Here is your " + counter + "th question.  What is the " + formatCasing(property) + " of the "  + item.Mascot + "?";
-        break;
+    if (supportsDisplay(handlerInput)) {
+      const title = `Question #${attributes.counter}`;
+      const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getQuestionWithoutOrdinal(property, item)).getTextContent();
+      const backgroundImage = new Alexa.ImageHelper().addImageInstance(getBackgroundImage(attributes.quizItem.Abbreviation)).getImage();
+      const itemList = [];
+      getAndShuffleMultipleChoiceAnswers(attributes.selectedItemIndex, item, property).forEach((x, i) => {
+        itemList.push(
+          {
+            "token" : x,
+            "textContent" : new Alexa.PlainTextContentHelper().withPrimaryText(x).getTextContent(),
+          }
+        );
+      });
+      response.addRenderTemplateDirective({
+        type : 'ListTemplate1',
+        token : 'Question',
+        backButton : 'hidden',
+        backgroundImage,
+        title,
+        listItems : itemList,
+      });
     }
-    */
-}
 
-// getQuestionWithoutOrdinal returns the question without the ordinal and is 
-// used for the echo show.
-function getQuestionWithoutOrdinal(property, item)
-{
-    return "What is the " + formatCasing(property).toLowerCase() + " of "  + item.StateName + "?";
-}
+    return response.speak(speakOutput)
+                   .reprompt(repromptOutput)
+                   .getResponse();
+  },
+};
 
-// This is the function that returns an answer to your user during the quiz.  
-// Much like the "getQuestion" function above, you can use a switch() statement 
-// to create different responses for each property in your data.  For example, 
-// when this quiz has an answer that includes a state abbreviation, we add some 
-// SSML to make sure that Alexa spells that abbreviation out (instead of trying 
-// to pronounce it.)
-function getAnswer(property, item)
-{
-    switch(property)
-    {
-        case "Abbreviation":
-            return "The " + formatCasing(property) + " of " + item.StateName + " is <say-as interpret-as='spell-out'>" + item[property] + "</say-as>. ";
-        default:
-            return "The " + formatCasing(property) + " of " + item.StateName + " is " + item[property] + ". ";
+const DefinitionHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside DefinitionHandler");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return attributes.state !== states.QUIZ &&
+           request.type === 'IntentRequest' &&
+           request.intent.name === 'AnswerIntent';
+  },
+  handle(handlerInput) {
+    console.log("Inside DefinitionHandler - handle");
+    //GRABBING ALL SLOT VALUES AND RETURNING THE MATCHING DATA OBJECT.
+    const item = getItem(handlerInput.requestEnvelope.request.intent.slots);
+    const response = handlerInput.responseBuilder;
+
+    //IF THE DATA WAS FOUND
+    if (item && item[Object.getOwnPropertyNames(data[0])[0]] !== undefined) {
+      if (useCardsFlag) {
+        response.withStandardCard(
+          getCardTitle(item),
+          getTextDescription(item),
+          getSmallImage(item),
+          getLargeImage(item))
+      }
+
+      if(supportsDisplay(handlerInput)) {
+        const image = new Alexa.ImageHelper().addImageInstance(getLargeImage(item)).getImage();
+        const title = getCardTitle(item);
+        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getTextDescription(item, "<br/>")).getTextContent();
+        response.addRenderTemplateDirective({
+          type: 'BodyTemplate2',
+          backButton: 'visible',
+          image,
+          title,
+          textContent: primaryText,
+        });
+      }
+      return response.speak(getSpeechDescription(item))
+              .reprompt(repromptSpeech)
+              .getResponse();
     }
+    //IF THE DATA WAS NOT FOUND
+    else
+    {
+      return response.speak(getBadAnswer(item))
+              .reprompt(getBadAnswer(item))
+              .getResponse();
+    }
+  }
+};
+
+const QuizAnswerHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside QuizAnswerHandler");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return attributes.state === states.QUIZ &&
+           request.type === 'IntentRequest' &&
+           request.intent.name === 'AnswerIntent';
+  },
+  handle(handlerInput) {
+    console.log("Inside QuizAnswerHandler - handle");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    var speakOutput = ``;
+    var repromptOutput = ``;
+    const item = attributes.quizItem;
+    const property = attributes.quizProperty;
+    const isCorrect = compareSlots(handlerInput.requestEnvelope.request.intent.slots, item[property]);
+
+    if (isCorrect) {
+      speakOutput = getSpeechCon(true);
+      attributes.quizScore += 1;
+      handlerInput.attributesManager.setSessionAttributes(attributes);
+    } else {
+      speakOutput = getSpeechCon(false);
+    }
+
+    speakOutput += getAnswer(property, item);
+    var question = ``;
+    //IF YOUR QUESTION COUNT IS LESS THAN 10, WE NEED TO ASK ANOTHER QUESTION.
+    if (attributes.counter < 10) {
+      speakOutput += getCurrentScore(attributes.quizScore, attributes.counter);
+      question = askQuestion(handlerInput);
+      speakOutput += question;
+      repromptOutput = question;
+
+      if (supportsDisplay(handlerInput)) {
+        const title = `Question #${attributes.counter}`;
+        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getQuestionWithoutOrdinal(attributes.quizProperty, attributes.quizItem)).getTextContent();
+        const backgroundImage = new Alexa.ImageHelper().addImageInstance(getBackgroundImage(attributes.quizItem.Abbreviation)).getImage();
+        const itemList = [];
+        getAndShuffleMultipleChoiceAnswers(attributes.selectedItemIndex, attributes.quizItem, attributes.quizProperty).forEach((x, i) => {
+          itemList.push(
+            {
+              "token" : x,
+              "textContent" : new Alexa.PlainTextContentHelper().withPrimaryText(x).getTextContent(),
+            }
+          );
+        });
+        response.addRenderTemplateDirective({
+          type : 'ListTemplate1',
+          token : 'Question',
+          backButton : 'hidden',
+          backgroundImage,
+          title,
+          listItems : itemList,
+        });
+      }
+      return response.speak(speakOutput)
+      .reprompt(repromptOutput)
+      .getResponse();
+    }
+    else {
+      speakOutput += getFinalScore(attributes.quizScore, attributes.counter) + exitSkillMessage;
+      if(supportsDisplay(handlerInput)) {
+        const title = 'Thank you for playing';
+        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getFinalScore(attributes.quizScore, attributes.counter)).getTextContent();
+        response.addRenderTemplateDirective({
+          type : 'BodyTemplate1',
+          backButton: 'hidden',
+          title,
+          textContent: primaryText,
+        });
+      }
+      return response.speak(speakOutput).getResponse();
+    }
+  },
+};
+
+const RepeatHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside RepeatHandler");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return attributes.state === states.QUIZ &&
+           request.type === 'IntentRequest' &&
+           request.intent.name === 'AMAZON.RepeatHandler';
+  },
+  handle(handlerInput) {
+    console.log("Inside RepeatHandler - handle");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const question = getQuestion(attributes.counter, attributes.quizproperty, attributes.quizitem);
+
+    return handlerInput.responseBuilder
+      .speak(question)
+      .reprompt(question)
+      .getResponse();
+  },
+};
+
+const HelpHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside HelpHandler");
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest' &&
+           request.intent.name === 'AMAZON.HelpHandler';
+  },
+  handle(handlerInput) {
+    console.log("Inside HelpHandler - handle");
+    return handlerInput.responseBuilder
+      .speak(helpMessage)
+      .reprompt(helpMessage)
+      .getResponse();
+  },
+};
+
+const ExitHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside ExitHandler");
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return request.type === `IntentRequest` && (
+              request.intent.name === 'AMAZON.StopIntent' ||
+              request.intent.name === 'AMAZON.PauseIntent' ||
+              request.intent.name === 'AMAZON.CancelIntent'
+           );
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak(exitSkillMessage)
+      .getResponse();
+  },
+};
+
+const SessionEndedRequestHandler = {
+  canHandle(handlerInput) {
+    console.log("Inside SessionEndedRequestHandler");
+    return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+  },
+  handle(handlerInput) {
+    console.log(`Session ended with reason: ${JSON.stringify(handlerInput.requestEnvelope)}`);
+    return handlerInput.responseBuilder.getResponse();
+  },
+};
+
+const ErrorHandler = {
+  canHandle() {
+    console.log("Inside ErrorHandler");
+    return true;
+  },
+  handle(handlerInput, error) {
+    console.log("Inside ErrorHandler - handle");
+    console.log(`Error handled: ${JSON.stringify(error)}`);
+    console.log(`Handler Input: ${JSON.stringify(handlerInput)}`);
+
+    return handlerInput.responseBuilder
+      .speak(helpMessage)
+      .reprompt(helpMessage)
+      .getResponse();
+  },
+};
+
+/* CONSTANTS */
+const skillBuilder = Alexa.SkillBuilders.custom();
+const imagePath = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png";
+const backgroundImagePath = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png"
+const speechConsCorrect = ['Booya', 'All righty', 'Bam', 'Bazinga', 'Bingo', 'Boom', 'Bravo', 'Cha Ching', 'Cheers', 'Dynomite', 'Hip hip hooray', 'Hurrah', 'Hurray', 'Huzzah', 'Oh dear.  Just kidding.  Hurray', 'Kaboom', 'Kaching', 'Oh snap', 'Phew','Righto', 'Way to go', 'Well done', 'Whee', 'Woo hoo', 'Yay', 'Wowza', 'Yowsa'];
+const speechConsWrong = ['Argh', 'Aw man', 'Blarg', 'Blast', 'Boo', 'Bummer', 'Darn', "D'oh", 'Dun dun dun', 'Eek', 'Honk', 'Le sigh', 'Mamma mia', 'Oh boy', 'Oh dear', 'Oof', 'Ouch', 'Ruh roh', 'Shucks', 'Uh oh', 'Wah wah', 'Whoops a daisy', 'Yikes'];
+const data = [
+  {StateName: 'Alabama', Abbreviation: 'AL', Capital: 'Montgomery', StatehoodYear: 1819, StatehoodOrder: 22},
+  {StateName: 'Alaska', Abbreviation: 'AK', Capital: 'Juneau', StatehoodYear: 1959, StatehoodOrder: 49},
+  {StateName: 'Arizona', Abbreviation: 'AZ', Capital: 'Phoenix', StatehoodYear: 1912, StatehoodOrder: 48},
+  {StateName: 'Arkansas', Abbreviation: 'AR', Capital: 'Little Rock', StatehoodYear: 1836, StatehoodOrder: 25},
+  {StateName: 'California', Abbreviation: 'CA', Capital: 'Sacramento', StatehoodYear: 1850, StatehoodOrder: 31},
+  {StateName: 'Colorado', Abbreviation: 'CO', Capital: 'Denver', StatehoodYear: 1876, StatehoodOrder: 38},
+  {StateName: 'Connecticut', Abbreviation: 'CT', Capital: 'Hartford', StatehoodYear: 1788, StatehoodOrder: 5},
+  {StateName: 'Delaware', Abbreviation: 'DE', Capital: 'Dover', StatehoodYear: 1787, StatehoodOrder: 1},
+  {StateName: 'Florida', Abbreviation: 'FL', Capital: 'Tallahassee', StatehoodYear: 1845, StatehoodOrder: 27},
+  {StateName: 'Georgia', Abbreviation: 'GA', Capital: 'Atlanta', StatehoodYear: 1788, StatehoodOrder: 4},
+  {StateName: 'Hawaii', Abbreviation: 'HI', Capital: 'Honolulu', StatehoodYear: 1959, StatehoodOrder: 50},
+  {StateName: 'Idaho', Abbreviation: 'ID', Capital: 'Boise', StatehoodYear: 1890, StatehoodOrder: 43},
+  {StateName: 'Illinois', Abbreviation: 'IL', Capital: 'Springfield', StatehoodYear: 1818, StatehoodOrder: 21},
+  {StateName: 'Indiana', Abbreviation: 'IN', Capital: 'Indianapolis', StatehoodYear: 1816, StatehoodOrder: 19},
+  {StateName: 'Iowa', Abbreviation: 'IA', Capital: 'Des Moines', StatehoodYear: 1846, StatehoodOrder: 29},
+  {StateName: 'Kansas', Abbreviation: 'KS', Capital: 'Topeka', StatehoodYear: 1861, StatehoodOrder: 34},
+  {StateName: 'Kentucky', Abbreviation: 'KY', Capital: 'Frankfort', StatehoodYear: 1792, StatehoodOrder: 15},
+  {StateName: 'Louisiana', Abbreviation: 'LA', Capital: 'Baton Rouge', StatehoodYear: 1812, StatehoodOrder: 18},
+  {StateName: 'Maine', Abbreviation: 'ME', Capital: 'Augusta', StatehoodYear: 1820, StatehoodOrder: 23},
+  {StateName: 'Maryland', Abbreviation: 'MD', Capital: 'Annapolis', StatehoodYear: 1788, StatehoodOrder: 7},
+  {StateName: 'Massachusetts', Abbreviation: 'MA', Capital: 'Boston', StatehoodYear: 1788, StatehoodOrder: 6},
+  {StateName: 'Michigan', Abbreviation: 'MI', Capital: 'Lansing', StatehoodYear: 1837, StatehoodOrder: 26},
+  {StateName: 'Minnesota', Abbreviation: 'MN', Capital: 'St. Paul', StatehoodYear: 1858, StatehoodOrder: 32},
+  {StateName: 'Mississippi', Abbreviation: 'MS', Capital: 'Jackson', StatehoodYear: 1817, StatehoodOrder: 20},
+  {StateName: 'Missouri', Abbreviation: 'MO', Capital: 'Jefferson City', StatehoodYear: 1821, StatehoodOrder: 24},
+  {StateName: 'Montana', Abbreviation: 'MT', Capital: 'Helena', StatehoodYear: 1889, StatehoodOrder: 41},
+  {StateName: 'Nebraska', Abbreviation: 'NE', Capital: 'Lincoln', StatehoodYear: 1867, StatehoodOrder: 37},
+  {StateName: 'Nevada', Abbreviation: 'NV', Capital: 'Carson City', StatehoodYear: 1864, StatehoodOrder: 36},
+  {StateName: 'New Hampshire', Abbreviation: 'NH', Capital: 'Concord', StatehoodYear: 1788, StatehoodOrder: 9},
+  {StateName: 'New Jersey', Abbreviation: 'NJ', Capital: 'Trenton', StatehoodYear: 1787, StatehoodOrder: 3},
+  {StateName: 'New Mexico', Abbreviation: 'NM', Capital: 'Santa Fe', StatehoodYear: 1912, StatehoodOrder: 47},
+  {StateName: 'New York', Abbreviation: 'NY', Capital: 'Albany', StatehoodYear: 1788, StatehoodOrder: 11},
+  {StateName: 'North Carolina', Abbreviation: 'NC', Capital: 'Raleigh', StatehoodYear: 1789, StatehoodOrder: 12},
+  {StateName: 'North Dakota', Abbreviation: 'ND', Capital: 'Bismarck', StatehoodYear: 1889, StatehoodOrder: 39},
+  {StateName: 'Ohio', Abbreviation: 'OH', Capital: 'Columbus', StatehoodYear: 1803, StatehoodOrder: 17},
+  {StateName: 'Oklahoma', Abbreviation: 'OK', Capital: 'Oklahoma City', StatehoodYear: 1907, StatehoodOrder: 46},
+  {StateName: 'Oregon', Abbreviation: 'OR', Capital: 'Salem', StatehoodYear: 1859, StatehoodOrder: 33},
+  {StateName: 'Pennsylvania', Abbreviation: 'PA', Capital: 'Harrisburg', StatehoodYear: 1787, StatehoodOrder: 2},
+  {StateName: 'Rhode Island', Abbreviation: 'RI', Capital: 'Providence', StatehoodYear: 1790, StatehoodOrder: 13},
+  {StateName: 'South Carolina', Abbreviation: 'SC', Capital: 'Columbia', StatehoodYear: 1788, StatehoodOrder: 8},
+  {StateName: 'South Dakota', Abbreviation: 'SD', Capital: 'Pierre', StatehoodYear: 1889, StatehoodOrder: 40},
+  {StateName: 'Tennessee', Abbreviation: 'TN', Capital: 'Nashville', StatehoodYear: 1796, StatehoodOrder: 16},
+  {StateName: 'Texas', Abbreviation: 'TX', Capital: 'Austin', StatehoodYear: 1845, StatehoodOrder: 28},
+  {StateName: 'Utah', Abbreviation: 'UT', Capital: 'Salt Lake City', StatehoodYear: 1896, StatehoodOrder: 45},
+  {StateName: 'Vermont', Abbreviation: 'VT', Capital: 'Montpelier', StatehoodYear: 1791, StatehoodOrder: 14},
+  {StateName: 'Virginia', Abbreviation: 'VA', Capital: 'Richmond', StatehoodYear: 1788, StatehoodOrder: 10},
+  {StateName: 'Washington', Abbreviation: 'WA', Capital: 'Olympia', StatehoodYear: 1889, StatehoodOrder: 42},
+  {StateName: 'West Virginia', Abbreviation: 'WV', Capital: 'Charleston', StatehoodYear: 1863, StatehoodOrder: 35},
+  {StateName: 'Wisconsin', Abbreviation: 'WI', Capital: 'Madison', StatehoodYear: 1848, StatehoodOrder: 30},
+  {StateName: 'Wyoming', Abbreviation: 'WY', Capital: 'Cheyenne', StatehoodYear: 1890, StatehoodOrder: 44},
+];
+
+const states = {
+  START: `_START`,
+  QUIZ: `_QUIZ`,
+};
+
+const welcomeMessage = `Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?`;
+const startQuizMessage = `OK.  I will ask you 10 questions about the United States. `;
+const exitSkillMessage = `Thank you for playing the United States Quiz Game!  Let's play again soon!`;
+const repromptSpeech = `Which other state or capital would you like to know about?`;
+const helpMessage = `I know lots of things about the United States.  You can ask me about a state or a capital, and I'll tell you what I know.  You can also test your knowledge by asking me to start a quiz.  What would you like to do?`;
+const useCardsFlag = true;
+
+/* HELPER FUNCTIONS */
+
+// returns true if the skill is running on a device with a display (show|spot)
+function supportsDisplay(handlerInput) {
+  var hasDisplay =
+    handlerInput.requestEnvelope.context &&
+    handlerInput.requestEnvelope.context.System &&
+    handlerInput.requestEnvelope.context.System.device &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces &&
+    handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display
+  return hasDisplay;
 }
 
-// This is a list of positive speechcons that this skill will use when a user 
-// gets a correct answer.  For a full list of supported speechcons, 
-// go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
-const speechConsCorrect = ["Booya", "All righty", "Bam", "Bazinga", "Bingo", "Boom", "Bravo", "Cha Ching", "Cheers", "Dynomite",
-"Hip hip hooray", "Hurrah", "Hurray", "Huzzah", "Oh dear.  Just kidding.  Hurray", "Kaboom", "Kaching", "Oh snap", "Phew",
-"Righto", "Way to go", "Well done", "Whee", "Woo hoo", "Yay", "Wowza", "Yowsa"];
-
-// This is a list of negative speechcons that this skill will use when a user 
-// gets an incorrect answer.  For a full list of supported speechcons, 
-// go here: https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/speechcon-reference
-const speechConsWrong = ["Argh", "Aw man", "Blarg", "Blast", "Boo", "Bummer", "Darn", "D'oh", "Dun dun dun", "Eek", "Honk", "Le sigh",
-"Mamma mia", "Oh boy", "Oh dear", "Oof", "Ouch", "Ruh roh", "Shucks", "Uh oh", "Wah wah", "Whoops a daisy", "Yikes"];
-
-// This is the welcome message for when a user starts the skill without a 
-// specific intent.
-const WELCOME_MESSAGE = "Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?";
-
-// This is the message a user will hear when they start a quiz.
-const START_QUIZ_MESSAGE = "OK.  I will ask you 10 questions about the United States.";
-
-// This is the message a user will hear when they try to cancel or stop the 
-// skill, or when they finish a quiz.
-const EXIT_SKILL_MESSAGE = "Thank you for playing the United States Quiz Game!  Let's play again soon!";
-
-// This is the message a user will hear after they ask (and hear) about a 
-// specific data element.
-const REPROMPT_SPEECH = "Which other state or capital would you like to know about?";
-
-// This is the message a user will hear when they ask Alexa for help in your 
-// skill.
-const HELP_MESSAGE = "I know lots of things about the United States.  You can ask me about a state or a capital, and I'll tell you what I know.  You can also test your knowledge by asking me to start a quiz.  What would you like to do?";
-
-
-//This is the response a user will receive when they ask about something we 
-// weren't expecting.  For example, say "pizza" to your skill when it starts.  
-// This is the response you will receive.
-function getBadAnswer(item) { 
-    return "I'm sorry. " + item + " is not something I know very much about in this skill. " + HELP_MESSAGE; 
+function getBadAnswer(item) {
+  return `I'm sorry. ${item} is not something I know very much about in this skill. ${helpMessage}`;
 }
 
-// This is the message a user will receive after each question of a quiz.  
-// It reminds them of their current score.
-function getCurrentScore(score, counter) { 
-    return "Your current score is " + score + " out of " + counter + ". "; 
+function getCurrentScore(score, counter) {
+  return `Your current score is ${score} out of ${counter}. `;
 }
 
-// This is the message a user will receive after they complete a quiz.  It tells 
-// them their final score.
-function getFinalScore(score, counter) { 
-    return "Your final score is " + score + " out of " + counter + ". "; 
+function getFinalScore(score, counter) {
+  return `Your final score is ${score} out of ${counter}. `;
 }
 
-// These next four values are for the Alexa cards that are created when a user 
-// asks about one of the data elements. This only happens outside of a quiz.
-
-// If you don't want to use cards in your skill, set the USE_CARDS_FLAG to 
-// false.  If you set it to true, you will need an image for each item in your 
-// data.
-const USE_CARDS_FLAG = true;
-
-// This is what your card title will be.  
-// For our example, we use the name of the state the user requested.
-function getCardTitle(item) { 
-    return item.StateName;
+function getCardTitle(item) {
+  return item.StateName;
 }
 
-// This is the small version of the card image.  We use our data as the naming 
-// convention for our images so that we can dynamically generate the URL to the 
-// image.  The small image should be 720x400 in dimension.
-function getSmallImage(item) { 
-    return getImage(720, 400, item.Abbreviation);
+function getSmallImage(item) {
+  return `https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/720x400/${item.Abbreviation}._TTH_.png`;
 }
 
-//This is the large version of the card image.  It should be 1200x800 pixels in dimension.
-function getLargeImage(item) { 
-    return getImage(1200, 800, item.Abbreviation);
+function getLargeImage(item) {
+  return `https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/1200x800/${item.Abbreviation}._TTH_.png`;
 }
 
 function getImage(height, width, label) {
-    return IMAGE_PATH.replace("{0}", height)
-                    .replace("{1}", width)
-                    .replace("{2}", label);
+  return imagePath.replace("{0}", height)
+    .replace("{1}", width)
+    .replace("{2}", label);
 }
 
 function getBackgroundImage(label, height = 1024, width = 600) {
-    return BACKGROUND_IMAGE_PATH.replace("{0}", height)
-                                .replace("{1}", width)
-                                .replace("{2}", label);
+  return backgroundImagePath.replace("{0}", height)
+    .replace("{1}", width)
+    .replace("{2}", label);
 }
 
-//=========================================================================================================================================
-//TODO: Replace this data with your own.
-//=========================================================================================================================================
-const data = [
-                {StateName: "Alabama",        Abbreviation: "AL", Capital: "Montgomery",     StatehoodYear: 1819, StatehoodOrder: 22 },
-                {StateName: "Alaska",         Abbreviation: "AK", Capital: "Juneau",         StatehoodYear: 1959, StatehoodOrder: 49 },
-                {StateName: "Arizona",        Abbreviation: "AZ", Capital: "Phoenix",        StatehoodYear: 1912, StatehoodOrder: 48 },
-                {StateName: "Arkansas",       Abbreviation: "AR", Capital: "Little Rock",    StatehoodYear: 1836, StatehoodOrder: 25 },
-                {StateName: "California",     Abbreviation: "CA", Capital: "Sacramento",     StatehoodYear: 1850, StatehoodOrder: 31 },
-                {StateName: "Colorado",       Abbreviation: "CO", Capital: "Denver",         StatehoodYear: 1876, StatehoodOrder: 38 },
-                {StateName: "Connecticut",    Abbreviation: "CT", Capital: "Hartford",       StatehoodYear: 1788, StatehoodOrder: 5 },
-                {StateName: "Delaware",       Abbreviation: "DE", Capital: "Dover",          StatehoodYear: 1787, StatehoodOrder: 1 },
-                {StateName: "Florida",        Abbreviation: "FL", Capital: "Tallahassee",    StatehoodYear: 1845, StatehoodOrder: 27 },
-                {StateName: "Georgia",        Abbreviation: "GA", Capital: "Atlanta",        StatehoodYear: 1788, StatehoodOrder: 4 },
-                {StateName: "Hawaii",         Abbreviation: "HI", Capital: "Honolulu",       StatehoodYear: 1959, StatehoodOrder: 50 },
-                {StateName: "Idaho",          Abbreviation: "ID", Capital: "Boise",          StatehoodYear: 1890, StatehoodOrder: 43 },
-                {StateName: "Illinois",       Abbreviation: "IL", Capital: "Springfield",    StatehoodYear: 1818, StatehoodOrder: 21 },
-                {StateName: "Indiana",        Abbreviation: "IN", Capital: "Indianapolis",   StatehoodYear: 1816, StatehoodOrder: 19 },
-                {StateName: "Iowa",           Abbreviation: "IA", Capital: "Des Moines",     StatehoodYear: 1846, StatehoodOrder: 29 },
-                {StateName: "Kansas",         Abbreviation: "KS", Capital: "Topeka",         StatehoodYear: 1861, StatehoodOrder: 34 },
-                {StateName: "Kentucky",       Abbreviation: "KY", Capital: "Frankfort",      StatehoodYear: 1792, StatehoodOrder: 15 },
-                {StateName: "Louisiana",      Abbreviation: "LA", Capital: "Baton Rouge",    StatehoodYear: 1812, StatehoodOrder: 18 },
-                {StateName: "Maine",          Abbreviation: "ME", Capital: "Augusta",        StatehoodYear: 1820, StatehoodOrder: 23 },
-                {StateName: "Maryland",       Abbreviation: "MD", Capital: "Annapolis",      StatehoodYear: 1788, StatehoodOrder: 7 },
-                {StateName: "Massachusetts",  Abbreviation: "MA", Capital: "Boston",         StatehoodYear: 1788, StatehoodOrder: 6 },
-                {StateName: "Michigan",       Abbreviation: "MI", Capital: "Lansing",        StatehoodYear: 1837, StatehoodOrder: 26 },
-                {StateName: "Minnesota",      Abbreviation: "MN", Capital: "St. Paul",       StatehoodYear: 1858, StatehoodOrder: 32 },
-                {StateName: "Mississippi",    Abbreviation: "MS", Capital: "Jackson",        StatehoodYear: 1817, StatehoodOrder: 20 },
-                {StateName: "Missouri",       Abbreviation: "MO", Capital: "Jefferson City", StatehoodYear: 1821, StatehoodOrder: 24 },
-                {StateName: "Montana",        Abbreviation: "MT", Capital: "Helena",         StatehoodYear: 1889, StatehoodOrder: 41 },
-                {StateName: "Nebraska",       Abbreviation: "NE", Capital: "Lincoln",        StatehoodYear: 1867, StatehoodOrder: 37 },
-                {StateName: "Nevada",         Abbreviation: "NV", Capital: "Carson City",    StatehoodYear: 1864, StatehoodOrder: 36 },
-                {StateName: "New Hampshire",  Abbreviation: "NH", Capital: "Concord",        StatehoodYear: 1788, StatehoodOrder: 9 },
-                {StateName: "New Jersey",     Abbreviation: "NJ", Capital: "Trenton",        StatehoodYear: 1787, StatehoodOrder: 3 },
-                {StateName: "New Mexico",     Abbreviation: "NM", Capital: "Santa Fe",       StatehoodYear: 1912, StatehoodOrder: 47 },
-                {StateName: "New York",       Abbreviation: "NY", Capital: "Albany",         StatehoodYear: 1788, StatehoodOrder: 11 },
-                {StateName: "North Carolina", Abbreviation: "NC", Capital: "Raleigh",        StatehoodYear: 1789, StatehoodOrder: 12 },
-                {StateName: "North Dakota",   Abbreviation: "ND", Capital: "Bismarck",       StatehoodYear: 1889, StatehoodOrder: 39 },
-                {StateName: "Ohio",           Abbreviation: "OH", Capital: "Columbus",       StatehoodYear: 1803, StatehoodOrder: 17 },
-                {StateName: "Oklahoma",       Abbreviation: "OK", Capital: "Oklahoma City",  StatehoodYear: 1907, StatehoodOrder: 46 },
-                {StateName: "Oregon",         Abbreviation: "OR", Capital: "Salem",          StatehoodYear: 1859, StatehoodOrder: 33 },
-                {StateName: "Pennsylvania",   Abbreviation: "PA", Capital: "Harrisburg",     StatehoodYear: 1787, StatehoodOrder: 2 },
-                {StateName: "Rhode Island",   Abbreviation: "RI", Capital: "Providence",     StatehoodYear: 1790, StatehoodOrder: 13 },
-                {StateName: "South Carolina", Abbreviation: "SC", Capital: "Columbia",       StatehoodYear: 1788, StatehoodOrder: 8 },
-                {StateName: "South Dakota",   Abbreviation: "SD", Capital: "Pierre",         StatehoodYear: 1889, StatehoodOrder: 40 },
-                {StateName: "Tennessee",      Abbreviation: "TN", Capital: "Nashville",      StatehoodYear: 1796, StatehoodOrder: 16 },
-                {StateName: "Texas",          Abbreviation: "TX", Capital: "Austin",         StatehoodYear: 1845, StatehoodOrder: 28 },
-                {StateName: "Utah",           Abbreviation: "UT", Capital: "Salt Lake City", StatehoodYear: 1896, StatehoodOrder: 45 },
-                {StateName: "Vermont",        Abbreviation: "VT", Capital: "Montpelier",     StatehoodYear: 1791, StatehoodOrder: 14 },
-                {StateName: "Virginia",       Abbreviation: "VA", Capital: "Richmond",       StatehoodYear: 1788, StatehoodOrder: 10 },
-                {StateName: "Washington",     Abbreviation: "WA", Capital: "Olympia",        StatehoodYear: 1889, StatehoodOrder: 42 },
-                {StateName: "West Virginia",  Abbreviation: "WV", Capital: "Charleston",     StatehoodYear: 1863, StatehoodOrder: 35 },
-                {StateName: "Wisconsin",      Abbreviation: "WI", Capital: "Madison",        StatehoodYear: 1848, StatehoodOrder: 30 },
-                {StateName: "Wyoming",        Abbreviation: "WY", Capital: "Cheyenne",       StatehoodYear: 1890, StatehoodOrder: 44 }
-            ];
-
-//=========================================================================================================================================
-//Editing anything below this line might break your skill.
-//=========================================================================================================================================
-
-const states = {
-    START: "_START",
-    QUIZ: "_QUIZ"
-};
-
-const handlers = {
-     "LaunchRequest": function() {
-        this.handler.state = states.START;
-        this.emitWithState("Start");
-     },
-    "QuizIntent": function() {
-        this.handler.state = states.QUIZ;
-        this.emitWithState("Quiz");
-    },
-    "AnswerIntent": function() {
-        this.handler.state = states.START;
-        this.emitWithState("AnswerIntent");
-    },
-    "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "Unhandled": function() {
-        this.handler.state = states.START;
-        this.emitWithState("Start");
-    }
-};
-
-const startHandlers = Alexa.CreateStateHandler(states.START,{
-    "Start": function() {
-        this.response.speak(WELCOME_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AnswerIntent": function() {
-        let item = getItem(this.event.request.intent.slots);
-
-        if (item && item[Object.getOwnPropertyNames(data[0])[0]] != undefined)
-        {
-          
-            if (USE_CARDS_FLAG)
-            {
-                let imageObj = {smallImageUrl: getSmallImage(item), largeImageUrl: getLargeImage(item)};
-
-                this.response.speak(getSpeechDescription(item)).listen(REPROMPT_SPEECH);
-                this.response.cardRenderer(getCardTitle(item), getTextDescription(item), imageObj);            }
-            else
-            {
-                this.response.speak(getSpeechDescription(item)).listen(REPROMPT_SPEECH);
-            }
-
-            // Display code for an Alexa Device with a screen Echo Show|Spot
-            // For this we are using Body Template 2 
-            // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#bodytemplate2-for-image-views-and-limited-centered-text
-            if (supportsDisplay.call(this)) {
-                let builder = new Alexa.templateBuilders['BodyTemplate2Builder']();
-                let mainImage = MAKE_IMAGE(getLargeImage(item));
-                let title = getCardTitle(item);
-                let primaryText = MAKE_RICH_TEXT(getTextDescription(item, "<br/>"));
-
-                builder.setImage(mainImage);
-                builder.setTitle(title);
-                builder.setTextContent(primaryText, null, null);
-
-                // The back button can be hidden by passing 'hidden'
-                // The default is 'visibile'
-                builder.setBackButtonBehavior('visible'); 
-                let template = builder.build();
-
-                this.response.renderTemplate(template);
-            }            
-        }
-        else
-        {
-            this.response.speak(getBadAnswer(item)).listen(getBadAnswer(item));
-        }
-
-        this.emit(":responseReady");
-    },
-    "QuizIntent": function() {
-        this.handler.state = states.QUIZ;
-        this.emitWithState("Quiz");
-    },
-    "AMAZON.PauseIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.StopIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.CancelIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "Unhandled": function() {
-        this.emitWithState("Start");
-    }
-});
-
-const quizHandlers = Alexa.CreateStateHandler(states.QUIZ,{
-    "Quiz": function() {
-        this.attributes["response"] = "";
-        this.attributes["counter"] = 0;
-        this.attributes["quizscore"] = 0;
-        this.emitWithState("AskQuestion");
-    },
-    "AskQuestion": function() {
-        if (this.attributes["counter"] == 0)
-        {
-            this.attributes["response"] = START_QUIZ_MESSAGE + " ";
-        }
-
-        let random = getRandom(0, data.length-1);
-        let item = data[random];
-
-        let propertyArray = Object.getOwnPropertyNames(item);
-        let property = propertyArray[getRandom(1, propertyArray.length-1)];
-
-        this.attributes["quizitem"] = item;
-        this.attributes["quizproperty"] = property;
-        this.attributes["counter"]++;
-
-        let question = getQuestion(this.attributes["counter"], property, item);
-        let speech = this.attributes["response"] + question;
-
-        this.response.speak(speech).listen(question);
-
-        // Display code for an Alexa Device with a screen Echo Show|Spot
-        // For this we are using Body Template 1
-        // https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#bodytemplate1-for-simple-text-and-image-views
-        if (supportsDisplay.call(this)) {
-            // let builder = new Alexa.templateBuilders['BodyTemplate1Builder']();
-            let builder = new Alexa.templateBuilders['ListTemplate1Builder']();
-            let title = `Question #${this.attributes["counter"]}`;    
-            let primaryText = MAKE_RICH_TEXT(getQuestionWithoutOrdinal(property, item));
-            
-            let itemList = [];
-
-            getAndShuffleMultipleChoiceAnswers(random, item, property).forEach( (x, i) => {
-                itemList.push(
-                    {  
-                        "token": x, 
-                        "image": null, 
-                        "textContent": MAKE_TEXT_CONTENT(MAKE_PLAIN_TEXT(x), null, null)
-                    }
-                );
-            });
-
-            builder.setTitle(title);
-            builder.setToken('QUESTION');
-            builder.setListItems(itemList);
-
-            // builder.setTextContent(primaryText, null, null);
-
-            // During the quiz we don't want the back button visibile.
-            // We don't want the user to be able to reanswer with the correct
-            // answer after they got it wrong.
-
-            builder.setBackgroundImage(MAKE_IMAGE(getBackgroundImage(item.Abbreviation)));
-            builder.setBackButtonBehavior('hidden');
-            let template = builder.build();
-
-            this.response.renderTemplate(template);
-        }                  
-
-        this.emit(':responseReady');
-    },
-    "AnswerIntent": function() {
-        let response = "";
-        let speechOutput = "";
-        let item = this.attributes["quizitem"];
-        let property = this.attributes["quizproperty"];
-
-        let correct = compareSlots(this.event, item[property]);
-
-
-
-        if (correct)
-        {
-            response = getSpeechCon(true);
-            this.attributes["quizscore"]++;
-        }
-        else
-        {
-            response = getSpeechCon(false);
-        }
-
-        response += getAnswer(property, item);
-
-        if (this.attributes["counter"] < 10)
-        {
-            response += getCurrentScore(this.attributes["quizscore"], this.attributes["counter"]);
-            this.attributes["response"] = response;
-            this.emitWithState("AskQuestion");
-        }
-        else
-        {
-            response += getFinalScore(this.attributes["quizscore"], this.attributes["counter"]);
-            speechOutput = response + " " + EXIT_SKILL_MESSAGE;
-
-            this.response.speak(speechOutput);
-            
-            if (supportsDisplay.call(this)) {
-            let builder = new Alexa.templateBuilders['BodyTemplate1Builder']();
-            let title = 'Thank you for playing!';    
-            let primaryText = MAKE_RICH_TEXT(getFinalScore(this.attributes["quizscore"], this.attributes["counter"]));
-            console.log('primary text: ', primaryText);
-            builder.setTitle(title);
-
-
-            builder.setTextContent(primaryText, null, null);
-
-            // During the quiz we don't want the back button visibile.
-            // We don't want the user to be able to reanswer with the correct
-            // answer after they got it wrong.
-
-            //builder.setBackgroundImage(MAKE_IMAGE(getLargeImage(item)));
-            builder.setBackButtonBehavior('hidden');
-            let template = builder.build();
-
-            this.response.renderTemplate(template);
-            } 
-            this.emit(":responseReady");
-        }
-    },
-    "ElementSelected": function() {
-        console.log("In ElementSelected Quiz State.");
-        this.emitWithState("AnswerIntent");
-    },
-    "AMAZON.RepeatIntent": function() {
-        let question = getQuestion(this.attributes["counter"], this.attributes["quizproperty"], this.attributes["quizitem"]);
-        this.response.speak(question).listen(question);
-        this.emit(":responseReady");
-    },
-    "AMAZON.StartOverIntent": function() {
-        this.emitWithState("Quiz");
-    },
-    "AMAZON.StopIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.PauseIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.CancelIntent": function() {
-        this.response.speak(EXIT_SKILL_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "AMAZON.HelpIntent": function() {
-        this.response.speak(HELP_MESSAGE).listen(HELP_MESSAGE);
-        this.emit(":responseReady");
-    },
-    "Unhandled": function() {
-        this.emitWithState("AnswerIntent");
-    }
-});
-
-function compareSlots(event, value)
-{
-
-    if (event.request && event.request.token) {
-        console.log(JSON.stringify(event.request));
-        if (event.request.token.toString().toLowerCase() == value.toString().toLocaleLowerCase()) {
-            return true;
-        }
-            
-    } else if (event.request.intent && event.request.intent.slots) {
-        let slots = event.request.intent.slots
-        for (let slot in slots)
-        {
-            if (slots[slot].value != undefined)
-            {
-                if (slots[slot].value.toString().toLowerCase() == value.toString().toLowerCase())
-                {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
+function getSpeechDescription(item) {
+  return `${item.StateName} is the ${item.StatehoodOrder}th state, admitted to the Union in ${item.StatehoodYear}.  The capital of ${item.StateName} is ${item.Capital}, and the abbreviation for ${item.StateName} is <break strength='strong'/><say-as interpret-as='spell-out'>${item.Abbreviation}</say-as>.  I've added ${item.StateName} to your Alexa app.  Which other state or capital would you like to know about?`;
 }
 
-function getRandom(min, max)
-{
-    return Math.floor(Math.random() * (max-min+1)+min);
+function formatCasing(key) {
+  return key.split(/(?=[A-Z])/).join(' ');
 }
 
-function getItem(slots)
-{
-    let propertyArray = Object.getOwnPropertyNames(data[0]);
-    let value;
+function getQuestion(counter, property, item) {
+  return `Here is your ${counter}th question.  What is the ${formatCasing(property)} of ${item.StateName}?`;
+}
 
-    for (let slot in slots)
-    {
-        if (slots[slot].value !== undefined)
-        {
-            value = slots[slot].value;
-            for (let property in propertyArray)
-            {
-                let item = data.filter(x => x[propertyArray[property]].toString().toLowerCase() === slots[slot].value.toString().toLowerCase());
-                if (item.length > 0)
-                {
-                    return item[0];
-                }
-            }
-        }
+// getQuestionWithoutOrdinal returns the question without the ordinal and is
+// used for the echo show.
+function getQuestionWithoutOrdinal(property, item) {
+  return "What is the " + formatCasing(property).toLowerCase() + " of "  + item.StateName + "?";
+}
+
+function getAnswer(property, item) {
+  switch (property) {
+    case 'Abbreviation':
+      return `The ${formatCasing(property)} of ${item.StateName} is <say-as interpret-as='spell-out'>${item[property]}</say-as>. `;
+    default:
+      return `The ${formatCasing(property)} of ${item.StateName} is ${item[property]}. `;
+  }
+}
+
+function getRandom(min, max) {
+  return Math.floor((Math.random() * ((max - min) + 1)) + min);
+}
+
+function askQuestion(handlerInput) {
+  console.log("I am in askQuestion()");
+  //GENERATING THE RANDOM QUESTION FROM DATA
+  const random = getRandom(0, data.length - 1);
+  const item = data[random];
+  const propertyArray = Object.getOwnPropertyNames(item);
+  const property = propertyArray[getRandom(1, propertyArray.length - 1)];
+
+  //GET SESSION ATTRIBUTES
+  const attributes = handlerInput.attributesManager.getSessionAttributes();
+
+  //SET QUESTION DATA TO ATTRIBUTES
+  attributes.selectedItemIndex = random;
+  attributes.quizItem = item;
+  attributes.quizProperty = property;
+  attributes.counter += 1;
+
+  //SAVE ATTRIBUTES
+  handlerInput.attributesManager.setSessionAttributes(attributes);
+
+  const question = getQuestion(attributes.counter, property, item);
+  return question;
+}
+
+function compareSlots(slots, value) {
+  for (const slot in slots) {
+    if (Object.prototype.hasOwnProperty.call(slots, slot) && slots[slot].value !== undefined) {
+      if (slots[slot].value.toString().toLowerCase() === value.toString().toLowerCase()) {
+        return true;
+      }
     }
-    return value;
+  }
+
+  return false;
+}
+
+function getItem(slots) {
+  const propertyArray = Object.getOwnPropertyNames(data[0]);
+  let slotValue;
+
+  for (const slot in slots) {
+    if (Object.prototype.hasOwnProperty.call(slots, slot) && slots[slot].value !== undefined) {
+      slotValue = slots[slot].value;
+      for (const property in propertyArray) {
+        if (Object.prototype.hasOwnProperty.call(propertyArray, property)) {
+          const item = data.filter(x => x[propertyArray[property]]
+            .toString().toLowerCase() === slots[slot].value.toString().toLowerCase());
+          if (item.length > 0) {
+            return item[0];
+          }
+        }
+      }
+    }
+  }
+  return slotValue;
+}
+
+function getSpeechCon(type) {
+  if (type) return `<say-as interpret-as='interjection'>${speechConsCorrect[getRandom(0, speechConsCorrect.length - 1)]}! </say-as><break strength='strong'/>`;
+  return `<say-as interpret-as='interjection'>${speechConsWrong[getRandom(0, speechConsWrong.length - 1)]} </say-as><break strength='strong'/>`;
+}
+
+
+function getTextDescription(item) {
+  let text = '';
+
+  for (const key in item) {
+    if (Object.prototype.hasOwnProperty.call(item, key)) {
+      text += `${formatCasing(key)}: ${item[key]}\n`;
+    }
+  }
+  return text;
 }
 
 function getAndShuffleMultipleChoiceAnswers(currentIndex, item, property) {
-    return shuffle(getMultipleChoiceAnswers(currentIndex, item, property));
+  return shuffle(getMultipleChoiceAnswers(currentIndex, item, property));
 }
 
 // This function randomly chooses 3 answers 2 incorrect and 1 correct answer to
 // display on the screen using the ListTemplate. It ensures that the list is unique.
 function getMultipleChoiceAnswers(currentIndex, item, property) {
 
-    // insert the correct answer first
-    let answerList = [item[property]];
+  // insert the correct answer first
+  let answerList = [item[property]];
 
-    // There's a possibility that we might get duplicate answers
-    // 8 states were founded in 1788
-    // 4 states were founded in 1889
-    // 3 states were founded in 1787 
-    // to prevent duplicates we need avoid index collisions and take a sample of
-    // 8 + 4 + 1 = 13 answers (it's not 8+4+3 because later we take the unique 
-    // we only need the minimum.)
-    let count = 0
-    let upperBound = 12 
+  // There's a possibility that we might get duplicate answers
+  // 8 states were founded in 1788
+  // 4 states were founded in 1889
+  // 3 states were founded in 1787
+  // to prevent duplicates we need avoid index collisions and take a sample of
+  // 8 + 4 + 1 = 13 answers (it's not 8+4+3 because later we take the unique
+  // we only need the minimum.)
+  let count = 0
+  let upperBound = 12
 
-    let seen = new Array();
-    seen[currentIndex] = 1;
+  let seen = new Array();
+  seen[currentIndex] = 1;
 
-    while (count < upperBound) {
-        let random = getRandom(0, data.length - 1);
+  while (count < upperBound) {
+    let random = getRandom(0, data.length - 1);
 
-        // only add if we haven't seen this index
-        if ( seen[random] === undefined ) {
-            answerList.push(data[random][property]);
-            count++;
-        }
+    // only add if we haven't seen this index
+    if ( seen[random] === undefined ) {
+      answerList.push(data[random][property]);
+      count++;
     }
-
-    // remove duplicates from the list.
-    answerList = answerList.filter((v, i, a) => a.indexOf(v) === i)
-    // take the first three items from the list.
-    answerList = answerList.slice(0, 3);
-
-    return answerList;
-}
-
-// This function takes the contents of an array and randomly shuffles it. 
-function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-
-    while ( 0 !== currentIndex ) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
-}
-
-function getSpeechCon(type)
-{
-
-    if (type) return "<say-as interpret-as='interjection'>" + speechConsCorrect[getRandom(0, speechConsCorrect.length-1)] + "! </say-as><break strength='strong'/>";
-    else return "<say-as interpret-as='interjection'>" + speechConsWrong[getRandom(0, speechConsWrong.length-1)] + " </say-as><break strength='strong'/>";
-}
-
-function formatCasing(key)
-{
-    key = key.split(/(?=[A-Z])/).join(" ");
-    return key;
-}
-
-function getTextDescription(item, delimiter = "\n")
-{
-    let text = "";
-
-    for (let key in item)
-    {
-        text += formatCasing(key) + ": " + item[key] + delimiter;
-    }
-    return text;
-}
-
-
-// returns true if the skill is running on a device with a display (show|spot)
-function supportsDisplay() {
-    var hasDisplay =
-      this.event.context &&
-      this.event.context.System &&
-      this.event.context.System.device &&
-      this.event.context.System.device.supportedInterfaces &&
-      this.event.context.System.device.supportedInterfaces.Display
-  
-    return hasDisplay;
   }
 
-exports.handler = (event, context) => {
-    console.log("event: ", event);
-    console.log("context: ", context)
-    const alexa = Alexa.handler(event, context);
-    alexa.appId = APP_ID;
-    alexa.registerHandlers(handlers, startHandlers, quizHandlers);
-    alexa.execute();
-};
+  // remove duplicates from the list.
+  answerList = answerList.filter((v, i, a) => a.indexOf(v) === i)
+  // take the first three items from the list.
+  answerList = answerList.slice(0, 3);
+  return answerList;
+}
+
+// This function takes the contents of an array and randomly shuffles it.
+function shuffle(array) {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+
+  while ( 0 !== currentIndex ) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
+/* LAMBDA SETUP */
+exports.handler = skillBuilder
+  .addRequestHandlers(
+    LaunchRequestHandler,
+    QuizHandler,
+    DefinitionHandler,
+    QuizAnswerHandler,
+    RepeatHandler,
+    HelpHandler,
+    ExitHandler,
+    SessionEndedRequestHandler
+  )
+  .addErrorHandlers(ErrorHandler)
+  .lambda();
