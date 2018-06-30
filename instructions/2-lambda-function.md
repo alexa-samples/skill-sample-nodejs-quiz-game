@@ -27,7 +27,7 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
 6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box.  
 
-7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as it's trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
+7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as its trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
 
     <!-- <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/2-5-blueprint._TTH_.png" />  <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE, THIS ONE IS OUT OF DATE. -->
 8. **Click the deploy button** at the bottom of the page.
