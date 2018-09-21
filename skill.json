@@ -1,5 +1,5 @@
 {
-  "skillManifest": {
+  "manifest": {
     "publishingInformation": {
       "locales": {
         "ja-JP": {
@@ -15,17 +15,13 @@
             "都道府県"
           ],
           "name": "QuizGame",
-          "smallIconUri": "https://api.amazonalexa.com/v0/skills/amzn1.ask.skill.eb1b8275-59e5-4006-a9f1-246ca4bd3cca/images/eyJkIjoiREllQ0lQeVdvaS9vZ1RhSDVEQW96N2tVRnpRYlNESFNFeGlCcmxMbUJOd0ZRT0ZReCtRMkNUZlBXRFdSYW1KMWNqSnFWVEEyZHVoazRvL0w1b3k5T0FRZjI3SWQ5eDZqbU9pbjh5WlY1dHdReTArSzhKbGlteGVBd051UUJXM2kiLCJpdiI6IlRoTFJUcm9UQ2VjeEIvbUs3aU1OeUE9PSIsInYiOjF9",
-          "description": "このスキルは日本の都道府県に関連するたくさんのことを教えてくレます。また、その知識をクイズにして出題してくれます。",
-          "largeIconUri": "https://api.amazonalexa.com/v0/skills/amzn1.ask.skill.eb1b8275-59e5-4006-a9f1-246ca4bd3cca/images/eyJkIjoiME01MGdRRzR6Qk5zempMSUNlbEZSc0hTY2pMTUhES0lMSjhOamlrNHkvTDZPZW84RnZ3ZmNabU9GaDZvSG9ERGV0V0ZhZnIyYlFNWk9YRjE2eUNqUWoyT0NTZU10WmdoRndmcFc2NHVaazh0dldPTHhuYVZveUNxNk9XRUdYUnNFZDY2UlBRdU5kTlJ5WDJpUDM3ZGp3PT0iLCJpdiI6ImcvWXpKTWlkOUFLVzNCeUQ3NHlVcmc9PSIsInYiOjF9"
+          "description": "このスキルは日本の都道府県に関連するたくさんのことを教えてくレます。また、その知識をクイズにして出題してくれます。"
         }
       },
-      "isAvailableWorldwide": false,
+      "isAvailableWorldwide": true,
       "testingInstructions": "Quiz Game スキルを使って作成しました。",
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": [
-        "JP"
-      ]
+      "category": "EDUCATION_AND_REFERENCE",
+      "distributionCountries": []
     },
     "apis": {
       "custom": {
@@ -34,13 +30,6 @@
         }
       }
     },
-    "manifestVersion": "1.0",
-    "privacyAndCompliance": {
-      "allowsPurchases": false,
-      "isExportCompliant": true,
-      "containsAds": false,
-      "isChildDirected": false,
-      "usesPersonalInfo": false
-    }
+    "manifestVersion": "1.0"
   }
 }
