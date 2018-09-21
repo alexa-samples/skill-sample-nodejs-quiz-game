@@ -6,6 +6,7 @@
 このAlexaサンプルスキルは、簡単なクイズゲームスキルのテンプレートを提供します。あるトピックの関連する情報のリストを提供すると、Alexaがそのリストから情報を取り出しクイズを出します。
 
 **開始** するには次のボタンをクリックしてください。
+
 [![始めましょう](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_get_started.png)](instructions/1-voice-user-interface.md)
 
 もしくは、コマンドラインを使った ASK CLI (command line interface) を利用するには [こちら](./instructions/7-cli.md) をクリックしてください。
