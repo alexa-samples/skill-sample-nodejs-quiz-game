@@ -22,6 +22,7 @@ Or click [here](./instructions/7-cli.md) for instructions using the ASK CLI (com
 ### Tutorials & Guides
 * [Voice Design Guide](https://developer.amazon.com/designing-for-voice/) - A great resource for learning conversational and voice user interface design.
 * [Codecademy: Learn Alexa](https://www.codecademy.com/learn/learn-alexa) - Learn how to build an Alexa Skill from within your browser with this beginner friendly tutorial on Codecademy!
+* [Situation Design for Quiz Skill](https://s3.amazonaws.com/ask-samples-resources/templates/situational-design-quiz-skill.pptx) - step through the design of the quiz skill, and how it handles different situations.  Apply it to your skill too!  Also available in [PDF](https://s3.amazonaws.com/ask-samples-resources/templates/situational-design-quiz-skill.pdf).
 
 ### Documentation
 * [Official Alexa Skills Kit Node.js SDK](https://www.npmjs.com/package/ask-sdk) - The Official Node.js SDK Documentation
