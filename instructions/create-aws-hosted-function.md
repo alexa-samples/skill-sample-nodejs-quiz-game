@@ -1,7 +1,6 @@
 # Build An Alexa Quiz Game Skill
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-locked._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-on._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./6-publication.md)
 
 ## Setting Up A Lambda Function Using Amazon Web Services
 
@@ -25,7 +24,7 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
 5.  There are three boxes labeled "Author from scratch", "Blueprints" and "Serverless Application Repository". **Click the radio button in the box titled  "Serverless Application Repository"**  We have created a repository as a shortcut to getting everything set up for your skill.
 
-6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box.  
+6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box.
 
 7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as it's trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
 
@@ -45,4 +44,5 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
     ![Copy ARN](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-12-copy-ARN._TTH_.png)
 <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE. -->
 
-[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_connect_vui_to_code._TTH_.png)](./3-connect-vui-to-code.md)
+[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_testing._TTH_.png)](./test-using-simulator.md)
+
