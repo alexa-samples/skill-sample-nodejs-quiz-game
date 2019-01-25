@@ -27,7 +27,7 @@ Toggle the dropdown from **Off** to **Development**.
 	* If it's not working as expected, you can dig into the JSON to see exactly what Alexa is sending and receiving from the endpoint. If something is broken, you can find the error in AWS Cloudwatch.
 
 
-6.  Troubleshooting with CloudWatch log messages: You can add console.log() statements to your code, to track what is happening as your code executes, and help to figure out what is happening when something goes wrong.
+6.  Troubleshooting with CloudWatch log messages: You can add `console.log()` statements to your code, to track what is happening as your code executes, and help to figure out what is happening when something goes wrong.
 You will find the log to be incredibly valuable as you move into more advanced skills.
 
 
