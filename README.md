@@ -32,5 +32,5 @@ There are a number of different ways for you to setup your skill, depending on y
 * [Situation Design for Quiz Skill](https://s3.amazonaws.com/ask-samples-resources/templates/situational-design-quiz-skill.pptx) - step through the design of the quiz skill, and how it handles different situations.  Apply it to your skill too!  Also available in [PDF](https://s3.amazonaws.com/ask-samples-resources/templates/situational-design-quiz-skill.pdf).
 
 ### Documentation
-* [Official Alexa Skills Kit Node.js SDK](https://www.npmjs.com/package/ask-sdk) - The Official Node.js SDK Documentation
-*  [Official Alexa Skills Kit Documentation](https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html) - Official Alexa Skills Kit Documentation
+* [Alexa Skills Kit SDK for Node.js](https://alexa.design/node-sdk-docs)
+* [Alexa Skills Kit Documentation](https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html)
