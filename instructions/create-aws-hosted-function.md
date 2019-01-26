@@ -26,7 +26,7 @@ In the [first step of this guide](./setup-vui-aws-hosted.md), we built the Voice
 
 6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box.
 
-7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as it's trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
+7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as its trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
 
 8. **Click the deploy button** at the bottom of the page.
 
