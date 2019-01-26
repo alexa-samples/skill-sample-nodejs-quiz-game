@@ -7,6 +7,12 @@
 // See this screenshot - https://alexa.design/enabledisplay
 
 const Alexa = require('ask-sdk-core');
+const i18n = require('i18next');
+const sprintf = require('i18next-sprintf-postprocessor');
+
+const languageStrings = {
+  'en': require('./languages/en.js'),
+};
 
 /* INTENT HANDLERS */
 const LaunchRequestHandler = {
@@ -14,9 +20,13 @@ const LaunchRequestHandler = {
     return handlerInput.requestEnvelope.request.type === `LaunchRequest`;
   },
   handle(handlerInput) {
+    const attributesManager = handlerInput.attributesManager;
+    const responseBuilder = handlerInput.responseBuilder;
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
     return handlerInput.responseBuilder
-      .speak(welcomeMessage)
-      .reprompt(helpMessage)
+      .speak(requestAttributes.t('WELCOME_MESSAGE'))
+      .reprompt(requestAttributes.t('HELP_MESSAGE'))
       .getResponse();
   },
 };
@@ -33,12 +43,16 @@ const QuizHandler = {
     console.log("Inside QuizHandler - handle");
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const response = handlerInput.responseBuilder;
+    const attributesManager = handlerInput.attributesManager;
+    const responseBuilder = handlerInput.responseBuilder;
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
     attributes.state = states.QUIZ;
     attributes.counter = 0;
     attributes.quizScore = 0;
 
     var question = askQuestion(handlerInput);
-    var speakOutput = startQuizMessage + question;
+    var speakOutput = requestAttributes.t('START_QUIZ_MESSAGE') + question;
     var repromptOutput = question;
 
     const item = attributes.quizItem;
@@ -46,7 +60,7 @@ const QuizHandler = {
 
     if (supportsDisplay(handlerInput)) {
       const title = `Question #${attributes.counter}`;
-      const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getQuestionWithoutOrdinal(property, item)).getTextContent();
+      const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(WithoutOrdinal(property, item)).getTextContent();
       const backgroundImage = new Alexa.ImageHelper().addImageInstance(getBackgroundImage(attributes.quizItem.Abbreviation)).getImage();
       const itemList = [];
       getAndShuffleMultipleChoiceAnswers(attributes.selectedItemIndex, item, property).forEach((x, i) => {
@@ -78,6 +92,9 @@ const DefinitionHandler = {
     console.log("Inside DefinitionHandler");
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
+    const attributesManager = handlerInput.attributesManager;
+    const responseBuilder = handlerInput.responseBuilder;
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
     return attributes.state !== states.QUIZ &&
            request.type === 'IntentRequest' &&
@@ -111,15 +128,15 @@ const DefinitionHandler = {
           textContent: primaryText,
         });
       }
-      return response.speak(getSpeechDescription(item))
-              .reprompt(repromptSpeech)
+      return response.speak(getSpeechDescription(item, handlerInput))
+              .reprompt(repromptOutput)
               .getResponse();
     }
     //IF THE DATA WAS NOT FOUND
     else
     {
-      return response.speak(getBadAnswer(item))
-              .reprompt(getBadAnswer(item))
+      return response.speak(requestAttributes.t('GET_BAD_ANSWER'), item, requestAttributes.t('HElP_MESSAGE'))
+              .reprompt(requestAttributes.t('GET_BAD_ANSWER'), item, requestAttributes.t('HElP_MESSAGE'))
               .getResponse();
     }
   }
@@ -154,18 +171,18 @@ const QuizAnswerHandler = {
       speakOutput = getSpeechCon(false);
     }
 
-    speakOutput += getAnswer(property, item);
+    speakOutput += getAnswer(property, item, handlerInput);
     var question = ``;
     //IF YOUR QUESTION COUNT IS LESS THAN 10, WE NEED TO ASK ANOTHER QUESTION.
     if (attributes.counter < 10) {
-      speakOutput += getCurrentScore(attributes.quizScore, attributes.counter);
+      speakOutput += getCurrentScore(attributes.quizScore, attributes.counter, handlerInput);
       question = askQuestion(handlerInput);
       speakOutput += question;
       repromptOutput = question;
 
       if (supportsDisplay(handlerInput)) {
         const title = `Question #${attributes.counter}`;
-        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getQuestionWithoutOrdinal(attributes.quizProperty, attributes.quizItem)).getTextContent();
+        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getQuestionWithoutOrdinal(attributes.quizProperty, attributes.quizItem, handlerInput)).getTextContent();
         const backgroundImage = new Alexa.ImageHelper().addImageInstance(getBackgroundImage(attributes.quizItem.Abbreviation)).getImage();
         const itemList = [];
         getAndShuffleMultipleChoiceAnswers(attributes.selectedItemIndex, attributes.quizItem, attributes.quizProperty).forEach((x, i) => {
@@ -190,10 +207,10 @@ const QuizAnswerHandler = {
       .getResponse();
     }
     else {
-      speakOutput += getFinalScore(attributes.quizScore, attributes.counter) + exitSkillMessage;
+      speakOutput += getFinalScore(attributes.quizScore, attributes.counter, handlerInput) + exitSkillMessage;
       if(supportsDisplay(handlerInput)) {
-        const title = 'Thank you for playing';
-        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getFinalScore(attributes.quizScore, attributes.counter)).getTextContent();
+        const title = 'EXIT_SKILL_MESSAGE';
+        const primaryText = new Alexa.RichTextContentHelper().withPrimaryText(getFinalScore(attributes.quizScore, attributes.counter, handlerInput)).getTextContent();
         response.addRenderTemplateDirective({
           type : 'BodyTemplate1',
           backButton: 'hidden',
@@ -219,7 +236,7 @@ const RepeatHandler = {
   handle(handlerInput) {
     console.log("Inside RepeatHandler - handle");
     const attributes = handlerInput.attributesManager.getSessionAttributes();
-    const question = getQuestion(attributes.counter, attributes.quizproperty, attributes.quizitem);
+    const question = getQuestion(attributes.counter, attributes.quizproperty, attributes.quizitem, handlerInput);
 
     return handlerInput.responseBuilder
       .speak(question)
@@ -238,8 +255,8 @@ const HelpHandler = {
   handle(handlerInput) {
     console.log("Inside HelpHandler - handle");
     return handlerInput.responseBuilder
-      .speak(helpMessage)
-      .reprompt(helpMessage)
+      .speak('HElP_MESSAGE')
+      .reprompt('HElP_MESSAGE')
       .getResponse();
   },
 };
@@ -285,8 +302,8 @@ const ErrorHandler = {
     console.log(`Handler Input: ${JSON.stringify(handlerInput)}`);
 
     return handlerInput.responseBuilder
-      .speak(helpMessage)
-      .reprompt(helpMessage)
+      .speak('HELP_MESSAGE')
+      .reprompt('HELP_MESSAGE')
       .getResponse();
   },
 };
@@ -295,7 +312,7 @@ const ErrorHandler = {
 const skillBuilder = Alexa.SkillBuilders.custom();
 const imagePath = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png";
 const backgroundImagePath = "https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/state_flag/{0}x{1}/{2}._TTH_.png"
-const speechConsCorrect = ['Booya', 'All righty', 'Bam', 'Bazinga', 'Bingo', 'Boom', 'Bravo', 'Cha Ching', 'Cheers', 'Dynomite', 'Hip hip hooray', 'Hurrah', 'Hurray', 'Huzzah', 'Oh dear.  Just kidding.  Hurray', 'Kaboom', 'Kaching', 'Oh snap', 'Phew','Righto', 'Way to go', 'Well done', 'Whee', 'Woo hoo', 'Yay', 'Wowza', 'Yowsa'];
+const speechConsCorrect = ['Booya', 'All righty', 'Bam', 'Bazinga', 'Bingo', 'Boom', 'Bravo', 'Cha Ching', 'Cheers', 'Dynomite', 'Hip hip hooray', 'Hurrah', 'Hurray', 'Huzzah', 'Oh dear.  Just kidding.  Hurray', 'Kaboom', 'Kaching', 'Oh snap', 'Phew', 'Righto', 'Way to go', 'Well done', 'Whee', 'Woo hoo', 'Yay', 'Wowza', 'Yowsa'];
 const speechConsWrong = ['Argh', 'Aw man', 'Blarg', 'Blast', 'Boo', 'Bummer', 'Darn', "D'oh", 'Dun dun dun', 'Eek', 'Honk', 'Le sigh', 'Mamma mia', 'Oh boy', 'Oh dear', 'Oof', 'Ouch', 'Ruh roh', 'Shucks', 'Uh oh', 'Wah wah', 'Whoops a daisy', 'Yikes'];
 const data = [
   {StateName: 'Alabama', Abbreviation: 'AL', Capital: 'Montgomery', StatehoodYear: 1819, StatehoodOrder: 22},
@@ -355,11 +372,6 @@ const states = {
   QUIZ: `_QUIZ`,
 };
 
-const welcomeMessage = `Welcome to the United States Quiz Game!  You can ask me about any of the fifty states and their capitals, or you can ask me to start a quiz.  What would you like to do?`;
-const startQuizMessage = `OK.  I will ask you 10 questions about the United States. `;
-const exitSkillMessage = `Thank you for playing the United States Quiz Game!  Let's play again soon!`;
-const repromptSpeech = `Which other state or capital would you like to know about?`;
-const helpMessage = `I know lots of things about the United States.  You can ask me about a state or a capital, and I'll tell you what I know.  You can also test your knowledge by asking me to start a quiz.  What would you like to do?`;
 const useCardsFlag = true;
 
 /* HELPER FUNCTIONS */
@@ -375,16 +387,19 @@ function supportsDisplay(handlerInput) {
   return hasDisplay;
 }
 
-function getBadAnswer(item) {
-  return `I'm sorry. ${item} is not something I know very much about in this skill. ${helpMessage}`;
+
+function getCurrentScore(score, counter, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
+  return requestAttributes.t('GET_CURRENT_SCORE', score, counter);
 }
 
-function getCurrentScore(score, counter) {
-  return `Your current score is ${score} out of ${counter}. `;
-}
+function getFinalScore(score, counter, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
 
-function getFinalScore(score, counter) {
-  return `Your final score is ${score} out of ${counter}. `;
+  return requestAttributes.t('GET_FINAL_SCORE', score, counter);
 }
 
 function getCardTitle(item) {
@@ -411,30 +426,42 @@ function getBackgroundImage(label, height = 1024, width = 600) {
     .replace("{2}", label);
 }
 
-function getSpeechDescription(item) {
-  return `${item.StateName} is the ${item.StatehoodOrder}th state, admitted to the Union in ${item.StatehoodYear}.  The capital of ${item.StateName} is ${item.Capital}, and the abbreviation for ${item.StateName} is <break strength='strong'/><say-as interpret-as='spell-out'>${item.Abbreviation}</say-as>.  I've added ${item.StateName} to your Alexa app.  Which other state or capital would you like to know about?`;
+function getSpeechDescription(item, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
+  return requestAttributes.t('GET_SPEECH_DESCRIPTION', item.StateName, item.StatehoodOrder, item.StatehoodYear, item.StateName, item.Capital, item.StateName, item.Abbreviation, item.StateName);
 }
 
 function formatCasing(key) {
   return key.split(/(?=[A-Z])/).join(' ');
 }
 
-function getQuestion(counter, property, item) {
-  return `Here is your ${counter}th question.  What is the ${formatCasing(property)} of ${item.StateName}?`;
+function getQuestion(counter, property, item, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
+  return requestAttributes.t('GET_QUESTION', counter, formatCasing(property), item.StateName);
 }
 
 // getQuestionWithoutOrdinal returns the question without the ordinal and is
 // used for the echo show.
-function getQuestionWithoutOrdinal(property, item) {
-  return "What is the " + formatCasing(property).toLowerCase() + " of "  + item.StateName + "?";
+function getQuestionWithoutOrdinal(property, item, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
+  return requestAttributes.t(`GET_QUESTION_WITHOUT_ORDINAL`, formatCasing(property).toLowerCase(), item.StateName);
 }
 
-function getAnswer(property, item) {
-  switch (property) {
+function getAnswer(property, item, handlerInput) {
+  const attributesManager = handlerInput.attributesManager;
+  const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
+
+  switch (property, requestAttributes) {
     case 'Abbreviation':
-      return `The ${formatCasing(property)} of ${item.StateName} is <say-as interpret-as='spell-out'>${item[property]}</say-as>. `;
+      return requestAttributes.t(`GET_ANSWER_ABBREVIATION`, formatCasing(property), item.StateName, item[property]);
     default:
-      return `The ${formatCasing(property)} of ${item.StateName} is ${item[property]}. `;
+      return requestAttributes.t(`GET_ANSWER`, formatCasing(property).toLowerCase(), item.StateName, item[property]);
   }
 }
 
@@ -462,7 +489,7 @@ function askQuestion(handlerInput) {
   //SAVE ATTRIBUTES
   handlerInput.attributesManager.setSessionAttributes(attributes);
 
-  const question = getQuestion(attributes.counter, property, item);
+  const question = getQuestion(attributes.counter, property, item, handlerInput);
   return question;
 }
 
@@ -571,6 +598,35 @@ function shuffle(array) {
   return array;
 }
 
+const LocalizationInterceptor = {
+  process(handlerInput) {
+    const localizationClient = i18n.use(sprintf).init({
+      lng: handlerInput.requestEnvelope.request.locale,
+      resources: languageStrings,
+    });
+    localizationClient.localize = function localize() {
+      const args = arguments;
+      const values = [];
+      for (let i = 1; i < args.length; i += 1) {
+        values.push(args[i]);
+      }
+      const value = i18n.t(args[0], {
+        returnObjects: true,
+        postProcess: 'sprintf',
+        sprintf: values,
+      });
+      if (Array.isArray(value)) {
+        return value[Math.floor(Math.random() * value.length)];
+      }
+      return value;
+    };
+    const attributes = handlerInput.attributesManager.getRequestAttributes();
+    attributes.t = function translate(...args) {
+      return localizationClient.localize(...args);
+    };
+  },
+};
+
 /* LAMBDA SETUP */
 exports.handler = skillBuilder
   .addRequestHandlers(
@@ -583,5 +639,6 @@ exports.handler = skillBuilder
     ExitHandler,
     SessionEndedRequestHandler
   )
+  .addRequestInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
