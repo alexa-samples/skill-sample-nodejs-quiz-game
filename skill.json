@@ -25,7 +25,8 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "lambda/custom"
+          "sourceDir": "lambda/custom",
+          "uri": "ask-custom-StatesQuiz"
         }
       }
     },
