@@ -21,7 +21,7 @@ We are almost done!  The last step is to add the metadata that your skill will u
 
        | Common Failure Points for Example Phrases |
        | ----------------------------------------- |
-       | Example phrases **must** adhere to the [supported phrases](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/supported-phrases-to-begin-a-conversation?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=fact-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_fact-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs). |
+       | Example phrases **must** adhere to the [supported phrases](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/supported-phrases-to-begin-a-conversation?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=quiz-game-nodejs-V2_GUI-6&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_quiz-game-nodejs-V2_GUI-6_Convert_WW_beginnersdevs&sc_segment=beginnersdevs). |
        | Example phrases **must** be based on sample utterances specified in your Intent Schema. |
        | Your first example phrase **must** include a wake word and your invocation name. |
        | Example phrases **must** provide a contextual response. |

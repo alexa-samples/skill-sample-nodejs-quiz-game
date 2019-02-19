@@ -4,7 +4,7 @@
 ## Setup w/ ASK CLI
 
 ### About
-This readme assumes you have your developer environment ready to go and that you have some familiarity with CLI (Command Line Interface) Tools, [AWS](https://aws.amazon.com/), and the [ASK Developer Portal](https://developer.amazon.com/alexa-skills-kit?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=quiz-game-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_quiz-game-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs). If not, [click here](./1-voice-user-interface.md) for a more detailed walkthrough.
+This readme assumes you have your developer environment ready to go and that you have some familiarity with CLI (Command Line Interface) Tools, [AWS](https://aws.amazon.com/), and the [ASK Developer Portal](https://developer.amazon.com/alexa-skills-kit?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=quiz-game-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_quiz-game-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs). If not, [click here](./setup-vui-alexa-hosted.md) for a more detailed walkthrough.
 
 ### Pre-requisites
 
@@ -17,27 +17,13 @@ This readme assumes you have your developer environment ready to go and that you
 1. **Make sure** you are running the latest version of the CLI
 
 	```bash
-	$ npm update -g ask-cli
+	npm update -g ask-cli
 	```
 
 2. **Clone** the repository.
 
 	```bash
-	$ git clone https://github.com/alexa/skill-sample-nodejs-quiz-game/
-	```
-
-3. If it's your first time using it, **initiatialize** the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=quiz-game-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_quiz-game-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs) by navigating into the repository and running npm command: `ask init`. Follow the prompts.
-
-	```bash
-	$ cd skill-sample-nodejs-quiz-game
-	$ ask init
-	```
-
-4. Install npm dependencies by navigating into the `/lambda/custom` directory and running the npm command: `npm install --save`
-
-	```bash
-	$ cd lambda/custom
-	$ npm install
+	ask new --url https://github.com/alexa/skill-sample-nodejs-quiz-game.git --skill-name quiz-game
 	```
 
 ### Deployment
@@ -48,7 +34,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 2. Deploy the skill and the lambda function in one step by running the following command:
 
 	```bash
-	$ ask deploy
+	ask deploy
 	```
 
 ### Testing
@@ -58,7 +44,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 2. Simulate verbal interaction with your skill through the command line (this might take a few moments) using the following example:
 
 	```bash
-	 $ ask simulate -l en-GB -t "start quiz game"
+	 ask simulate -l en-GB -t "start quiz game"
 
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
