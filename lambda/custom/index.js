@@ -412,6 +412,8 @@ function getBackgroundImage(label, height = 1024, width = 600) {
 }
 
 function getSpeechDescription(item) {
+  
+  //the Alexa Service will present the correct ordinal (i.e. first, tenth, fifteenth) when the audio response is being delivered
   return `${item.StateName} is the ${item.StatehoodOrder}th state, admitted to the Union in ${item.StatehoodYear}.  The capital of ${item.StateName} is ${item.Capital}, and the abbreviation for ${item.StateName} is <break strength='strong'/><say-as interpret-as='spell-out'>${item.Abbreviation}</say-as>.  I've added ${item.StateName} to your Alexa app.  Which other state or capital would you like to know about?`;
 }
 
@@ -420,6 +422,8 @@ function formatCasing(key) {
 }
 
 function getQuestion(counter, property, item) {
+  
+  //the Alexa Service will present the correct ordinal (i.e. first, tenth, fifteenth) when the audio response is being delivered
   return `Here is your ${counter}th question.  What is the ${formatCasing(property)} of ${item.StateName}?`;
 }
 
