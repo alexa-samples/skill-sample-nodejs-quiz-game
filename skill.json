@@ -23,7 +23,12 @@
       "distributionCountries": []
     },
     "apis": {
-      "custom": {}
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom",
+          "uri": "ask-custom-StatesQuiz"
+        }
+      }
     },
     "manifestVersion": "1.0"
   }
