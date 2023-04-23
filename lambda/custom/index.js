@@ -2,7 +2,7 @@
 /* eslint-disable  no-console */
 /* eslint-disable  no-restricted-syntax */
 
-// IMPORTANT: Please note that this template uses Dispay Directives,
+// IMPORTANT: Please note that this template uses Display Directives,
 // Display Interface for your skill should be enabled through the Amazon developer console
 // See this screenshot - https://alexa.design/enabledisplay
 
